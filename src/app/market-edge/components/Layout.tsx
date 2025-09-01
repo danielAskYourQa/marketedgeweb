@@ -65,9 +65,20 @@ export function Layout({ children }: { children: ReactNode }) {
 
           <a
             href="#contact"
-            className="rounded-2xl px-4 py-2 text-sm font-medium bg-gradient-to-tr from-fuchsia-600 to-indigo-600 text-white shadow-sm hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500"
+            className="relative inline-flex items-center justify-center rounded-2xl px-4 py-2 text-sm font-semibold text-white bg-gradient-to-tr from-fuchsia-600 to-indigo-600 shadow-sm hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 overflow-visible group"
           >
-            Get in touch
+            {/* Glow behind the button */}
+            <span
+              aria-hidden
+              className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-fuchsia-500 to-indigo-500 blur-md opacity-60 animate-pulse z-0"
+            />
+            {/* Soft ping ring */}
+            <span
+              aria-hidden
+              className="absolute inset-0 rounded-2xl ring-2 ring-fuchsia-500/30 animate-[ping_2.4s_ease-in-out_infinite] z-0"
+            />
+            {/* Label stays above effects */}
+            <span className="relative z-10">Get in touch</span>
           </a>
         </div>
       </header>
@@ -116,10 +127,8 @@ export function Layout({ children }: { children: ReactNode }) {
           <div>
             <h4 className="font-semibold mb-2">Services</h4>
             <ul className="space-y-1 text-neutral-700">
-              <li>Automation ecosystem</li>
-              <li>Web app automation</li>
-              <li>Mobile app automation</li>
-              <li>Security testing</li>
+              <li>Price Monitoring</li>
+              <li>Competition Analysis</li>
             </ul>
           </div>
           <div>
