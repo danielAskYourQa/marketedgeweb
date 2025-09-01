@@ -96,7 +96,7 @@ export function Layout({ children }: { children: ReactNode }) {
               <span className="font-semibold">Market Edge</span>
             </div>
             <p className="text-neutral-600">
-              QA automation & price monitoring for modern teams.
+              Price monitoring and competition analysis for eCommerce
             </p>
           </div>
           <div>

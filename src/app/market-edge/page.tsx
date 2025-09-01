@@ -18,12 +18,3 @@ export default function MarketEdgePage() {
     </>
   );
 }
-
-// export default function MarketEdgeTest() {
-//   return (
-//     <main style={{ padding: 24, color: "#fff", background: "#111", minHeight: "60vh" }}>
-//       <h1>/market-edge route is working ✅</h1>
-//       <p>If you see this, the 404 is gone. Next we can swap in the real components.</p>
-//     </main>
-//   );
-// }
