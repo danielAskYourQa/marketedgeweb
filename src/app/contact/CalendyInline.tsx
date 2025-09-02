@@ -15,7 +15,7 @@ type Props = {
   height?: number;
 };
 
-export default function CalendlyInline({ url, height = 760 }: Props) {
+export default function CalendyInline({ url, height = 760 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
