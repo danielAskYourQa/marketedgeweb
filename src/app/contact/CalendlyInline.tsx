@@ -1,10 +1,18 @@
+// src/app/contact/CalendlyInline.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
 
 declare global {
   interface Window {
-    Calendly?: any;
+    Calendly?: {
+      initInlineWidget: (opts: {
+        url: string;
+        parentElement: HTMLElement;
+        prefill?: Record<string, unknown>;
+        utm?: Record<string, unknown>;
+      }) => void;
+    };
   }
 }
 
@@ -28,10 +36,8 @@ export default function CalendlyInline({ url, height = 760 }: Props) {
       document.head.appendChild(link);
     }
 
-    // Load script and init
     const init = () => {
       if (!containerRef.current || !window.Calendly) return;
-      // Clear any previous widget for hot reloads
       containerRef.current.innerHTML = "";
       window.Calendly.initInlineWidget({
         url,
@@ -41,6 +47,7 @@ export default function CalendlyInline({ url, height = 760 }: Props) {
       });
     };
 
+    // Load script and init
     if (window.Calendly) {
       init();
     } else {
@@ -54,7 +61,6 @@ export default function CalendlyInline({ url, height = 760 }: Props) {
         script.onload = init;
         document.body.appendChild(script);
       } else {
-        // If script tag exists but Calendly not ready yet, attach onload
         if (!window.Calendly) script.addEventListener("load", init, { once: true });
         else init();
       }

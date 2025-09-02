@@ -1,11 +1,12 @@
 "use client";
+
 export function ContactCta() {
   return (
     <section id="contact" className="mx-auto max-w-7xl px-4 py-16">
       <div className="rounded-2xl border border-neutral-200 bg-gradient-to-tr from-purple-50 to-indigo-50 p-8 flex flex-col md:flex-row justify-between items-center gap-6">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold">
-            Ready to see your competitors' prices?
+            {"Ready to see your competitors' prices?"}
           </h2>
           <p className="text-neutral-700 mt-2">
             Get a live demo or start a free trial — no credit card required.

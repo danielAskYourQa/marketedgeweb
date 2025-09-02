@@ -31,7 +31,11 @@ export default function ContactForm() {
 
   const onChange =
     (k: keyof FormState) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    (
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
+    ) => {
       const v =
         e.currentTarget.type === "checkbox"
           ? (e.currentTarget as HTMLInputElement).checked
@@ -46,7 +50,7 @@ export default function ContactForm() {
     form.message.trim().length >= 10 &&
     form.consent;
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setOk(null);
     setErr(null);
@@ -61,8 +65,26 @@ export default function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.error || "Something went wrong.");
+
+      // Try to parse JSON safely; fall back to empty object
+      let data: unknown = {};
+      try {
+        data = await res.json();
+      } catch {
+        // ignore JSON parse errors
+      }
+
+      if (!res.ok) {
+        const msg =
+          typeof data === "object" &&
+          data !== null &&
+          "error" in data &&
+          typeof (data as Record<string, unknown>).error === "string"
+            ? (data as { error: string }).error
+            : "Something went wrong.";
+        throw new Error(msg);
+      }
+
       setOk("Thanks! Your message has been sent.");
       setForm({
         name: "",
@@ -74,8 +96,10 @@ export default function ContactForm() {
         consent: false,
         botfield: "",
       });
-    } catch (e: any) {
-      setErr(e.message || "Failed to send your message.");
+    } catch (e: unknown) {
+      const message =
+        e instanceof Error ? e.message : "Failed to send your message.";
+      setErr(message);
     } finally {
       setSubmitting(false);
     }
