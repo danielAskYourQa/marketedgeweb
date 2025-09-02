@@ -1,6 +1,6 @@
 // src/app/contact/page.tsx (SERVER component)
 import ContactForm from "./ContactForm";
-import CalendyInline from "./CalendyInline";
+import CalendlyInline from "./CalendlyInline";
 
 export const metadata = {
   title: "Contact — Market Edge",
@@ -37,10 +37,8 @@ export default function ContactPage() {
             </p>
 
             <div className="mt-4">
-              <CalendyInline
+              <CalendlyInline
                 url={
-                  // TODO: replace with your Calendly link
-                  // Example with brand colors + cleaner UI:
                   "https://calendly.com/ask_your_qa/discovery-meeting-position"
                 }
                 height={760}
