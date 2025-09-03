@@ -94,14 +94,24 @@ export function Layout({ children }: { children: ReactNode }) {
 
       <div id="content">{children}</div>
 
-      <footer
-        className="bg-gradient-to-tr from-fuchsia-600 via-purple-600 to-indigo-600 text-white"
-        role="contentinfo"
-      >
-        <div className="mx-auto max-w-7xl px-4 py-10 grid md:grid-cols-4 gap-8 text-sm">
+      <footer className="relative text-white" role="contentinfo">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/footer-image.png"
+            alt="Market Edge footer background"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/30" />{" "}
+          {/* optional overlay */}
+        </div>
+
+        {/* Footer content */}
+        <div className="relative mx-auto max-w-7xl px-4 py-10 grid md:grid-cols-4 gap-8 text-sm">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              {/* Market Edge logo */}
               <Image
                 src="/logo-40.png"
                 alt="Market Edge logo"
@@ -117,29 +127,22 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-2">Pages</h4>
+            <h4 className="font-semibold mb-2">Contact</h4>
             <ul className="space-y-1 text-fuchsia-100">
-              <li>
-                <a href="#" className="hover:text-white">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="#usecases" className="hover:text-white">
-                  Use-cases
-                </a>
-              </li>
-              <li>
-                <a href="#pricing" className="hover:text-white">
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a href="#faqs" className="hover:text-white">
-                  FAQs
-                </a>
-              </li>
+              <li>Cluj-Napoca, Romania</li>
+              <li>+40 729 014 617</li>
+              <li>office@askyourqa.com</li>
             </ul>
+          </div>
+
+          <div className="mx-auto max-w-7xl px-4 pb-10 text-xs text-fuchsia-100 flex flex-wrap gap-4">
+            <span>© {new Date().getFullYear()} AskYourQA</span>
+            <a href="/privacy" className="hover:text-white">
+              Privacy Policy
+            </a>
+            <a href="/terms" className="hover:text-white">
+              Terms of Service
+            </a>
           </div>
 
           <div>
@@ -149,17 +152,9 @@ export function Layout({ children }: { children: ReactNode }) {
               <li>Competition Analysis</li>
             </ul>
           </div>
-
-          <div>
-            <h4 className="font-semibold mb-2">Contact</h4>
-            <ul className="space-y-1 text-fuchsia-100">
-              <li>Cluj-Napoca, Romania</li>
-              <li>+40 729 014 617</li>
-              <li>office@askyourqa.com</li>
-            </ul>
-          </div>
         </div>
-        <div className="mx-auto max-w-7xl px-4 pb-10 text-xs text-fuchsia-100">
+
+        <div className="relative mx-auto max-w-7xl px-4 pb-10 text-xs text-fuchsia-100">
           © {new Date().getFullYear()} AskYourQA
         </div>
       </footer>

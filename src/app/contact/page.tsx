@@ -1,6 +1,7 @@
 // src/app/contact/page.tsx (SERVER component)
 import ContactForm from "./ContactForm";
 import CalendlyInline from "./CalendlyInline";
+import ContactExtras, { TelegramButton } from "./ContactExtras";
 
 export const metadata = {
   title: "Contact — Market Edge",
@@ -20,11 +21,18 @@ export default function ContactPage() {
             Let’s talk about your pricing visibility
           </h1>
           <p className="mt-3 text-neutral-700">
-            Get a live demo or ask anything about Market Edge. We usually reply the
-            same business day.
+            Get a live demo or ask anything about Market Edge. We usually reply
+            the same business day.
           </p>
         </div>
-
+        <div className="mt-4 flex items-center gap-3">
+          <div>
+            <ContactExtras /> {/* WhatsApp */}
+          </div>
+          <div>
+            <TelegramButton /> {/* Telegram */}
+          </div>
+        </div>
         <div className="mt-10 grid lg:grid-cols-3 gap-8">
           {/* Client-side form */}
           <ContactForm />
