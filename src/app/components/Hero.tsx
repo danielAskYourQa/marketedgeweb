@@ -300,7 +300,7 @@ export function Hero() {
               </a>
               <a
                 className="rounded-2xl px-5 py-3 bg-gradient-to-tr from-fuchsia-600 to-indigo-600 text-white font-medium hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500"
-                href="#contact"
+                href="/contact"
               >
                 Start free trial
               </a>

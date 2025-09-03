@@ -1,3 +1,4 @@
+// src/lib/pricing.ts
 export type Billing = "monthly" | "annual";
 
 export function estimatePrice({
@@ -11,13 +12,21 @@ export function estimatePrice({
   marketplaces: number;
   billing: Billing;
 }): number {
-  const baseMonthly = 150;
-  const extraProducts = Math.max(0, Math.ceil((products - 1000) / 1000)) * 50;
-  const extraCompetitors = Math.max(0, competitors - 6) * 20;
-  const extraMarketplaces = Math.max(0, marketplaces - 2) * 30;
-  let monthly =
-    baseMonthly + extraProducts + extraCompetitors + extraMarketplaces;
+  // Per-unit pricing
+  const productCost = products * 0.1; // $0.10 per product
+  const competitorCost = competitors * 10; // $10 per competitor
+  const marketplaceCost = marketplaces * 10; // $10 per marketplace
 
-  if (products <= 100 && competitors <= 3 && marketplaces === 0) monthly = 0; // Free tier
-  return billing === "annual" ? monthly * 10 : monthly; // 2 months free
+  let monthly = productCost + competitorCost + marketplaceCost;
+
+  // Free tier: <=100 products, <=3 competitors, and 0 marketplaces
+  if (products <= 100 && competitors <= 3 && marketplaces === 0) {
+    monthly = 0;
+  }
+
+  // Return monthly, or annual with 2 months free (10× monthly)
+  const total = billing === "annual" ? monthly * 10 : monthly;
+
+  // Round to cents
+  return Math.round(total * 100) / 100;
 }

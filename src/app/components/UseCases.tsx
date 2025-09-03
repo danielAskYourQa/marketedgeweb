@@ -45,7 +45,7 @@ export function UseCases() {
           <div className="flex gap-3">
             <a
               className="rounded-2xl px-5 py-3 bg-gradient-to-tr from-fuchsia-600 to-indigo-600 text-white font-medium hover:opacity-90"
-              href="#contact"
+              href="/contact"
             >
               Contact us
             </a>
