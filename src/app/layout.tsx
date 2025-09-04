@@ -1,7 +1,7 @@
-// src/app/layout.tsx
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Layout as Shell } from "./components/Layout";
+import Analytics from "./components/Analytics";
 
 export const metadata: Metadata = {
   title: "Market Edge — Competitor Price Monitoring",
@@ -22,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Shell>{children}</Shell>
+        <Analytics />
       </body>
     </html>
   );
