@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Layout as Shell } from "./components/Layout";
 import Analytics from "./components/Analytics";
+import { Suspense } from "react"; // ⬅️ add this
 
 export const metadata: Metadata = {
   title: "Market Edge — Competitor Price Monitoring",
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Shell>{children}</Shell>
-        <Analytics />
+        <Suspense fallback={null}>
+          <Analytics />
+        </Suspense>
       </body>
     </html>
   );
