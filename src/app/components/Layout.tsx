@@ -88,6 +88,13 @@ export function Layout({ children }: { children: ReactNode }) {
               />
               <span className="relative z-10">Get in touch</span>
             </a>
+
+            <a
+              href="/affiliate"
+              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+            >
+              Affiliate
+            </a>
           </div>
         </div>
       </header>
