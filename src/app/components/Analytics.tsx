@@ -14,10 +14,11 @@ export default function Analytics() {
   useEffect(() => {
     if (!GA_ID || typeof window === "undefined") return;
 
-    const page_path = `${pathname}${searchParams?.toString() ? `?${searchParams.toString()}` : ""}`;
+    const page_path = `${pathname}${
+      searchParams?.toString() ? `?${searchParams.toString()}` : ""
+    }`;
 
-    // @ts-ignore
-    window.gtag?.("event", "page_view", {
+    (window as any).gtag?.("event", "page_view", {
       page_path,
       page_title: document.title,
     });
