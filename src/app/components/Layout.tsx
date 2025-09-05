@@ -62,6 +62,12 @@ export function Layout({ children }: { children: ReactNode }) {
             >
               Contact
             </a>
+            <a
+              href="/affiliate"
+              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+            >
+              Affiliate
+            </a>
           </nav>
 
           {/* Actions: Sign In + CTA */}
@@ -87,13 +93,6 @@ export function Layout({ children }: { children: ReactNode }) {
                 className="absolute inset-0 rounded-2xl ring-2 ring-fuchsia-500/30 animate-[ping_2.4s_ease-in-out_infinite] z-0"
               />
               <span className="relative z-10">Get in touch</span>
-            </a>
-
-            <a
-              href="/affiliate"
-              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
-            >
-              Affiliate
             </a>
           </div>
         </div>

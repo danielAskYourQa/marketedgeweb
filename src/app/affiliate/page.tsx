@@ -9,10 +9,10 @@ export default function AffiliatePage() {
       <ul className="mt-6 list-disc pl-6 space-y-2">
         <li>Recurring commission for as long as the customer stays.</li>
         <li>60-day attribution window.</li>
-        <li>Monthly payouts, €50 minimum.</li>
+        <li>Monthly payouts, €100 minimum.</li>
       </ul>
       <Link
-        href="https://YOUR-SUBDOMAIN.rewardful.com/signup"
+        href="https://ask-your-qa.getrewardful.com/signup"
         className="mt-8 inline-flex rounded-xl px-5 py-3 font-semibold border"
       >
         Apply now
