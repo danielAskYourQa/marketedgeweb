@@ -1,25 +1,42 @@
-// src/app/market-edge/page.tsx
+// src/app/page.tsx
 import { Suspense } from "react";
 import { Hero } from "./components/Hero";
 import { UseCases } from "./components/UseCases";
 import { PricingSection } from "./components/Pricing";
 import { CalculatorSection } from "./components/Calculator";
 import { FAQsSection } from "./components/FAQs";
-import { ContactCta } from "./components/ContactCta";
 import { defaultFaqs } from "./data";
+import { ContactCta } from "./components/ContactCta";
 
-export default function MarketEdgePage() {
+export default function HomePage() {
   return (
     <>
-      <Suspense fallback={<div />}>
-        <Hero />
-      </Suspense>
+      <section id="hero">
+        <Suspense fallback={<div />}>
+          <Hero />
+        </Suspense>
+      </section>
 
-      <UseCases />
-      <PricingSection />
-      <CalculatorSection />
-      <FAQsSection faqs={defaultFaqs} />
-      <ContactCta />
+      <section id="usecases">
+        <UseCases />
+      </section>
+
+      <section id="pricing">
+        <PricingSection />
+      </section>
+
+      {/* Optional: add an anchor for the calculator if you plan to link to it */}
+      <section id="calculator">
+        <CalculatorSection />
+      </section>
+
+      <section id="faqs">
+        <FAQsSection faqs={defaultFaqs} />
+      </section>
+
+      <section id="contact-cta">
+        <ContactCta />
+      </section>
     </>
   );
 }

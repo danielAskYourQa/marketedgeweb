@@ -1,8 +1,49 @@
 // src/app/market-edge/components/Layout.tsx
+"use client";
+
 import Image from "next/image";
-import { ReactNode } from "react";
-import { StickyCta } from "./StickyCta";
 import Link from "next/link";
+import { ReactNode, MouseEvent, PropsWithChildren } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { StickyCta } from "./StickyCta";
+
+const HOME = "/";
+
+function SectionLink({
+  sectionId,
+  children,
+  className = "",
+}: PropsWithChildren<{ sectionId: string; className?: string }>) {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    // If we're not on the Market Edge homepage, navigate there with the hash
+    if (pathname !== HOME) {
+      router.push(`${HOME}#${sectionId}`);
+      return;
+    }
+
+    // Already on homepage: smooth scroll
+    const el = document.getElementById(sectionId);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  return (
+    <a
+      href={`${HOME}#${sectionId}`}
+      onClick={onClick}
+      className={className}
+      aria-label={
+        typeof children === "string" ? (children as string) : undefined
+      }
+    >
+      {children}
+    </a>
+  );
+}
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
@@ -19,8 +60,12 @@ export function Layout({ children }: { children: ReactNode }) {
         role="banner"
       >
         <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
-          {/* Brand */}
-          <Link href="/" className="flex items-center gap-2">
+          {/* Brand: always go to Market Edge homepage */}
+          <Link
+            href={HOME}
+            className="flex items-center gap-2"
+            aria-label="Go to Market Edge homepage"
+          >
             <Image
               src="/logo-40.png"
               alt="Market Edge logo"
@@ -36,36 +81,40 @@ export function Layout({ children }: { children: ReactNode }) {
             className="hidden md:flex items-center gap-6 text-sm text-neutral-600"
             aria-label="Primary"
           >
-            <a
-              href="#usecases"
+            <SectionLink
+              sectionId="usecases"
               className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
             >
               Use-cases
-            </a>
-            <a
-              href="#pricing"
+            </SectionLink>
+
+            <SectionLink
+              sectionId="pricing"
               className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
             >
               Pricing
-            </a>
-            <a
-              href="#faqs"
+            </SectionLink>
+
+            <SectionLink
+              sectionId="faqs"
               className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
             >
               FAQs
-            </a>
-            <a
+            </SectionLink>
+
+            <Link
               href="/contact"
               className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
             >
               Contact
-            </a>
-            <a
+            </Link>
+
+            <Link
               href="/affiliate"
               className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
             >
               Affiliate
-            </a>
+            </Link>
           </nav>
 
           {/* Actions: Sign In + CTA */}
@@ -78,7 +127,7 @@ export function Layout({ children }: { children: ReactNode }) {
               Sign In
             </a>
 
-            <a
+            <Link
               href="/contact"
               className="relative inline-flex items-center justify-center rounded-2xl px-4 py-2 text-sm font-semibold text-white bg-gradient-to-tr from-fuchsia-600 to-indigo-600 shadow-sm hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 overflow-visible group"
             >
@@ -91,7 +140,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 className="absolute inset-0 rounded-2xl ring-2 ring-fuchsia-500/30 animate-[ping_2.4s_ease-in-out_infinite] z-0"
               />
               <span className="relative z-10">Get in touch</span>
-            </a>
+            </Link>
           </div>
         </div>
       </header>
@@ -108,22 +157,27 @@ export function Layout({ children }: { children: ReactNode }) {
             className="object-cover object-center"
             priority
           />
-          <div className="absolute inset-0 bg-black/30" />{" "}
-          {/* optional overlay */}
+          <div className="absolute inset-0 bg-black/30" />
         </div>
 
         {/* Footer content */}
         <div className="relative mx-auto max-w-7xl px-4 py-10 grid md:grid-cols-4 gap-8 text-sm">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <Image
-                src="/logo-40.png"
-                alt="Market Edge logo"
-                width={32}
-                height={32}
-                className="rounded-2xl bg-white p-1"
-              />
-              <span className="font-semibold">Market Edge</span>
+              <Link
+                href={HOME}
+                className="flex items-center gap-3"
+                aria-label="Go to Market Edge homepage"
+              >
+                <Image
+                  src="/logo-40.png"
+                  alt="Market Edge logo"
+                  width={32}
+                  height={32}
+                  className="rounded-2xl bg-white p-1"
+                />
+                <span className="font-semibold">Market Edge</span>
+              </Link>
             </div>
             <p className="text-fuchsia-50">
               Price monitoring and competition analysis for eCommerce
@@ -139,14 +193,20 @@ export function Layout({ children }: { children: ReactNode }) {
             </ul>
           </div>
 
-          <div className="mx-auto max-w-7xl px-4 pb-10 text-xs text-fuchsia-100 flex flex-wrap gap-4">
-            <span>© {new Date().getFullYear()} AskYourQA</span>
-            <a href="/privacy" className="hover:text-white">
-              Privacy Policy
-            </a>
-            <a href="/terms" className="hover:text-white">
-              Terms of Service
-            </a>
+          <div>
+            <h4 className="font-semibold mb-2">Company</h4>
+            <ul className="space-y-1 text-fuchsia-100">
+              <li>
+                <Link href="/privacy" className="hover:text-white">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white">
+                  Terms of Service
+                </Link>
+              </li>
+            </ul>
           </div>
 
           <div>
