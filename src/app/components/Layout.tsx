@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { ReactNode } from "react";
 import { StickyCta } from "./StickyCta";
+import Link from "next/link";
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
@@ -19,19 +20,16 @@ export function Layout({ children }: { children: ReactNode }) {
       >
         <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
           {/* Brand */}
-          <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-2">
             <Image
               src="/logo-40.png"
               alt="Market Edge logo"
-              width={36}
-              height={36}
-              className="rounded-2xl"
-              priority
+              width={32}
+              height={32}
+              className="rounded-2xl bg-white p-1"
             />
-            <span className="text-lg font-semibold tracking-tight">
-              Market Edge
-            </span>
-          </div>
+            <span className="font-semibold text-lg">Market Edge</span>
+          </Link>
 
           {/* Primary nav */}
           <nav
