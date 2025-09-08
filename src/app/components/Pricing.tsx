@@ -1,55 +1,73 @@
-// src/app/market-edge/components/PricingSection.tsx
+// src/app/components/Pricing.tsx
 "use client";
 import { useMemo, useState } from "react";
 import { BillingToggle } from "./ui/BillingToggle";
 
+const UNIT_PRICE_EUR = 0.10;      // € per URL / month
+const MARKETPLACE_WEIGHT = 1.5;   // 1 marketplace counts as 1.5 sites
+const ANNUAL_DISCOUNT = 0.20;     // 20% off on annual
+
 // 🔗 Put your real Stripe Payment Link URLs here
-const STRIPE_PAYMENT_LINKS: Record<
-  "monthly" | "annual",
-  Record<string, string>
-> = {
+const STRIPE_PAYMENT_LINKS: Record<"monthly" | "annual", Record<string, string>> = {
   monthly: {
-    BASIC: "https://buy.stripe.com/cNifZi0FWgc54w8fdN9fW06", // ← replace
-    "start-up": "https://buy.stripe.com/cNifZi0FWgc54w8fdN9fW06", // ← replace
+    BASIC: "https://buy.stripe.com/cNifZi0FWgc54w8fdN9fW06",        // ← replace
+    "start-up": "https://buy.stripe.com/cNifZi0FWgc54w8fdN9fW06",   // ← replace
   },
   annual: {
     individual: "https://buy.stripe.com/test_individual_annual_XXXX", // ← replace
-    "start-up": "https://buy.stripe.com/test_startup_annual_XXXX", // ← replace
+    "start-up": "https://buy.stripe.com/test_startup_annual_XXXX",    // ← replace
   },
 };
+
+type TierKey = "business" | "BASIC" | "start-up" | "individual" | "enterprise";
+type TierSpec =
+  | { free: true; productsCap: number; competitors: number; marketplaces: number }
+  | { custom: true }
+  | { productsCap: number; competitors: number; marketplaces: number };
+
+const TIER_SPECS: Record<TierKey, TierSpec> = {
+  business:   { free: true, productsCap: 100,  competitors: 3,  marketplaces: 0 },
+  BASIC:      { productsCap: 1000, competitors: 6,  marketplaces: 2 },
+  "start-up": { productsCap: 2000, competitors: 10, marketplaces: 4 },
+  // On annual we show "individual" instead of "BASIC" (same caps)
+  individual: { productsCap: 1000, competitors: 6,  marketplaces: 2 },
+  enterprise: { custom: true },
+};
+
+function calcUrls(products: number, competitors: number, marketplaces: number) {
+  const weightedSites =
+    Math.max(0, competitors) + Math.max(0, marketplaces) * MARKETPLACE_WEIGHT;
+  return Math.max(0, Math.round(products * weightedSites));
+}
+
+function calcPriceEUR(
+  products: number,
+  competitors: number,
+  marketplaces: number,
+  billing: "monthly" | "annual"
+) {
+  const urls = calcUrls(products, competitors, marketplaces);
+  const monthly = urls * UNIT_PRICE_EUR;
+  if (billing === "annual") return Math.round(monthly * 12 * (1 - ANNUAL_DISCOUNT));
+  return Math.round(monthly);
+}
 
 export function PricingSection() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
 
-  const pricing = useMemo(
-    () => ({
-      monthly: [
-        {
-          tier: "business",
-          price: "Free",
-          period: "/ month",
-          features: ["up to 100 products", "3 competitors", "0 marketplaces"],
-          cta: "Get Started Now",
-          highlight: false,
-        },
-        {
-          tier: "BASIC",
-          price: "$150",
-          period: "/ month",
-          features: ["up to 1000 products", "6 competitors", "2 marketplaces"],
-          cta: "Get Started Now",
-          highlight: true,
-        },
-        {
-          tier: "start-up",
-          price: "$250",
-          period: "/ month",
-          features: ["up to 2000 products", "10 competitors", "4 marketplaces"],
-          cta: "Get Started Now",
-          highlight: false,
-        },
-        {
-          tier: "enterprise",
+  const cards = useMemo(() => {
+    const order: TierKey[] =
+      billing === "monthly"
+        ? ["business", "BASIC", "start-up", "enterprise"]
+        : ["business", "individual", "start-up", "enterprise"];
+
+    return order.map((tier) => {
+      const spec = TIER_SPECS[tier];
+
+      // Enterprise → custom quote
+      if ("custom" in spec && spec.custom) {
+        return {
+          tier,
           price: "CUSTOM",
           period: "",
           features: [
@@ -59,56 +77,55 @@ export function PricingSection() {
           ],
           cta: "Contact Us",
           highlight: false,
-        },
-      ],
-      annual: [
-        {
-          tier: "business",
+        };
+      }
+
+      // Free tier
+      if ("free" in spec && spec.free) {
+        return {
+          tier,
           price: "Free",
-          period: "/ year",
-          features: ["up to 100 products", "3 competitors", "0 marketplaces"],
-          cta: "Get Started Now",
-          highlight: false,
-        },
-        {
-          tier: "individual",
-          price: "$1600",
-          period: "/ year",
-          features: ["up to 1000 products", "6 competitors", "2 marketplaces"],
-          cta: "Get Started Now",
-          highlight: false,
-        },
-        {
-          tier: "start-up",
-          price: "$2800",
-          period: "/ year",
-          features: ["up to 2000 products", "10 competitors", "4 marketplaces"],
-          cta: "Get Started Now",
-          highlight: true,
-        },
-        {
-          tier: "enterprise",
-          price: "CUSTOM",
-          period: "",
+          period: billing === "monthly" ? "/ month" : "/ year",
           features: [
-            "Unlimited PRODUCTS",
-            "Unlimited competitors",
-            "Unlimited marketplaces",
+            `up to ${spec.productsCap} products`,
+            `${spec.competitors} competitors`,
+            `${spec.marketplaces} marketplaces`,
           ],
-          cta: "Contact Us",
+          cta: "Get Started Now",
           highlight: false,
-        },
-      ],
-    }),
-    []
-  );
+        };
+      }
+
+      // Paid tiers → compute prices from caps
+      const priceNumber = calcPriceEUR(
+        spec.productsCap,
+        spec.competitors,
+        spec.marketplaces,
+        billing
+      );
+
+      return {
+        tier,
+        price: `€${priceNumber.toLocaleString()}`,
+        period: billing === "monthly" ? "/ month" : "/ year",
+        features: [
+          `up to ${spec.productsCap} products`,
+          `${spec.competitors} competitors`,
+          `${spec.marketplaces} marketplaces`,
+        ],
+        cta: "Get Started Now",
+        highlight:
+          (billing === "monthly" && (tier === "BASIC" || tier === "start-up")) ||
+          (billing === "annual" && (tier === "individual" || tier === "start-up")),
+      };
+    });
+  }, [billing]);
 
   // Decide link per card based on tier + billing
   function getCtaHref(tier: string, mode: "monthly" | "annual") {
     const stripe = STRIPE_PAYMENT_LINKS[mode]?.[tier];
     if (stripe) return stripe; // paid plans → Stripe
-    // free/enterprise → contact for now (adjust later if you add a free signup URL)
-    return tier.toLowerCase() === "enterprise" ? "/contact" : "#contact";
+    return tier.toLowerCase() === "enterprise" ? "/contact" : "#contact"; // free/enterprise
   }
 
   return (
@@ -124,7 +141,7 @@ export function PricingSection() {
       </p>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {pricing[billing].map((p, i) => {
+        {cards.map((p, i) => {
           const href = getCtaHref(p.tier, billing);
           const isStripe = href.startsWith("https://buy.stripe.com");
           return (
@@ -153,7 +170,9 @@ export function PricingSection() {
               </div>
 
               <ul className="mt-6 space-y-2 text-sm text-neutral-700">
-                {p.features.map((f: string, idx: number) => (
+                {[
+                  ...p.features,
+                ].map((f: string, idx: number) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="mt-2 h-1.5 w-1.5 rounded-full bg-fuchsia-600" />
                     <span>{f}</span>
@@ -161,7 +180,6 @@ export function PricingSection() {
                 ))}
               </ul>
 
-              {/* CTA: add data-rewardful only for Stripe links */}
               {isStripe ? (
                 <a
                   href={href}
