@@ -39,8 +39,8 @@ function isPaid(spec: TierSpec): spec is PaidSpec {
 
 const TIER_SPECS: Record<TierKey, TierSpec> = {
   business:   { free: true, productsCap: 100,  competitors: 3,  marketplaces: 0 },
-  BASIC:      { productsCap: 1000, competitors: 6,  marketplaces: 2 },
-  "start-up": { productsCap: 2000, competitors: 10, marketplaces: 4 },
+  BASIC:      { productsCap: 1000, competitors: 5,  marketplaces: 0 },
+  "start-up": { productsCap: 1000, competitors: 5, marketplaces: 3 },
   // On annual we show "individual" instead of "BASIC" (same caps)
   individual: { productsCap: 1000, competitors: 6,  marketplaces: 2 },
   enterprise: { custom: true },
