@@ -20,10 +20,22 @@ const STRIPE_PAYMENT_LINKS: Record<"monthly" | "annual", Record<string, string>>
 };
 
 type TierKey = "business" | "BASIC" | "start-up" | "individual" | "enterprise";
-type TierSpec =
-  | { free: true; productsCap: number; competitors: number; marketplaces: number }
-  | { custom: true }
-  | { productsCap: number; competitors: number; marketplaces: number };
+
+// Split union into concrete shapes + type guards (to satisfy TS)
+type PaidSpec = { productsCap: number; competitors: number; marketplaces: number };
+type FreeSpec = { free: true; productsCap: number; competitors: number; marketplaces: number };
+type CustomSpec = { custom: true };
+type TierSpec = PaidSpec | FreeSpec | CustomSpec;
+
+function isCustom(spec: TierSpec): spec is CustomSpec {
+  return (spec as CustomSpec).custom === true;
+}
+function isFree(spec: TierSpec): spec is FreeSpec {
+  return (spec as FreeSpec).free === true;
+}
+function isPaid(spec: TierSpec): spec is PaidSpec {
+  return !isCustom(spec) && !isFree(spec);
+}
 
 const TIER_SPECS: Record<TierKey, TierSpec> = {
   business:   { free: true, productsCap: 100,  competitors: 3,  marketplaces: 0 },
@@ -64,8 +76,7 @@ export function PricingSection() {
     return order.map((tier) => {
       const spec = TIER_SPECS[tier];
 
-      // Enterprise → custom quote
-      if ("custom" in spec && spec.custom) {
+      if (isCustom(spec)) {
         return {
           tier,
           price: "CUSTOM",
@@ -80,8 +91,7 @@ export function PricingSection() {
         };
       }
 
-      // Free tier
-      if ("free" in spec && spec.free) {
+      if (isFree(spec)) {
         return {
           tier,
           price: "Free",
@@ -96,7 +106,7 @@ export function PricingSection() {
         };
       }
 
-      // Paid tiers → compute prices from caps
+      // Paid tiers
       const priceNumber = calcPriceEUR(
         spec.productsCap,
         spec.competitors,
@@ -121,7 +131,6 @@ export function PricingSection() {
     });
   }, [billing]);
 
-  // Decide link per card based on tier + billing
   function getCtaHref(tier: string, mode: "monthly" | "annual") {
     const stripe = STRIPE_PAYMENT_LINKS[mode]?.[tier];
     if (stripe) return stripe; // paid plans → Stripe
@@ -170,9 +179,7 @@ export function PricingSection() {
               </div>
 
               <ul className="mt-6 space-y-2 text-sm text-neutral-700">
-                {[
-                  ...p.features,
-                ].map((f: string, idx: number) => (
+                {p.features.map((f: string, idx: number) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="mt-2 h-1.5 w-1.5 rounded-full bg-fuchsia-600" />
                     <span>{f}</span>
