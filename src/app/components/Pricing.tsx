@@ -10,8 +10,8 @@ const ANNUAL_DISCOUNT = 0.20;     // 20% off on annual
 // 🔗 Put your real Stripe Payment Link URLs here
 const STRIPE_PAYMENT_LINKS: Record<"monthly" | "annual", Record<string, string>> = {
   monthly: {
-    BASIC: "https://buy.stripe.com/cNifZi0FWgc54w8fdN9fW06",        // ← replace
-    "start-up": "https://buy.stripe.com/cNifZi0FWgc54w8fdN9fW06",   // ← replace
+    BASIC: "https://buy.stripe.com/00w7sM3S86Bv1jW0iT9fW07",        // ← replace
+    "start-up": "https://buy.stripe.com/bJe6oI1K04tnbYA6Hh9fW08",   // ← replace
   },
   annual: {
     individual: "https://buy.stripe.com/test_individual_annual_XXXX", // ← replace
