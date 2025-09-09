@@ -3,27 +3,39 @@
 import { useMemo, useState } from "react";
 import { BillingToggle } from "./ui/BillingToggle";
 
-const UNIT_PRICE_EUR = 0.10;      // € per URL / month
-const MARKETPLACE_WEIGHT = 1.5;   // 1 marketplace counts as 1.5 sites
-const ANNUAL_DISCOUNT = 0.20;     // 20% off on annual
+const UNIT_PRICE_EUR = 0.1; // € per URL / month
+const MARKETPLACE_WEIGHT = 1.5; // 1 marketplace counts as 1.5 sites
+const ANNUAL_DISCOUNT = 0.2; // 20% off on annual
 
 // 🔗 Put your real Stripe Payment Link URLs here
-const STRIPE_PAYMENT_LINKS: Record<"monthly" | "annual", Record<string, string>> = {
+const STRIPE_PAYMENT_LINKS: Record<
+  "monthly" | "annual",
+  Record<string, string>
+> = {
   monthly: {
-    BASIC: "https://buy.stripe.com/00w7sM3S86Bv1jW0iT9fW07",        // ← replace
-    "start-up": "https://buy.stripe.com/bJe6oI1K04tnbYA6Hh9fW08",   // ← replace
+    BASIC: "https://buy.stripe.com/00w7sM3S86Bv1jW0iT9fW07", // ← replace
+    "start-up": "https://buy.stripe.com/bJe6oI1K04tnbYA6Hh9fW08", // ← replace
   },
   annual: {
     individual: "https://buy.stripe.com/test_individual_annual_XXXX", // ← replace
-    "start-up": "https://buy.stripe.com/test_startup_annual_XXXX",    // ← replace
+    "start-up": "https://buy.stripe.com/test_startup_annual_XXXX", // ← replace
   },
 };
 
 type TierKey = "business" | "BASIC" | "start-up" | "individual" | "enterprise";
 
 // Split union into concrete shapes + type guards (to satisfy TS)
-type PaidSpec = { productsCap: number; competitors: number; marketplaces: number };
-type FreeSpec = { free: true; productsCap: number; competitors: number; marketplaces: number };
+type PaidSpec = {
+  productsCap: number;
+  competitors: number;
+  marketplaces: number;
+};
+type FreeSpec = {
+  free: true;
+  productsCap: number;
+  competitors: number;
+  marketplaces: number;
+};
 type CustomSpec = { custom: true };
 type TierSpec = PaidSpec | FreeSpec | CustomSpec;
 
@@ -38,11 +50,11 @@ function isPaid(spec: TierSpec): spec is PaidSpec {
 }
 
 const TIER_SPECS: Record<TierKey, TierSpec> = {
-  business:   { free: true, productsCap: 100,  competitors: 3,  marketplaces: 0 },
-  BASIC:      { productsCap: 1000, competitors: 5,  marketplaces: 0 },
+  business: { free: true, productsCap: 100, competitors: 3, marketplaces: 0 },
+  BASIC: { productsCap: 1000, competitors: 5, marketplaces: 0 },
   "start-up": { productsCap: 1000, competitors: 5, marketplaces: 3 },
   // On annual we show "individual" instead of "BASIC" (same caps)
-  individual: { productsCap: 1000, competitors: 6,  marketplaces: 2 },
+  individual: { productsCap: 1000, competitors: 6, marketplaces: 2 },
   enterprise: { custom: true },
 };
 
@@ -60,7 +72,8 @@ function calcPriceEUR(
 ) {
   const urls = calcUrls(products, competitors, marketplaces);
   const monthly = urls * UNIT_PRICE_EUR;
-  if (billing === "annual") return Math.round(monthly * 12 * (1 - ANNUAL_DISCOUNT));
+  if (billing === "annual")
+    return Math.round(monthly * 12 * (1 - ANNUAL_DISCOUNT));
   return Math.round(monthly);
 }
 
@@ -125,8 +138,8 @@ export function PricingSection() {
         ],
         cta: "Get Started Now",
         highlight:
-          (billing === "monthly" && (tier === "BASIC" || tier === "start-up")) ||
-          (billing === "annual" && (tier === "individual" || tier === "start-up")),
+          (billing === "monthly" && tier === "start-up") ||
+          (billing === "annual" && tier === "start-up"),
       };
     });
   }, [billing]);
