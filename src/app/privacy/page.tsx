@@ -24,7 +24,7 @@ export default function PrivacyPage() {
         <h2>Who we are</h2>
         <p>
           Ask Your QA SRL, Cluj-Napoca, Romania. Email:{" "}
-          <a href="mailto:office@askyourqa.com">office@askyourqa.com</a> •
+          <a href="mailto:office@marketedgemonitoring.com">office@marketedgemonitoring.com</a> •
           Phone: +40 729 014 617
           {/* Optionally add company ID: CUI / Reg. No. */}
         </p>
@@ -125,7 +125,7 @@ export default function PrivacyPage() {
         </ul>
         <p>
           To exercise rights, contact:{" "}
-          <a href="mailto:office@askyourqa.com">office@askyourqa.com</a>.
+          <a href="mailto:office@marketedgemonitoring.com">office@marketedgemonitoring.com</a>.
         </p>
 
         <h2>Cookies & analytics</h2>
@@ -167,7 +167,7 @@ export default function PrivacyPage() {
 
         <h2>Contact</h2>
         <p>
-          Email <a href="mailto:office@askyourqa.com">office@askyourqa.com</a>{" "}
+          Email <a href="mailto:office@marketedgemonitoring.com">office@marketedgemonitoring.com</a>{" "}
           for any privacy questions.
         </p>
       </section>

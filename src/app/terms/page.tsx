@@ -158,7 +158,7 @@ export default function TermsPage() {
         <h2>Contact</h2>
         <p>
           Ask Your QA SRL • Cluj-Napoca, Romania •{" "}
-          <a href="mailto:office@askyourqa.com">office@askyourqa.com</a> • +40
+          <a href="mailto:office@marketedgemonitoring.com">office@marketedgemonitoring.com</a> • +40
           729 014 617
         </p>
       </section>

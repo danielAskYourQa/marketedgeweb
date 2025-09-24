@@ -58,8 +58,8 @@ export default function ContactPage() {
               <ul className="mt-2 space-y-2 text-neutral-700 text-sm">
                 <li>
                   Email:{" "}
-                  <a className="underline" href="mailto:office@askyourqa.com">
-                    office@askyourqa.com
+                  <a className="underline" href="mailto:office@marketedgemonitoring.com">
+                    office@marketedgemonitoring.com
                   </a>
                 </li>
                 <li>Phone: +40 729 014 617</li>

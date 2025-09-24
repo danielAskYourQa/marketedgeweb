@@ -102,6 +102,13 @@ export function Layout({ children }: { children: ReactNode }) {
               FAQs
             </SectionLink>
 
+             <SectionLink
+              sectionId="reviews"
+              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+            >
+              Reviews
+            </SectionLink>
+
             <Link
               href="/contact"
               className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
@@ -189,7 +196,7 @@ export function Layout({ children }: { children: ReactNode }) {
             <ul className="space-y-1 text-fuchsia-100">
               <li>Cluj-Napoca, Romania</li>
               <li>+40 729 014 617</li>
-              <li>office@askyourqa.com</li>
+              <li>office@marketedgemonitoring.com</li>
             </ul>
           </div>
 
