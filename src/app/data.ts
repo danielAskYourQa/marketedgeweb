@@ -5,7 +5,7 @@ export const trustpilotReviews: Review[] = [
     id: "tp-1",
     name: "Sandor Tarczali",
     rating: 5,
-    text: "Seems a very promising tool in our modern competitive market.",
+    text: "A very promising tool in our modern competitive market.",
     url: "https://www.trustpilot.com/review/marketedgemonitoring.com", // direct link to review
     date: "2025-09-19",
     countryCode: "RO",
