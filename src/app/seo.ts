@@ -4,13 +4,13 @@ export const metadata: Metadata = {
   title: "Market Edge — Competitor Price Monitoring",
   description:
     "Monitor competitor prices and stock across websites and marketplaces. Market Edge gives you real-time visibility to protect margin and win deals.",
-  alternates: { canonical: "https://askyourqa.com/marketedge" },
+  alternates: { canonical: "https://marketedgemonitoring.com/" },
   openGraph: {
     type: "website",
     title: "Market Edge — Competitor Price Monitoring",
     description:
       "Monitor competitor prices and stock across websites and marketplaces in near real time.",
-    url: "https://askyourqa.com/marketedge",
+    url: "https://marketedgemonitoring.com/",
     images: [{ url: "/og-market-edge.png", width: 1200, height: 630 }],
   },
   twitter: {

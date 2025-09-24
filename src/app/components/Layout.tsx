@@ -226,7 +226,7 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 pb-10 text-xs text-fuchsia-100">
-          © {new Date().getFullYear()} AskYourQA
+          © {new Date().getFullYear()} Market Edge
         </div>
       </footer>
 
