@@ -102,7 +102,7 @@ export function Layout({ children }: { children: ReactNode }) {
               FAQs
             </SectionLink>
 
-             <SectionLink
+            <SectionLink
               sectionId="reviews"
               className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
             >
@@ -114,6 +114,13 @@ export function Layout({ children }: { children: ReactNode }) {
               className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
             >
               Contact
+            </Link>
+
+            <Link
+              href="/caseStudies"
+              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+            >
+              Case Studies
             </Link>
 
             <Link

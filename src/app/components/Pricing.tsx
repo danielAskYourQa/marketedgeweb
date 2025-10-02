@@ -22,7 +22,7 @@ const STRIPE_PAYMENT_LINKS: Record<
   },
 };
 
-type TierKey = "business" | "BASIC" | "start-up" | "individual" | "enterprise";
+type TierKey = "Trial" | "BASIC" | "start-up" | "individual" | "enterprise";
 
 // Split union into concrete shapes + type guards (to satisfy TS)
 type PaidSpec = {
@@ -50,7 +50,7 @@ function isPaid(spec: TierSpec): spec is PaidSpec {
 }
 
 const TIER_SPECS: Record<TierKey, TierSpec> = {
-  business: { free: true, productsCap: 100, competitors: 3, marketplaces: 0 },
+  Trial: { free: true, productsCap: 100, competitors: 3, marketplaces: 0 },
   BASIC: { productsCap: 1000, competitors: 5, marketplaces: 0 },
   "start-up": { productsCap: 1000, competitors: 5, marketplaces: 3 },
   // On annual we show "individual" instead of "BASIC" (same caps)
@@ -83,8 +83,8 @@ export function PricingSection() {
   const cards = useMemo(() => {
     const order: TierKey[] =
       billing === "monthly"
-        ? ["business", "BASIC", "start-up", "enterprise"]
-        : ["business", "individual", "start-up", "enterprise"];
+        ? ["Trial", "BASIC", "start-up", "enterprise"]
+        : ["Trial", "individual", "start-up", "enterprise"];
 
     return order.map((tier) => {
       const spec = TIER_SPECS[tier];
