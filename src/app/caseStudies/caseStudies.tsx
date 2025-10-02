@@ -31,8 +31,8 @@ export default function CaseStudiesContent() {
               <Card title="Challenge">
                 <ul className="list-disc space-y-2 pl-5">
                   <li>
-                    Products sold by <strong>&gt;200 resellers</strong> across
-                    Europe.
+                    Products sold by <strong>&gt;12 resellers</strong> across
+                    Romania and Hungary.
                   </li>
                   <li>
                     <strong>30% of resellers</strong> listed items below MAP.
