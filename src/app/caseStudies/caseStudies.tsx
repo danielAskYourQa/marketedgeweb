@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function CaseStudiesContent() {
   return (
     <main className="mx-auto max-w-7xl px-6 py-20">
@@ -62,7 +64,8 @@ export default function CaseStudiesContent() {
           <aside className="md:w-1/3">
             <Quote>
               “We finally gained control over our price positioning across
-              Romania && Hungary. Compliance calls dropped and margins recovered.”
+              Romania && Hungary. Compliance calls dropped and margins
+              recovered.”
             </Quote>
             <div className="mt-6 flex flex-wrap gap-2">
               <Badge>MAP compliance</Badge>
@@ -78,7 +81,7 @@ export default function CaseStudiesContent() {
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div className="md:w-2/3">
             <h2 className="text-3xl font-bold text-gray-900">
-              Case Study Reseller –  SKF Bearings Distributor
+              Case Study Reseller – SKF Bearings Distributor
             </h2>
             <p className="mt-2 text-sm text-gray-500">
               Client: Online Bearings retailer with +70000 SKUs
@@ -135,18 +138,18 @@ export default function CaseStudiesContent() {
             </p>
           </div>
           <div className="flex gap-4">
-            <a
+            <Link
               href="/contact"
               className="rounded-xl bg-white px-6 py-3 font-semibold text-gray-900 shadow-md transition hover:scale-105 hover:shadow-lg"
             >
               Book a demo
-            </a>
-            <a
+            </Link>
+            <Link
               href="/#pricing"
               className="rounded-xl border border-white/40 px-6 py-3 font-semibold text-white/90 transition hover:bg-white/10 hover:scale-105"
             >
               See pricing
-            </a>
+            </Link>
           </div>
         </div>
       </section>
