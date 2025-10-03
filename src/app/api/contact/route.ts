@@ -17,11 +17,11 @@ type FormState = {
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 587,
-  secure: true,
+  port: 587,          // Gmail STARTTLS port
+  secure: false,      // must be false for port 587
   auth: {
-    user: process.env.SMTP_USER, // your gmail
-    pass: process.env.SMTP_PASS, // app password
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
 });
 
@@ -29,12 +29,10 @@ export async function POST(req: NextRequest) {
   try {
     const body = (await req.json()) as FormState;
 
-    // Honeypot check
     if (body.botfield && body.botfield.trim().length > 0) {
       return NextResponse.json({ ok: true });
     }
 
-    // Validation
     const validEmail = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
     if (
       !body.name ||
@@ -81,6 +79,9 @@ UA:   ${req.headers.get("user-agent") || "n/a"}
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("Contact form error:", err);
-    return NextResponse.json({ error: "Failed to send email." }, { status: 500 });
+    return NextResponse.json(
+      { error: (err as Error).message || "Failed to send email." },
+      { status: 500 }
+    );
   }
 }
