@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle2, AlertTriangle, Loader2 } from "lucide-react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 type FormState = {
   name: string;
@@ -12,6 +13,7 @@ type FormState = {
   message: string;
   consent: boolean;
   botfield: string; // honeypot
+  recaptcha: string; // ✅ new
 };
 
 export default function ContactForm() {
@@ -24,6 +26,7 @@ export default function ContactForm() {
     message: "",
     consent: false,
     botfield: "",
+    recaptcha: "",
   });
   const [submitting, setSubmitting] = useState(false);
   const [ok, setOk] = useState<string | null>(null);
@@ -48,7 +51,8 @@ export default function ContactForm() {
     form.name.trim().length >= 2 &&
     validEmail(form.email) &&
     form.message.trim().length >= 10 &&
-    form.consent;
+    form.consent &&
+    form.recaptcha.length > 0; // ✅ require captcha
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,12 +70,11 @@ export default function ContactForm() {
         body: JSON.stringify(form),
       });
 
-      // Try to parse JSON safely; fall back to empty object
       let data: unknown = {};
       try {
         data = await res.json();
       } catch {
-        // ignore JSON parse errors
+        // ignore
       }
 
       if (!res.ok) {
@@ -95,6 +98,7 @@ export default function ContactForm() {
         message: "",
         consent: false,
         botfield: "",
+        recaptcha: "",
       });
     } catch (e: unknown) {
       const message =
@@ -225,6 +229,16 @@ export default function ContactForm() {
           <span>{err}</span>
         </div>
       )}
+
+      {/* ✅ reCAPTCHA widget here */}
+      <div className="mt-4">
+        <ReCAPTCHA
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+          onChange={(token) =>
+            setForm((f) => ({ ...f, recaptcha: token || "" }))
+          }
+        />
+      </div>
 
       <div className="mt-6">
         <button
