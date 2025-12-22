@@ -45,7 +45,10 @@ export async function POST(req: Request) {
 
   if (!owner || !repo || !ghToken) {
     return NextResponse.json(
-      { error: "Missing GitHub env vars (GITHUB_OWNER, GITHUB_REPO, GITHUB_TOKEN)" },
+      {
+        error:
+          "Missing GitHub env vars (GITHUB_OWNER, GITHUB_REPO, GITHUB_TOKEN)",
+      },
       { status: 500 }
     );
   }
@@ -53,12 +56,17 @@ export async function POST(req: Request) {
   const results: Array<{ slug: string; ok: boolean; error?: string }> = [];
 
   for (const a of articles) {
+    const slug = String(a?.slug ?? "").trim();
+
     try {
-      const slug = String(a.slug || "").trim();
       if (!slug) throw new Error("Missing article slug");
 
       const title = String(a.title || slug);
-      const description = (a.meta_description || a.description || "").toString();
+      const description = (
+        a.meta_description ||
+        a.description ||
+        ""
+      ).toString();
       const date = (a.created_at || new Date().toISOString()).toString();
       const tags = Array.isArray(a.tags) ? (a.tags as string[]) : [];
 
@@ -86,8 +94,9 @@ export async function POST(req: Request) {
       });
 
       results.push({ slug, ok: true });
-    } catch (e: any) {
-      results.push({ slug: a?.slug ?? "unknown", ok: false, error: e?.message || String(e) });
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : String(e);
+      results.push({ slug: slug || "unknown", ok: false, error: message });
     }
   }
 
@@ -131,13 +140,16 @@ async function upsertFileToGitHub(opts: {
   const apiBase = `https://api.github.com/repos/${opts.owner}/${opts.repo}/contents/${opts.path}`;
 
   // Get current sha if file exists (needed to update)
-  const getRes = await fetch(`${apiBase}?ref=${encodeURIComponent(opts.branch)}`, {
-    headers: {
-      Authorization: `Bearer ${opts.token}`,
-      Accept: "application/vnd.github+json",
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-  });
+  const getRes = await fetch(
+    `${apiBase}?ref=${encodeURIComponent(opts.branch)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${opts.token}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    }
+  );
 
   let sha: string | undefined;
   if (getRes.ok) {
