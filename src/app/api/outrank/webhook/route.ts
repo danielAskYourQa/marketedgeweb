@@ -76,7 +76,7 @@ export async function POST(req: Request) {
         date,
         tags,
         category: tags?.[0] ?? "Guides",
-        body: sanitizeMarkdown((a.content_markdown || a.content || "").toString()),,
+        body: sanitizeMarkdown((a.content_markdown || a.content || "").toString()),
         cover: a.image_url ? String(a.image_url) : "",
       });
 
