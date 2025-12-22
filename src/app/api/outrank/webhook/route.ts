@@ -76,7 +76,7 @@ export async function POST(req: Request) {
         date,
         tags,
         category: tags?.[0] ?? "Guides",
-        body: (a.content_markdown || a.content || "").toString(),
+        body: sanitizeMarkdown((a.content_markdown || a.content || "").toString()),,
         cover: a.image_url ? String(a.image_url) : "",
       });
 
@@ -180,3 +180,9 @@ async function upsertFileToGitHub(opts: {
 
   return putRes.json();
 }
+function sanitizeMarkdown(input: string) {
+  // Remove inline style attributes that can break MDX/React during prerender
+  // e.g. <span style="color:red"> -> <span>
+  return input.replace(/\sstyle\s*=\s*(["']).*?\1/gi, "");
+}
+
