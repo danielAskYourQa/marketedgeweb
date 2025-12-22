@@ -4,6 +4,12 @@ import matter from "gray-matter";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
+function sanitizeMarkdown(input: string) {
+  // Outrank sometimes includes inline style="..." which can break MDX/React prerender.
+  return input.replace(/\sstyle\s*=\s*(["']).*?\1/gi, "");
+}
+
+
 export type BlogPostMeta = {
   slug: string;
   title: string;
@@ -71,6 +77,6 @@ export function getPostBySlug(slug: string): {
       tags: data.tags ?? [],
       featured: data.featured ?? false,
     },
-    content,
+    content: sanitizeMarkdown(content),
   };
 }
