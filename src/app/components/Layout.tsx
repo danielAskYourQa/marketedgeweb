@@ -129,6 +129,13 @@ export function Layout({ children }: { children: ReactNode }) {
             >
               Affiliate
             </Link>
+
+            <Link
+              href="/blog"
+              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+            >
+              Blog
+            </Link>
           </nav>
 
           {/* Actions: Sign In + CTA */}
