@@ -21,7 +21,7 @@ export function ContactCta() {
           </a>
           <a
             className="rounded-2xl px-5 py-3 bg-gradient-to-tr from-fuchsia-600 to-indigo-600 text-white font-medium hover:opacity-90"
-            href="https://auth.webshopqa.com/login?client_id=719452pnlcub3boop4mhap7bop&response_type=token&redirect_uri=https://webshopqa.com"
+            href="https://marketedgemonitoring.com/contact"
           >
             Start free trial
           </a>
