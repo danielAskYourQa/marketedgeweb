@@ -1,107 +1,47 @@
-import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
 
-type FormState = {
-  name: string;
-  email: string;
-  company?: string;
-  phone?: string;
-  reason?: "demo" | "question" | "support";
-  message: string;
-  consent: boolean;
-  botfield?: string;
-  recaptcha?: string;
-};
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// ✅ function to verify captcha with Google
-async function verifyCaptcha(token: string) {
-  const secret = process.env.RECAPTCHA_SECRET_KEY;
-  const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `secret=${secret}&response=${token}`,
-  });
-  return res.json();
-}
-
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // must be false for port 587
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
-
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const body = (await req.json()) as FormState;
+    const form = await req.json();
 
-    // ✅ Honeypot check
-    if (body.botfield && body.botfield.trim().length > 0) {
+    // Honeypot → silently accept
+    if (form.botfield) {
       return NextResponse.json({ ok: true });
     }
 
-    // ✅ Captcha check
-    if (!body.recaptcha) {
-      return NextResponse.json({ error: "Captcha missing" }, { status: 400 });
-    }
-    const captcha = await verifyCaptcha(body.recaptcha);
-    if (!captcha.success) {
-      return NextResponse.json({ error: "Captcha failed" }, { status: 400 });
-    }
+    const from = process.env.CONTACT_FROM_EMAIL!;
+    const to = process.env.CONTACT_TO_EMAIL!;
 
-    // ✅ Basic validation
-    const validEmail = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
-    if (
-      !body.name ||
-      !body.email ||
-      !body.message ||
-      !body.consent ||
-      !validEmail(body.email)
-    ) {
-      return NextResponse.json(
-        { error: "Missing or invalid required fields." },
-        { status: 400 }
-      );
-    }
+    const { error } = await resend.emails.send({
+      from,
+      to,
+      replyTo: form.email,
+      subject: `Contact (${form.reason}) — ${form.name}`,
+      text: `
+Name: ${form.name}
+Email: ${form.email}
+Company: ${form.company}
+Phone: ${form.phone}
+Reason: ${form.reason}
 
-    const subject = `Market Edge — ${body.reason ?? "message"} from ${body.name}${
-      body.company ? " @ " + body.company : ""
-    }`;
-
-    const text = `New contact form submission:
-
-Name:   ${body.name}
-Email:  ${body.email}
-Company:${body.company || "-"}
-Phone:  ${body.phone || "-"}
-Reason: ${body.reason || "-"}
-Consent:${body.consent ? "yes" : "no"}
-
-Message:
-${body.message}
-
-— meta —
-When: ${new Date().toISOString()}
-UA:   ${req.headers.get("user-agent") || "n/a"}
-`;
-
-    await transporter.sendMail({
-      from: process.env.CONTACT_FROM || process.env.SMTP_USER,
-      to: process.env.CONTACT_TO || process.env.SMTP_USER,
-      replyTo: body.email,
-      subject,
-      text,
+${form.message}
+      `.trim(),
     });
 
+    if (error) {
+      return NextResponse.json({ error: String(error) }, { status: 500 });
+    }
+
     return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("Contact form error:", err);
-    return NextResponse.json({ error: "Failed to send email." }, { status: 500 });
+  } catch (e: any) {
+    return NextResponse.json(
+      { error: e?.message ?? "Server error" },
+      { status: 500 }
+    );
   }
 }
