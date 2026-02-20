@@ -3,88 +3,77 @@
 import { useMemo, useState } from "react";
 import { BillingToggle } from "./ui/BillingToggle";
 
-const UNIT_PRICE_EUR = 0.1; // € per URL / month
-const MARKETPLACE_WEIGHT = 1.5; // 1 marketplace counts as 1.5 sites
 const ANNUAL_DISCOUNT = 0.2; // 20% off on annual
 
-// 🔗 Put your real Stripe Payment Link URLs here
-const STRIPE_PAYMENT_LINKS: Record<
-  "monthly" | "annual",
-  Record<string, string>
-> = {
-  monthly: {
-    BASIC: "https://buy.stripe.com/00w7sM3S86Bv1jW0iT9fW07", // ← replace
-    "start-up": "https://buy.stripe.com/bJe6oI1K04tnbYA6Hh9fW08", // ← replace
-  },
-  annual: {
-    individual: "https://buy.stripe.com/test_individual_annual_XXXX", // ← replace
-    "start-up": "https://buy.stripe.com/test_startup_annual_XXXX", // ← replace
-  },
+type TierKey = "STARTER-LITE" | "STARTER" | "GROWTH" | "PRO" | "ENTERPRISE";
+
+type FixedSpec = {
+  productsCap: number;
+  competitorsIncluded: number;
+  monthlyPriceEUR: number;
+  highlight?: boolean;
 };
 
-type TierKey = "Trial" | "BASIC" | "start-up" | "individual" | "enterprise";
-
-// Split union into concrete shapes + type guards (to satisfy TS)
-type PaidSpec = {
-  productsCap: number;
-  competitors: number;
-  marketplaces: number;
-};
-type FreeSpec = {
-  free: true;
-  productsCap: number;
-  competitors: number;
-  marketplaces: number;
-};
-type CustomSpec = { custom: true };
-type TierSpec = PaidSpec | FreeSpec | CustomSpec;
+type CustomSpec = { custom: true; highlight?: boolean };
+type TierSpec = FixedSpec | CustomSpec;
 
 function isCustom(spec: TierSpec): spec is CustomSpec {
   return (spec as CustomSpec).custom === true;
 }
-function isFree(spec: TierSpec): spec is FreeSpec {
-  return (spec as FreeSpec).free === true;
-}
-function isPaid(spec: TierSpec): spec is PaidSpec {
-  return !isCustom(spec) && !isFree(spec);
-}
 
 const TIER_SPECS: Record<TierKey, TierSpec> = {
-  Trial: { free: true, productsCap: 100, competitors: 3, marketplaces: 0 },
-  BASIC: { productsCap: 1000, competitors: 5, marketplaces: 0 },
-  "start-up": { productsCap: 1000, competitors: 5, marketplaces: 3 },
-  // On annual we show "individual" instead of "BASIC" (same caps)
-  individual: { productsCap: 1000, competitors: 6, marketplaces: 2 },
-  enterprise: { custom: true },
+  "STARTER-LITE": {
+    productsCap: 500,
+    competitorsIncluded: 3,
+    monthlyPriceEUR: 249,
+  },
+  STARTER: {
+    productsCap: 1000,
+    competitorsIncluded: 3,
+    monthlyPriceEUR: 349,
+    highlight: true,
+  },
+  GROWTH: {
+    productsCap: 3000,
+    competitorsIncluded: 3,
+    monthlyPriceEUR: 549,
+  },
+  PRO: {
+    productsCap: 10000,
+    competitorsIncluded: 3,
+    monthlyPriceEUR: 999,
+  },
+  ENTERPRISE: { custom: true },
 };
 
-function calcUrls(products: number, competitors: number, marketplaces: number) {
-  const weightedSites =
-    Math.max(0, competitors) + Math.max(0, marketplaces) * MARKETPLACE_WEIGHT;
-  return Math.max(0, Math.round(products * weightedSites));
+const ADDON_COMPETITOR_EUR = 79;
+const ADDON_1K_PRODUCTS_EUR = 90;
+
+function formatEUR(amount: number) {
+  return `€${amount.toLocaleString()}`;
 }
 
-function calcPriceEUR(
-  products: number,
-  competitors: number,
-  marketplaces: number,
+function calcDisplayedPrice(
+  monthlyPriceEUR: number,
   billing: "monthly" | "annual"
 ) {
-  const urls = calcUrls(products, competitors, marketplaces);
-  const monthly = urls * UNIT_PRICE_EUR;
-  if (billing === "annual")
-    return Math.round(monthly * 12 * (1 - ANNUAL_DISCOUNT));
-  return Math.round(monthly);
+  if (billing === "annual") {
+    return Math.round(monthlyPriceEUR * 12 * (1 - ANNUAL_DISCOUNT));
+  }
+  return monthlyPriceEUR;
 }
 
 export function PricingSection() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
 
   const cards = useMemo(() => {
-    const order: TierKey[] =
-      billing === "monthly"
-        ? ["Trial", "BASIC", "start-up", "enterprise"]
-        : ["Trial", "individual", "start-up", "enterprise"];
+    const order: TierKey[] = [
+      "STARTER-LITE",
+      "STARTER",
+      "GROWTH",
+      "PRO",
+      "ENTERPRISE",
+    ];
 
     return order.map((tier) => {
       const spec = TIER_SPECS[tier];
@@ -92,138 +81,109 @@ export function PricingSection() {
       if (isCustom(spec)) {
         return {
           tier,
-          price: "CUSTOM",
+          title: "Enterprise",
+          price: "Custom",
           period: "",
           features: [
-            "Unlimited PRODUCTS",
-            "Unlimited competitors",
-            "Unlimited marketplaces",
+            "10,000+ products",
+            "3 competitors included",
+            "Custom SLA & onboarding",
+            "Custom integrations",
           ],
-          cta: "Contact Us",
           highlight: false,
         };
       }
 
-      if (isFree(spec)) {
-        return {
-          tier,
-          price: "Free",
-          period: billing === "monthly" ? "/ month" : "/ year",
-          features: [
-            `up to ${spec.productsCap} products`,
-            `${spec.competitors} competitors`,
-            `${spec.marketplaces} marketplaces`,
-          ],
-          cta: "Get Started Now",
-          highlight: false,
-        };
-      }
-
-      // Paid tiers
-      const priceNumber = calcPriceEUR(
-        spec.productsCap,
-        spec.competitors,
-        spec.marketplaces,
+      const priceNumber = calcDisplayedPrice(
+        spec.monthlyPriceEUR,
         billing
       );
 
+      const planName =
+        tier === "STARTER-LITE"
+          ? "Starter Lite"
+          : tier === "STARTER"
+          ? "Starter"
+          : tier === "GROWTH"
+          ? "Growth"
+          : "Pro";
+
       return {
         tier,
-        price: `€${priceNumber.toLocaleString()}`,
+        title: planName,
+        price: formatEUR(priceNumber),
         period: billing === "monthly" ? "/ month" : "/ year",
         features: [
-          `up to ${spec.productsCap} products`,
-          `${spec.competitors} competitors`,
-          `${spec.marketplaces} marketplaces`,
+          `Up to ${spec.productsCap.toLocaleString()} products`,
+          `${spec.competitorsIncluded} competitors included`,
+          `Add competitor: ${formatEUR(ADDON_COMPETITOR_EUR)}/month`,
+          `Add 1,000 products: ${formatEUR(ADDON_1K_PRODUCTS_EUR)}/month`,
         ],
-        cta: "Get Started Now",
-        highlight:
-          (billing === "monthly" && tier === "start-up") ||
-          (billing === "annual" && tier === "start-up"),
+        highlight: !!spec.highlight,
       };
     });
   }, [billing]);
-
-  function getCtaHref(tier: string, mode: "monthly" | "annual") {
-    const stripe = STRIPE_PAYMENT_LINKS[mode]?.[tier];
-    if (stripe) return stripe; // paid plans → Stripe
-    return tier.toLowerCase() === "enterprise" ? "/contact" : "#contact"; // free/enterprise
-  }
 
   return (
     <section id="pricing" className="mx-auto max-w-7xl px-4 py-16">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-3xl md:text-4xl font-bold">
-          Kick-start with an affordable tracking system
+          Pricing built for SKU-level competitor monitoring
         </h2>
         <BillingToggle value={billing} onChange={setBilling} />
       </div>
+
       <p className="text-neutral-700 mb-10">
-        Choose monthly or annual. Cancel anytime.
+        Talk to us to activate your plan. Cancel anytime.
       </p>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {cards.map((p, i) => {
-          const href = getCtaHref(p.tier, billing);
-          const isStripe = href.startsWith("https://buy.stripe.com");
-          return (
-            <div
-              key={i}
-              className={`rounded-2xl border ${
-                p.highlight
-                  ? "border-fuchsia-400 ring-1 ring-fuchsia-200"
-                  : "border-neutral-200"
-              } bg-white p-6 flex flex-col shadow-sm hover:shadow-md transition hover:translate-y-[-2px]`}
-            >
-              <div className="flex items-start justify-between">
-                <h3 className="uppercase tracking-wide text-sm text-neutral-600">
-                  {p.tier}
-                </h3>
-                {p.highlight && (
-                  <span className="text-xs px-2 py-1 rounded-full bg-fuchsia-50 text-fuchsia-700">
-                    Most Popular
-                  </span>
-                )}
-              </div>
-
-              <div className="mt-4">
-                <div className="text-4xl font-extrabold">{p.price}</div>
-                <div className="text-neutral-500">{p.period}</div>
-              </div>
-
-              <ul className="mt-6 space-y-2 text-sm text-neutral-700">
-                {p.features.map((f: string, idx: number) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-fuchsia-600" />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {isStripe ? (
-                <a
-                  href={href}
-                  data-rewardful
-                  className="mt-6 rounded-xl bg-neutral-900 text-white text-center py-2 font-medium hover:translate-y-[-1px] transition"
-                >
-                  {p.cta}
-                </a>
-              ) : (
-                <a
-                  href={href}
-                  className="mt-6 rounded-xl bg-neutral-900 text-white text-center py-2 font-medium hover:translate-y-[-1px] transition"
-                >
-                  {p.cta}
-                </a>
+      <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+        {cards.map((p, i) => (
+          <div
+            key={i}
+            className={`rounded-2xl border ${
+              p.highlight
+                ? "border-fuchsia-400 ring-1 ring-fuchsia-200"
+                : "border-neutral-200"
+            } bg-white p-6 flex flex-col shadow-sm hover:shadow-md transition hover:translate-y-[-2px]`}
+          >
+            <div className="flex items-start justify-between">
+              <h3 className="uppercase tracking-wide text-sm text-neutral-600">
+                {p.title}
+              </h3>
+              {p.highlight && (
+                <span className="text-xs px-2 py-1 rounded-full bg-fuchsia-50 text-fuchsia-700">
+                  Most Popular
+                </span>
               )}
             </div>
-          );
-        })}
+
+            <div className="mt-4">
+              <div className="text-4xl font-extrabold">{p.price}</div>
+              <div className="text-neutral-500">{p.period}</div>
+            </div>
+
+            <ul className="mt-6 space-y-2 text-sm text-neutral-700">
+              {p.features.map((f: string, idx: number) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-fuchsia-600" />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href="/contact"
+              className="mt-6 rounded-xl bg-neutral-900 text-white text-center py-2 font-medium hover:translate-y-[-1px] transition"
+            >
+              Contact Us
+            </a>
+          </div>
+        ))}
       </div>
 
       <p className="mt-6 text-sm text-neutral-600">
-        Important: for subscriptions bigger than 10,000 products we offer large
-        discounts.
+        For subscriptions bigger than 10,000 products we offer large discounts.
       </p>
     </section>
   );
