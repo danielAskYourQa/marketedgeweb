@@ -28,8 +28,8 @@ function estimatePriceEUR(
 
 export function CalculatorSection() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
-  const [products, setProducts] = useState(1000);
-  const [competitors, setCompetitors] = useState(3);
+  const [products, setProducts] = useState(100);
+  const [competitors, setCompetitors] = useState(1);
   const [marketplaces, setMarketplaces] = useState(0);
 
   const estimate = useMemo(

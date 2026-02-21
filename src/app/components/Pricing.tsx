@@ -86,7 +86,6 @@ export function PricingSection() {
           period: "",
           features: [
             "10,000+ products",
-            "3 competitors included",
             "Custom SLA & onboarding",
             "Custom integrations",
           ],
@@ -94,10 +93,7 @@ export function PricingSection() {
         };
       }
 
-      const priceNumber = calcDisplayedPrice(
-        spec.monthlyPriceEUR,
-        billing
-      );
+      const priceNumber = calcDisplayedPrice(spec.monthlyPriceEUR, billing);
 
       const planName =
         tier === "STARTER-LITE"
@@ -163,13 +159,45 @@ export function PricingSection() {
               <div className="text-neutral-500">{p.period}</div>
             </div>
 
-            <ul className="mt-6 space-y-2 text-sm text-neutral-700">
-              {p.features.map((f: string, idx: number) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-fuchsia-600" />
-                  <span>{f}</span>
-                </li>
-              ))}
+            <ul className="mt-6 space-y-2 text-sm">
+              {p.features.map((f: string, idx: number) => {
+                const isCompetitorAddon = f.includes("Add competitor");
+
+                if (isCompetitorAddon) {
+                  return (
+                    <li
+                      key={idx}
+                      className="
+                        rounded-xl
+                        bg-gradient-to-r
+                        from-fuchsia-600
+                        via-purple-600
+                        to-indigo-600
+                        text-white
+                        px-4
+                        py-2.5
+                        font-semibold
+                        shadow-md
+                        hover:shadow-lg
+                        ring-1 ring-fuchsia-400/40
+                        transition
+                      "
+                    >
+                      {f}
+                    </li>
+                  );
+                }
+
+                return (
+                  <li
+                    key={idx}
+                    className="flex items-start gap-2 text-neutral-700"
+                  >
+                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-fuchsia-600" />
+                    <span>{f}</span>
+                  </li>
+                );
+              })}
             </ul>
 
             <a
