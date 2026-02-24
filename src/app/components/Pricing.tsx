@@ -53,27 +53,31 @@ function formatEUR(amount: number) {
   return `€${amount.toLocaleString()}`;
 }
 
-function calcDisplayedPrice(
-  monthlyPriceEUR: number,
-  billing: "monthly" | "annual"
-) {
+/**
+ * Annual pricing = (monthlyTotal * 12) * (1 - discount)
+ * Monthly pricing = monthlyTotal
+ */
+function calcDisplayedPrice(monthlyTotalEUR: number, billing: "monthly" | "annual") {
   if (billing === "annual") {
-    return Math.round(monthlyPriceEUR * 12 * (1 - ANNUAL_DISCOUNT));
+    return Math.round(monthlyTotalEUR * 12 * (1 - ANNUAL_DISCOUNT));
   }
-  return monthlyPriceEUR;
+  return Math.round(monthlyTotalEUR);
 }
 
 export function PricingSection() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
 
+  // per-tier extra competitors (Enterprise ignored)
+  const [extraCompetitors, setExtraCompetitors] = useState<Record<TierKey, number>>({
+    "STARTER-LITE": 0,
+    STARTER: 0,
+    GROWTH: 0,
+    PRO: 0,
+    ENTERPRISE: 0,
+  });
+
   const cards = useMemo(() => {
-    const order: TierKey[] = [
-      "STARTER-LITE",
-      "STARTER",
-      "GROWTH",
-      "PRO",
-      "ENTERPRISE",
-    ];
+    const order: TierKey[] = ["STARTER-LITE", "STARTER", "GROWTH", "PRO", "ENTERPRISE"];
 
     return order.map((tier) => {
       const spec = TIER_SPECS[tier];
@@ -84,16 +88,11 @@ export function PricingSection() {
           title: "Enterprise",
           price: "Custom",
           period: "",
-          features: [
-            "10,000+ products",
-            "Custom SLA & onboarding",
-            "Custom integrations",
-          ],
+          features: ["10,000+ products", "Custom SLA & onboarding", "Custom integrations"],
           highlight: false,
+          isCustom: true as const,
         };
       }
-
-      const priceNumber = calcDisplayedPrice(spec.monthlyPriceEUR, billing);
 
       const planName =
         tier === "STARTER-LITE"
@@ -104,21 +103,30 @@ export function PricingSection() {
           ? "Growth"
           : "Pro";
 
+      const extra = Math.max(0, extraCompetitors[tier] ?? 0);
+      const monthlyTotal = spec.monthlyPriceEUR + extra * ADDON_COMPETITOR_EUR;
+      const displayed = calcDisplayedPrice(monthlyTotal, billing);
+
       return {
         tier,
         title: planName,
-        price: formatEUR(priceNumber),
+        monthlyTotal,
+        price: formatEUR(displayed),
         period: billing === "monthly" ? "/ month" : "/ year",
         features: [
           `Up to ${spec.productsCap.toLocaleString()} products`,
           `${spec.competitorsIncluded} competitors included`,
+          `Extra competitors: +${extra} (${formatEUR(extra * ADDON_COMPETITOR_EUR)}/month)`,
           `Add competitor: ${formatEUR(ADDON_COMPETITOR_EUR)}/month`,
           `Add 1,000 products: ${formatEUR(ADDON_1K_PRODUCTS_EUR)}/month`,
         ],
         highlight: !!spec.highlight,
+        competitorsIncluded: spec.competitorsIncluded,
+        extraCompetitors: extra,
+        isCustom: false as const,
       };
     });
-  }, [billing]);
+  }, [billing, extraCompetitors]);
 
   return (
     <section id="pricing" className="mx-auto max-w-7xl px-4 py-16">
@@ -138,15 +146,11 @@ export function PricingSection() {
           <div
             key={i}
             className={`rounded-2xl border ${
-              p.highlight
-                ? "border-fuchsia-400 ring-1 ring-fuchsia-200"
-                : "border-neutral-200"
+              p.highlight ? "border-fuchsia-400 ring-1 ring-fuchsia-200" : "border-neutral-200"
             } bg-white p-6 flex flex-col shadow-sm hover:shadow-md transition hover:translate-y-[-2px]`}
           >
             <div className="flex items-start justify-between">
-              <h3 className="uppercase tracking-wide text-sm text-neutral-600">
-                {p.title}
-              </h3>
+              <h3 className="uppercase tracking-wide text-sm text-neutral-600">{p.title}</h3>
               {p.highlight && (
                 <span className="text-xs px-2 py-1 rounded-full bg-fuchsia-50 text-fuchsia-700">
                   Most Popular
@@ -157,7 +161,53 @@ export function PricingSection() {
             <div className="mt-4">
               <div className="text-4xl font-extrabold">{p.price}</div>
               <div className="text-neutral-500">{p.period}</div>
+
+              {/* Optional: show effective monthly when billing=annual */}
+              {!p.isCustom && billing === "annual" && (
+                <div className="mt-2 text-xs text-neutral-500">
+                  Billed annually (20% off). Equivalent:{" "}
+                  {formatEUR(Math.round(p.monthlyTotal * (1 - ANNUAL_DISCOUNT)))}/month
+                </div>
+              )}
             </div>
+
+            {/* Slider */}
+            {!p.isCustom && (
+              <div className="mt-5 rounded-xl border border-neutral-200 p-3">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-neutral-700 font-medium">Extra competitors</span>
+                  <span className="text-neutral-900 font-semibold">
+                    {p.extraCompetitors}
+                  </span>
+                </div>
+
+                <input
+                  type="range"
+                  min={0}
+                  max={20}
+                  step={1}
+                  value={p.extraCompetitors}
+                  onChange={(e) => {
+                    const next = Number(e.target.value);
+                    setExtraCompetitors((prev) => ({ ...prev, [p.tier]: next }));
+                  }}
+                  className="mt-3 w-full accent-fuchsia-600"
+                  aria-label={`Extra competitors for ${p.title}`}
+                />
+
+                <div className="mt-2 text-xs text-neutral-600">
+                  Total competitors:{" "}
+                  <span className="font-semibold text-neutral-900">
+                    {p.competitorsIncluded + p.extraCompetitors}
+                  </span>{" "}
+                  · Add-on:{" "}
+                  <span className="font-semibold text-neutral-900">
+                    {formatEUR(p.extraCompetitors * ADDON_COMPETITOR_EUR)}
+                  </span>
+                  /month
+                </div>
+              </div>
+            )}
 
             <ul className="mt-6 space-y-2 text-sm">
               {p.features.map((f: string, idx: number) => {
@@ -189,10 +239,7 @@ export function PricingSection() {
                 }
 
                 return (
-                  <li
-                    key={idx}
-                    className="flex items-start gap-2 text-neutral-700"
-                  >
+                  <li key={idx} className="flex items-start gap-2 text-neutral-700">
                     <span className="mt-2 h-1.5 w-1.5 rounded-full bg-fuchsia-600" />
                     <span>{f}</span>
                   </li>
