@@ -2,16 +2,15 @@ import { Suspense } from "react";
 import Script from "next/script";
 import CaseStudiesContent from "./caseStudies";
 
-// SEO metadata (Next.js 13+ App Router best practice)
 export async function generateMetadata() {
   return {
     title: "Case Studies | Market Edge Monitoring",
     description:
-      "Real ROI from Market Edge: MAP compliance for a European electronics brand and faster pricing reactions for a 25k-SKU fashion retailer.",
+      "ROI-driven case studies for Market Edge: MAP monitoring, margin recovery at scale, strategic sourcing, and smarter procurement decisions.",
     openGraph: {
       title: "Case Studies | Market Edge Monitoring",
       description:
-        "How Market Edge delivered MAP compliance and pricing agility across Europe.",
+        "Real scenarios showing how Market Edge protects margin, saves time, and improves pricing & procurement decisions.",
       type: "website",
       url: "https://marketedgemonitoring.com/case-studies",
     },
@@ -19,7 +18,7 @@ export async function generateMetadata() {
       card: "summary_large_image",
       title: "Case Studies | Market Edge Monitoring",
       description:
-        "Real ROI from Market Edge: MAP compliance for a European electronics brand and faster pricing reactions for a 25k-SKU fashion retailer.",
+        "MAP monitoring, hidden margin recovery, strategic sourcing, and smarter procurement—real Market Edge outcomes.",
     },
   };
 }
@@ -30,35 +29,39 @@ const jsonLd = {
   itemListElement: [
     {
       "@type": "CaseStudy",
-      name: "Case Study 1 – Producer (Brand Owner)",
+      name: "MAP Monitoring – Premium Electronics",
       description:
-        "European consumer electronics manufacturer improves MAP compliance and margins across 12 countries with Market Edge.",
-      provider: {
-        "@type": "Organization",
-        name: "Market Edge Monitoring",
-      },
-      about: {
-        "@type": "Organization",
-        name: "European consumer electronics manufacturer",
-      },
+        "Same-day MAP violation detection with timestamped screenshots; reduced manual executive hours and prevented margin erosion.",
+      provider: { "@type": "Organization", name: "Market Edge Monitoring" },
       citation:
-        "82% drop in MAP violations (from 30% to under 5%), +12% margin improvement, ROI in < 3 weeks.",
+        "Example incident: 8% below MAP on €1,100 products; ~€3,520 erosion before detection. Market Edge subscription: €240/month.",
     },
     {
       "@type": "CaseStudy",
-      name: "Case Study 2 – Reseller (E-commerce Retailer)",
+      name: "Recovering Hidden Margin – FMCG (14,000 SKUs)",
       description:
-        "Online fashion retailer with 25,000 SKUs saves 20 hours/week and lifts sales +9% using Market Edge.",
-      provider: {
-        "@type": "Organization",
-        name: "Market Edge Monitoring",
-      },
-      about: {
-        "@type": "Organization",
-        name: "Online fashion retailer",
-      },
+        "Large FMCG portfolio monitoring across 12 competitors; identified underpricing at scale and recovered margin through targeted adjustments.",
+      provider: { "@type": "Organization", name: "Market Edge Monitoring" },
       citation:
-        "20 hours/week saved, +9% sales uplift, +4% margin, ROI in 2 weeks.",
+        "17% of SKUs under market average; 480 SKU corrections → +€27,400/month recovered margin. Subscription: €1,200/month.",
+    },
+    {
+      "@type": "CaseStudy",
+      name: "Turning Scarcity into Long-Term Revenue (Bearings)",
+      description:
+        "Strategic sourcing using competitor monitoring to fulfill an urgent, obsolete product request and convert it into a long-term account.",
+      provider: { "@type": "Organization", name: "Market Edge Monitoring" },
+      citation:
+        "Timken Set 119 (100 units) sourced via market visibility; +5% margin; led to ~€200,000/year recurring purchases. Subscription: €650/month.",
+    },
+    {
+      "@type": "CaseStudy",
+      name: "Smarter Procurement – Avoiding a Low-Margin Order (Bearings)",
+      description:
+        "Pre-purchase competitive visibility prevented low-margin inventory and reshaped the order toward SKUs with market stock gaps.",
+      provider: { "@type": "Organization", name: "Market Edge Monitoring" },
+      citation:
+        "~€78,000 order reshaped from 20 in-stock SKUs to 15 gap SKUs; achieved ~20% margin → ~€15,600 gross margin. Subscription: €650/month.",
     },
   ],
 };
@@ -66,14 +69,13 @@ const jsonLd = {
 export default function Page() {
   return (
     <section id="case-studies">
-      {/* JSON-LD injected correctly */}
       <Script
         id="case-studies-jsonld"
         type="application/ld+json"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Suspense fallback={<div />}>
+      <Suspense fallback={<div />}>{/* server streaming */}
         <CaseStudiesContent />
       </Suspense>
     </section>
