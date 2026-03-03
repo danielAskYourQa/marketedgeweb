@@ -112,7 +112,7 @@ const STUDIES: Study[] = [
     outcome:
       "Found rare stock on the market, fulfilled an urgent order, and turned it into a ~€200k/year client.",
     paragraphs: [
-      "A bearing distributor received an urgent request: Timken Set 119 — €25/unit, 100 pieces required, no longer in production.",
+      "A bearing distributor received an urgent request: LBA 80 SKF — €200/unit, 8 pieces required, no longer in production.",
       "Instead of declining the order, they used Market Edge (€650/month) to monitor competitors and identify distributors still listing available stock.",
       "They sourced the remaining units, added a 5% margin, and fulfilled the order.",
       "Long-term impact: the client became a recurring customer, generating ~€200,000/year in additional purchases.",
@@ -125,7 +125,7 @@ const STUDIES: Study[] = [
     ],
     kpis: [
       { kpi: "€650/mo", label: "Subscription" },
-      { kpi: "100", label: "Units" },
+      { kpi: "6", label: "Competitors" },
       { kpi: "~€200k", label: "/year" },
     ],
   },
