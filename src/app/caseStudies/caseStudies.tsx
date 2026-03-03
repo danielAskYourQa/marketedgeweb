@@ -138,7 +138,7 @@ const STUDIES: Study[] = [
       "A bearing distributor was preparing a large restocking order.",
       "Initial plan: purchase 20 bearing SKUs worth ~€78,000.",
       "Market Edge showed 4 competitors already selling those SKUs at near purchase cost — margin would have been minimal.",
-      "They shifted toward 15 SKUs competitors lacked in stock.",
+      "They shifted the €78k order toward 15 products competitors lacked — securing ~€15.6k in gross margin.",
     ],
     bullets: [
       "Avoided near-zero-margin inventory",
