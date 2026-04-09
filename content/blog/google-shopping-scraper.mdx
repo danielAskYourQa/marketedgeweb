@@ -1,0 +1,493 @@
+---
+title: "Google Shopping Scraper: A B2B Decision-Maker's Guide"
+description: "Explore what a Google Shopping scraper does, its technical challenges, and legal risks. A guide for B2B decision-makers on building vs. buying price data."
+date: "2026-04-09T07:57:44.233024+00:00"
+category: "google shopping scraper"
+tags: ["google shopping scraper","price monitoring","competitive intelligence","web scraping","ecommerce data"]
+cover: "https://cdnimg.co/b3895002-59c4-429d-b59c-063ce5012dc7/e934ed0b-4edb-4473-bbd4-294b854d05fa/google-shopping-scraper-b2b-guide.jpg"
+---
+A lot of teams start the same way. Someone in ecommerce or pricing says, “We just need a simple Google Shopping scraper.” An engineer spends a few days on a prototype, pulls a few product cards into CSV, and the project looks easy.
+
+That impression does not last.
+
+If your goal is **price monitoring, competitor tracking, MAP enforcement, or marketplace visibility**, a google shopping scraper is not a side script. It is a data acquisition system with operational, legal, and commercial consequences. The hard part is not getting a few rows once. The hard part is getting trustworthy data repeatedly, at the right scale, in a format your team can use.
+
+For a non-technical executive, the key question is not “Can we scrape Google Shopping?” In most cases, the answer is yes. The useful question is, **what will it cost to build, run, maintain, and trust that system over time?**
+
+## What a Google Shopping Scraper Is and Why It Matters
+
+A **google shopping scraper** is a tool that collects public product listing data from Google Shopping results and turns it into structured records your business can analyze.
+
+That sounds technical. Commercially, it is much simpler.
+
+It gives your team a repeatable way to answer questions like:
+
+-   **Are we overpriced?** Compare your SKU pricing against the merchants that appear for the same product.
+-   **Who is undercutting us?** Spot resellers or marketplaces showing lower advertised prices.
+-   **Are competitors broadening assortment?** Track which brands, variants, or bundles appear in shopping results.
+-   **Are we losing buy intent at the search stage?** If buyers compare before they click, Google Shopping is one of the places where that comparison starts.
+
+![A professional man wearing glasses analyzing market data charts on a computer monitor in an office.](https://cdnimg.co/b3895002-59c4-429d-b59c-063ce5012dc7/65094b52-7a1d-4fdf-8e10-e9ad6ab1d7ec/google-shopping-scraper-market-data.jpg)
+
+For B2B teams, this matters because Google Shopping is not just a consumer channel. It is a live snapshot of how products are presented across merchants. A distributor can use it to benchmark channel pricing. A manufacturer can use it to spot possible MAP issues. An ecommerce manager can use it to see which sellers keep showing up around high-value queries.
+
+### Why the data volume changes the economics
+
+The value comes from coverage. Google Shopping typically returns a significant number of results per query, depending on the search term, and broad queries can yield a large number of extracted results. Even a basic scraper can pull **up to 100 products per keyword search** according to [Apify’s Google Shopping scraper overview](https://apify.com/automation-lab/google-shopping-scraper).
+
+That matters because the comparison set is rarely one rival.
+
+For a category like headphones, office chairs, or power tools, your team is not comparing against a single merchant. You are comparing across dozens of sellers, listings, bundles, and price points. Once you can extract hundreds of product records from a search pattern, you stop doing ad hoc checks and start building a usable competitor intelligence workflow.
+
+### Where business teams use it
+Three use cases come up most often:
+
+-   **Price monitoring:** A retailer checks daily whether listed prices drift above or below market visibility thresholds.
+-   **Competitor tracking:** A category manager watches which merchants repeatedly appear for branded and non-branded product searches.
+-   **MAP enforcement:** A manufacturer identifies sellers advertising below policy and escalates with evidence.
+
+If you already work on [ecommerce competitive intelligence](https://marketedgemonitoring.com/blog/ecommerce-competitive-intelligence), a google shopping scraper fits into that broader discipline. It captures one part of the market view. It does not replace marketplace data, direct site crawling, or internal sales data. It complements them.
+
+> **Practical takeaway:** If your team checks Google Shopping manually more than occasionally, you already have a scraping use case. The key decision is whether you want that process to stay manual, become an internal engineering project, or move into a managed workflow.
+
+## The Core Data Fields You Can Extract for Analysis
+
+The useful output of a google shopping scraper is not “a list of products.” It is a structured dataset your pricing, category, and commercial teams can work with.
+
+Google Shopping data extraction can include **product names, prices, descriptions, rankings, merchant information, customer reviews, product specifications, and competitive alternatives**, with output available in **JSON, CSV, and Excel** according to [WebsiteScraper’s Google Shopping scraper page](https://www.websitescraper.com/google-shopping-scraper.php).
+
+### The fields that matter most commercially
+
+Some fields are obvious. Others become important only when you try to operationalize them.
+
+-   **Product title**
+    This is your first matching signal. It helps identify whether “Apple AirPods Pro 2” and “AirPods Pro Gen 2 USB-C” are likely the same product or a close variant.
+
+-   **Price**
+    This is the headline metric for benchmarking. Pricing teams use it for gap analysis, promo detection, and identifying merchants that consistently undercut the market.
+
+-   **Merchant name**
+    This turns pricing from abstract market data into action. You need to know who is advertising the price, not just what the price is.
+
+-   **Description and product specifications**
+    These fields help distinguish true 1:1 matches from similar products. Packaging, model year, color, memory size, and included accessories often sit here.
+
+-   **Ranking or position in results**
+    This helps commercial teams understand visibility, not just price. A merchant that appears prominently can shape buyer expectations even if it is not the cheapest.
+
+-   **Customer reviews and ratings**
+    These add context. If a seller is cheaper but has weak review signals, that changes how your team interprets the threat.
+
+-   **Competitive alternatives**
+    This is useful for assortment work. It shows what substitute products Google presents around a query, which can reveal where buyers may shift if your product is absent or overpriced.
+
+### Why export format matters more than many teams expect
+
+A prototype often ends at “we exported a CSV.” An effective workflow needs more.
+
+-   **CSV** works for pricing managers who want to filter and compare in spreadsheets.
+-   **Excel** helps teams that distribute periodic reports to sales or category managers.
+-   **JSON** matters when analysts want to feed the data into dashboards, internal APIs, or matching pipelines.
+
+That format flexibility is one reason the raw extraction step is only part of the job. Once the data enters the business, different stakeholders need different ways to consume it.
+
+### A simple reporting view many teams can start with
+
+A lightweight analysis model usually includes:
+
+| Field           | Why it matters                     |
+| :-------------- | :--------------------------------- |
+| Product title   | Initial identification and matching |
+| Merchant        | Accountability and seller tracking |
+| Price           | Benchmarking and alerting          |
+| Ranking         | Visibility context                 |
+| Reviews         | Quality signal                     |
+| Specs           | Match confidence                   |
+
+If your team is building reports from [competitor price data](https://marketedgemonitoring.com/blog/competitor-price-data), this is the minimum usable layer.
+
+> **Checklist for managers:** Before approving any scraper project, ask what fields will be captured, how they will be validated, and which team will consume them in CSV, Excel, or JSON. If nobody can answer that clearly, the project is still in prototype territory.
+
+## How a Scraper Works The Technical Reality
+
+At a high level, a google shopping scraper acts like a digital research assistant. It requests a shopping results page, reads the returned code, identifies the product elements, and stores the pieces you care about.
+
+That is the clean version.
+
+![A 3D abstract digital hand representation pulling capsules from a helical structure labeled with Digital Extraction text.](https://cdnimg.co/b3895002-59c4-429d-b59c-063ce5012dc7/2c75e50b-fe2f-42b1-922e-be556d8bf79b/google-shopping-scraper-digital-extraction.jpg)
+
+The practical version is that Google’s frontend is dynamic, heavily scripted, and designed for users, not extraction pipelines. That changes the engineering work.
+
+### The basic mechanics
+
+A scraper usually follows a sequence like this:
+
+1.  **Send a request** for a Google Shopping search.
+2.  **Fetch the page response** and inspect the HTML or related network data.
+3.  **Parse product cards** to extract titles, prices, merchants, reviews, and links.
+4.  **Handle pagination** so you can move beyond the first visible batch of results.
+5.  **Store the output** in a structured form for downstream analysis.
+
+For a prototype, that sounds manageable. For production, the trouble starts at step four.
+
+### Why pagination is not just “go to page two”
+
+Google Shopping scrapers need to **dynamically extract and inject authentication tokens from the initial page response** to build valid pagination URLs. Google’s frontend uses client-side JavaScript to generate later pages, and if the scraper does not pick up those tokens correctly, it can hit **403 Forbidden errors or incomplete result sets**, as described in [Scrape.do’s Google Shopping scraping explanation](https://scrape.do/blog/google-shopping-scraping/).
+
+That one detail changes the project from a simple script to a parser that must understand how Google structures a session.
+
+A non-technical executive does not need to know the token names. What matters is this: the browser sees context that a raw script does not. Your engineering team has to recreate enough of that context to keep the scraper working.
+
+### Why “it worked once” means very little
+
+A prototype often succeeds because:
+
+-   the query is narrow
+-   the request volume is low
+-   the first page contains enough visible data
+-   the scraper is tested in a short time window
+
+That does not mean the approach is reliable.
+
+A production system needs to work across many keywords, merchants, geographies, and repeated schedules. It also needs to fail gracefully when Google changes something upstream.
+
+This walkthrough gives a reasonable visual sense of what teams are trying to automate:
+
+<iframe width="100%" src="https://www.youtube.com/embed/Ct8Gxo8StBU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+If your team is evaluating [ecommerce price monitoring tools](https://marketedgemonitoring.com/blog/ecommerce-price-monitoring-tools), this is the point where technical leaders should translate effort into business terms. The issue is not whether requests and parsers can be written. The issue is whether the company wants to own the reliability burden.
+
+> **Key takeaway:** A google shopping scraper is not a static connector. It is a moving integration against a dynamic frontend.
+
+## The Hidden Costs of Scaling a Scraping Operation
+
+Many in-house scraper projects are under-budgeted because leaders price the script, not the operation.
+
+The script is the smallest part.
+
+Once a team moves from “test a few searches” to “monitor products reliably,” the cost structure changes. You now need infrastructure, anti-blocking controls, monitoring, data validation, and ongoing engineering support.
+
+![Infographic](https://cdnimg.co/b3895002-59c4-429d-b59c-063ce5012dc7/b7c418ba-8551-4085-b70c-1a2c2517295c/google-shopping-scraper-scraping-costs.jpg)
+
+### Data completeness has a price
+
+Commercial scrapers often expose settings that increase the richness of output, but those settings are not free. For example, the parameter **includeExtraProductDetails** can increase scraping time by **3 to 5 times** and raise compute costs by **40% per run**, according to [Apify’s scraper configuration details](https://apify.com/scrapeai/google-shopping-scraper).
+
+That trade-off shows up quickly in practice.
+
+A product team asks for shipping details, stock status, or extra merchant comparison data. Engineering flips on more extraction. Runtime grows. Compute usage rises. Failure points multiply because additional page fetches are needed.
+
+The business sees “more fields.” The engineering team sees a more fragile pipeline.
+
+### Proxies are not optional at scale
+
+High-volume monitoring requires proxy rotation. The same source notes a **1:100 request-to-IP ratio** as a practical pattern, and block rates can spike to **15% without proxy rotation**.
+
+That tells you two things.
+
+First, you cannot plan a serious google shopping scraper as if it will run from a fixed, stable environment. Second, your costs will include an anti-blocking layer whether you budget for it at the start or not.
+
+#### What proxy infrastructure adds to the project
+
+-   **Vendor management:** Someone has to source, test, and maintain proxy supply.
+-   **Routing logic:** The scraper needs rules for rotation, retries, and fallback behavior.
+-   **Quality control:** Bad proxies create misleading failures. The page may be blocked, slow, incomplete, or personalized in ways that distort results.
+-   **Country handling:** If the business needs regional views, the proxy strategy gets more complex.
+
+### CAPTCHA and anti-bot handling become an operations problem
+
+Google does not need to block every request to create a business problem. It only needs to make extraction inconsistent.
+
+That inconsistency creates a chain reaction:
+
+-   Missing data leads to false price alerts.
+-   Incomplete result sets distort competitive comparisons.
+-   Frequent retries increase compute use and runtime.
+-   Engineers spend time diagnosing whether the issue is layout change, token failure, proxy quality, or bot detection.
+
+This is the hidden tax of scraping. Failures are not clean. They are ambiguous.
+
+### Maintenance is not occasional
+
+A lot of executives imagine maintenance as a periodic check. In practice, scraper maintenance behaves more like product support.
+
+Your team needs to watch for:
+
+-   layout changes that break selectors
+-   token changes that break pagination
+-   new anti-bot behavior
+-   field drift, where extraction still runs but values become wrong or incomplete
+-   business-rule drift, where merchants rename products or alter listing formats
+
+#### The maintenance checklist many teams forget
+
+-   **Alerting on extraction failures**
+-   **Validation against expected field coverage**
+-   **Review of merchant-specific anomalies**
+-   **Regression testing after parser updates**
+-   **Ownership for incident response**
+
+> **Operational rule:** If a data source influences price decisions or MAP enforcement, treat the scraper like production software. Give it monitoring, QA, and incident ownership.
+
+### The opportunity cost is often the biggest cost
+
+Even if the direct infrastructure bill looks manageable, internal ownership carries an opportunity cost.
+
+The engineers who maintain the google shopping scraper are not working on checkout reliability, catalog quality, internal data models, or the analytics projects your commercial teams also want. In many companies, that trade-off matters more than raw cloud spend.
+
+A quick executive test helps.
+
+If the project succeeds, what your business has built? Usually the answer is not “competitive advantage.” It is “a fragile but useful acquisition pipeline that still needs cleaning, matching, and governance.”
+
+That distinction matters when deciding whether this should live inside your core product roadmap.
+
+## From Raw Data to Actionable Intelligence Product Matching
+
+The most common mistake in scraper projects is assuming that scraped data is ready for use once it lands in a file.
+
+It is not.
+
+Raw shopping data is messy in ways that matter commercially. Titles vary. Merchant naming is inconsistent. Product packs, refurbished units, accessories, and alternate colorways get mixed into the same result set. If you compare those records without careful matching, you get bad decisions dressed up as analytics.
+
+### Why product matching is where projects stall
+
+A pricing manager wants a simple answer: “Are we cheaper, equal, or more expensive on this SKU?”
+
+The scraper cannot answer that alone.
+
+It can give you titles like:
+
+-   “Samsung Galaxy S24 128GB Black”
+-   “Samsung S24 128 GB Onyx Black”
+-   “Galaxy S24 Smartphone 128GB Unlocked”
+-   “Samsung Galaxy S24 with Charger Bundle”
+
+A human can often tell which are true matches and which are not. A production system needs rules to do that repeatedly.
+
+That means cleaning and normalizing fields such as:
+
+-   merchant names
+-   color labels
+-   storage units
+-   pack quantities
+-   stock language
+-   promotional text
+
+### Normalization work adds more than many teams expect
+
+Some records say “In stock.” Others say “Available.” Others imply availability through merchant detail pages or shipping text. Product titles include filler phrases that help marketing but hurt matching.
+
+The engineering work usually expands into a separate pipeline:
+
+| Task                 | Why it matters                                     |
+| :------------------- | :------------------------------------------------- |
+| Title cleaning       | Remove noise and isolate core identifiers          |
+| Specification parsing | Compare size, color, memory, condition             |
+| Merchant normalization | Merge naming variations into one seller identity   |
+| Variant handling     | Separate bundles from single units                 |
+| Confidence scoring   | Avoid false 1:1 comparisons                        |
+
+Without this layer, dashboards look precise but are operationally risky.
+
+### The commercial consequence of weak matching
+
+Bad matching hurts in three ways.
+
+First, pricing teams waste time reviewing false positives.
+
+Second, MAP enforcement becomes harder because evidence quality drops. If the product match is arguable, the enforcement case is weaker.
+
+Third, executives lose trust in the system. Once users notice that a report compares a single unit to a bundle, adoption falls fast.
+
+> **Practical test:** Ask for ten sample records from your target category and have someone from pricing validate the matches manually. If the team disagrees on several of them, your matching problem is larger than your scraping problem.
+
+### Predictive value depends on cleaned data
+
+Many teams want more than point-in-time comparisons. They want alerts, trends, and forward-looking insight. That only works if the underlying product identity is stable.
+
+If you are thinking beyond reporting and into forecasting, this overview of [predictive analytics for business](https://www.bridge-global.com/blog/predictive-analytics-for-business) is a useful primer. The important connection is simple. Prediction quality depends on input quality. A scraper that produces unstable product identities will produce unstable forecasts.
+
+In other words, the business value is not “we scraped Google Shopping.” The value is “we linked external market signals to the right internal SKU, consistently enough to act.”
+
+That is why so many internal builds stall after early excitement. The acquisition layer is visible. The essential system gets built at the normalization and matching layer.
+
+## Navigating the Legal and Ethical Minefield
+
+Many teams treat legal review as something to do after the scraper works. That is backwards.
+
+If the data source is important enough to influence pricing or channel enforcement, legal and compliance questions belong near the start. A google shopping scraper may target public information, but public does not automatically mean risk-free.
+
+![A conceptual 3D illustration featuring metallic circuit board pathways forming a maze under the text Ethical Boundaries.](https://cdnimg.co/b3895002-59c4-429d-b59c-063ce5012dc7/e01788d1-4a1f-4678-8cd6-c4e6e9b2ebd5/google-shopping-scraper-circuit-maze.jpg)
+
+### Why this risk is often understated
+
+Legal risks of scraping are frequently glossed over. Court rulings have gone against scrapers that exceed **robots.txt** protocols, and in the last 12 months, Google’s enhanced anti-bot measures have increased failure rates and ban risk, making compliance with changing terms more important for custom tools, as noted in [MrScraper’s discussion of Google Shopping scraping risk](https://mrscraper.com/blog/How-to-Scrape-Google-Shopping).
+
+For an executive, the issue is not whether every scrape is unlawful. The issue is whether your chosen method creates avoidable business exposure.
+
+That exposure can include:
+
+-   breach of terms concerns
+-   questions around unauthorized automated access
+-   operational disruption from blocks or bans
+-   internal governance problems if the collected data is retained carelessly
+
+### Public data still needs a governance model
+
+The phrase “public data” can give teams false confidence.
+
+Even when information is visible on the web, you still need policies for:
+
+-   what you collect
+-   how often you collect it
+-   how long you keep it
+-   who can access it internally
+-   how the data is used in commercial decisions
+
+Here, broader [modern data protection and privacy principles](https://devisia.pro/blog/data-protection-and-privacy) become relevant. Not because every Google Shopping field is personal data, but because disciplined collection and retention practices reduce risk across the whole workflow.
+
+### Ethical questions matter even when legal answers are unclear
+
+Not every scraping decision has a clean black-and-white legal answer. That does not remove the need for judgment.
+
+A practical internal standard should ask:
+
+-   Are we collecting only what we need for a defined business purpose?
+-   Are we avoiding unnecessary retention?
+-   Are we documenting how the data is obtained and used?
+-   Do we have legal review for the jurisdictions that matter to us?
+-   If Google changes access controls, will we respond by escalating evasion tactics or by reconsidering the method?
+
+That last question matters. A system that depends on increasingly aggressive workarounds can become hard to defend internally, even if it remains technically possible.
+
+> **Executive checklist:** Before approving a build, ask legal to review terms, access patterns, data retention, and jurisdictional exposure. Ask engineering to document how the scraper handles blocks, retries, and robots-related constraints. If neither side has a written position, the company is operating on assumption.
+
+### The safer view for decision-makers
+
+A good governance posture treats scraping as a controlled capability, not a clever workaround.
+
+That means:
+
+-   legal sign-off before scale
+-   documented purpose limitation
+-   restricted access to collected data
+-   periodic review of collection methods
+-   willingness to stop or redesign if the risk profile changes
+
+Companies rarely get into trouble because one engineer ran one script. They get into trouble because an unofficial script became a business process without governance.
+
+## Build vs Buy A Decision Framework for Price Intelligence
+
+Many build-versus-buy discussions go wrong because the comparison is unfair.
+
+The internal option gets framed as “engineer writes scraper.” The managed option gets framed as “vendor fee.” That is not the fundamental choice.
+
+The core comparison is **owning the full lifecycle** versus **buying an outcome**.
+
+### A practical comparison
+
+| Factor | Build In-House | Buy a Managed Service (e.g., Market Edge) |
+| :-------------- | :--------------------------------------------------- | :-------------------------------------------------- |
+| Initial speed | Fast to prototype, slower to production | Faster path to operational use |
+| Engineering effort | Internal team must build extraction, storage, monitoring, and QA | Vendor handles collection pipeline and support |
+| Reliability burden | Company owns breakage, blocks, retries, and parser updates | Reliability is largely outsourced |
+| Proxy and anti-bot operations | Internal responsibility | Usually included in service delivery |
+| Data cleaning | Must be designed internally | Often part of the managed workflow |
+| Product matching | Major internal challenge | Often a built-in capability or service layer |
+| Legal and compliance process | Company must define and maintain it | Shared responsibility, though buyer still needs review |
+| Cost profile | Variable and easy to underestimate | More predictable operating cost |
+| Executive visibility | Harder to forecast total ownership cost | Easier to budget and evaluate |
+| Strategic focus | Pulls engineers into scraping operations | Keeps team focused on pricing and commerce decisions |
+
+### When building makes sense
+
+There are cases where in-house is reasonable.
+
+Build if you have most of the following:
+
+-   a capable data engineering team
+-   appetite for ongoing maintenance
+-   tolerance for operational instability during development
+-   a narrow use case with limited coverage needs
+-   strong internal data governance and legal review
+-   a reason to own the pipeline as a strategic asset
+
+For example, a company with a specialized catalog, internal matching expertise, and an established data platform may decide the control is worth the effort.
+
+### When buying is the better business decision
+
+Buying is usually stronger when the company needs business answers more than technical ownership.
+
+That includes teams that need:
+
+-   price visibility across many products
+-   regular competitor monitoring
+-   channel and reseller oversight
+-   faster rollout to commercial users
+-   less engineering distraction
+-   a clearer operating model
+
+This is especially true when the core requirement is not just extraction, but **clean, comparable, near real-time intelligence**.
+
+### Questions executives should ask before deciding
+
+Use this checklist in the approval process.
+
+#### Scope
+
+-   Which products, markets, and merchants need to be covered?
+-   Is the need occasional research or recurring operational monitoring?
+
+#### Internal capability
+
+-   Who will own scraper maintenance after launch?
+-   Does the team have experience with dynamic scraping, anti-bot handling, and data QA?
+
+#### Data usability
+
+-   How will products be matched to internal SKUs?
+-   What happens when titles drift or merchants change listing patterns?
+
+#### Risk
+
+-   Has legal reviewed the collection method?
+-   Who is accountable for compliance, retention, and auditability?
+
+#### Commercial outcome
+
+-   Do we need raw data, or do we need decision-ready intelligence?
+-   Is engineering ownership part of the strategy, or just a means to an end?
+
+> **Decision rule:** If your business advantage comes from pricing strategy, channel management, or assortment decisions, not from scraper engineering, buying usually creates more focus.
+
+### The executive summary
+
+A google shopping scraper can be built in-house. That is not the interesting part.
+
+The interesting part is whether your company wants to own:
+
+-   the parser
+-   the proxy strategy
+-   the anti-bot response
+-   the QA process
+-   the product matching layer
+-   the legal review cycle
+-   the support burden when the data breaks at the worst possible time
+
+For many B2B teams, the answer is no once the full list is visible. They do not need a scraping project. They need dependable price intelligence.
+
+## Conclusion The Smart Path to Competitive Intelligence
+
+A google shopping scraper can be valuable. It can also become a quiet drain on engineering time, data trust, and governance attention if the project is framed too narrowly.
+
+The technical hurdle is only the beginning. Production scraping means handling dynamic page behavior, anti-bot systems, extraction failures, data normalization, product matching, and compliance review. That is why the total cost of ownership is usually much higher than the first prototype suggests.
+
+The commercial objective is not to collect pages. It is to support pricing decisions, competitor monitoring, and MAP enforcement with data your team can trust.
+
+If your company has a strong internal data platform and a clear reason to own the entire stack, building may be justified. Many businesses do better when they focus on interpreting competitive signals rather than engineering the collection layer themselves.
+
+That is where automated price monitoring tools like Market Edge become useful.
+
+---
+
+If you want a simpler way to turn competitor pricing and stock signals into something your team can act on, [Market Edge](https://marketedgemonitoring.com) is worth a look. It helps distributors, manufacturers, importers, and online retailers monitor prices across resellers, retail sites, and marketplaces without turning the job into an internal scraping operation.
