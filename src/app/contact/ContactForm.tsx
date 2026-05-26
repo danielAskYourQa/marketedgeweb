@@ -50,7 +50,7 @@ export default function ContactForm() {
   const isValid =
     form.name.trim().length >= 2 &&
     validEmail(form.email) &&
-    form.message.trim().length >= 10 &&
+    form.message.trim().length >= 5 &&
     form.consent &&
     form.recaptcha.length > 0; // ✅ require captcha
 
