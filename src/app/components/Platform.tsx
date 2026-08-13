@@ -1,7 +1,7 @@
 // src/app/components/Platform.tsx
 "use client";
-import { motion } from "framer-motion";
 import { useRef, useState } from "react";
+import { Reveal } from "./ui/Reveal";
 import {
   Tags,
   PackageSearch,
@@ -578,11 +578,10 @@ export function Platform() {
         </div>
 
         {/* big feature panel */}
-        <motion.div
+        <Reveal
           key={feature.key}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
+          mode="mount"
+          y={10}
           className="mt-6 rounded-3xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden"
         >
           {/* window chrome */}
@@ -614,7 +613,7 @@ export function Platform() {
               <Viz />
             </div>
           </div>
-        </motion.div>
+        </Reveal>
 
         {/* promise band — qualitative, no invented metrics */}
         <div className="mt-12 rounded-3xl bg-[#0b0b26] text-white px-6 py-10 grid sm:grid-cols-3 gap-8 text-center">

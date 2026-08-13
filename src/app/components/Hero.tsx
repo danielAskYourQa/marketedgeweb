@@ -1,7 +1,7 @@
 // src/app/components/Hero.tsx
 "use client";
-import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Reveal } from "./ui/Reveal";
 import {
   TrendingDown,
   TrendingUp,
@@ -555,12 +555,7 @@ export function Hero() {
       />
 
       <div className="pt-20 md:pt-28 pb-16 md:pb-20 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
-          className="mx-auto max-w-7xl px-4"
-        >
+        <Reveal mode="mount" y={18} className="mx-auto max-w-7xl px-4">
           <p className="text-xs md:text-sm uppercase tracking-widest text-indigo-300/80 mb-4">
             Market intelligence platform
           </p>
@@ -592,15 +587,10 @@ export function Hero() {
               View pricing
             </a>
           </div>
-        </motion.div>
+        </Reveal>
 
         {/* --------- dashboard carousel --------- */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.15 }}
-          className="relative mt-14 md:mt-16"
-        >
+        <Reveal mode="mount" y={40} delay={150} className="relative mt-14 md:mt-16">
           <DashboardCarousel />
 
           <div className="mt-6">
@@ -611,7 +601,7 @@ export function Hero() {
               Learn more
             </a>
           </div>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

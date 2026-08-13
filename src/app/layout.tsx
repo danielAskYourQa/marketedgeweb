@@ -14,14 +14,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Rewardful (must be on every page) */}
-        <Script id="rewardful-q" strategy="beforeInteractive">
+        {/* Rewardful (every page; afterInteractive so it never blocks hydration —
+            the _rwq queue stub captures any early calls) */}
+        <Script id="rewardful-q" strategy="afterInteractive">
           {`(function(w,r){w._rwq=r;w[r]=w[r]||function(){(w[r].q=w[r].q||[]).push(arguments)}})(window,'rewardful');`}
         </Script>
         <Script
           id="rewardful-src"
           src="https://r.wdfl.co/rw.js"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           data-rewardful="346af0" // ← your Rewardful public key
         />
       </head>
