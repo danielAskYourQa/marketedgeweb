@@ -1,17 +1,10 @@
-import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Layout as Shell } from "./components/Layout";
 import Analytics from "./components/Analytics";
 import { Suspense } from "react";
 import Script from "next/script";
 
-export const metadata: Metadata = {
-  title: "Market Edge — Competitor Price Monitoring",
-  description:
-    "Monitor competitor prices and stock across websites and marketplaces in near real time.",
-};
-
-export const viewport: Viewport = { themeColor: "#ffffff" };
+export { metadata, viewport } from "./seo";
 
 export default function RootLayout({
   children,

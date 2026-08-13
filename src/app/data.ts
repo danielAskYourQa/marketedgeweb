@@ -47,22 +47,34 @@ export const trustpilotReviews: Review[] = [
 export const defaultFaqs = [
   {
     q: "What is Market Edge?",
-    a: "Market Edge is a B2B platform that helps you monitor your product prices across competitor websites and marketplaces in near real time.",
+    a: "Market Edge is an AI-powered market intelligence platform. It tracks competitor prices, stock and assortment across websites and marketplaces in near real time, and turns that data into a clear view of your market — trends, alerts and opportunities included.",
+  },
+  {
+    q: "What is a market intelligence platform?",
+    a: "A market intelligence platform continuously collects data about your market — competitor prices, product availability, assortment and market movements — and turns it into insights you can act on: where you stand, what changed, and where the opportunities are. It replaces manual competitor checks and spreadsheets with one live view.",
+  },
+  {
+    q: "Is Market Edge a price tracking tool?",
+    a: "Price tracking is at the core of Market Edge — and it goes further. Alongside competitor price monitoring you get stock and availability tracking, assortment coverage, and market trend alerts, so you understand the whole market, not just today's prices.",
   },
   {
     q: "Who is Market Edge for?",
-    a: "Distributors, manufacturers, retailers, and importers who need a clear view of pricing and stock across the market.",
+    a: "Distributors, manufacturers, retailers, and importers who need a clear view of pricing, stock and competitor activity across their market — from small shops tracking 5 competitors to businesses covering 20,000 products.",
   },
   {
-    q: "How does Market Edge collect data?",
-    a: "Advanced web crawlers plus AI-based matching algorithms track the products you select and deliver clean data on price and availability.",
-  },
-  {
-    q: "Can I try it before I commit?",
-    a: "Yes — we offer a free trial so you can evaluate value and fit for your workflows.",
+    q: "How does Market Edge collect market data?",
+    a: "Advanced web crawlers plus AI-based product matching track the products you select and deliver clean, reliable data on price, availability and assortment — the same product recognized across every seller and channel.",
   },
   {
     q: "Do you support marketplaces like eMAG or Amazon?",
-    a: "Yes, we support major marketplaces (eMAG, Amazon, eBay and more) and add new ones based on demand.",
+    a: "Yes, we support major marketplaces (eMAG, Amazon, eBay and more) plus any competitor website, and we add new channels based on demand.",
+  },
+  {
+    q: "How is pricing structured?",
+    a: "Three flat plans sized by market coverage: Starter (up to 1,000 products, 5 competitors), Professional (up to 10,000 products, 10 competitors) and Business (up to 20,000 products, 20 competitors). Annual billing saves 20%, and custom plans are available beyond that.",
+  },
+  {
+    q: "Can I try it before I commit?",
+    a: "Yes — every plan starts with a free trial, no credit card required, so you can evaluate value and fit for your workflows before paying.",
   },
 ];

@@ -4,11 +4,11 @@ import CaseStudiesContent from "./caseStudies";
 
 export async function generateMetadata() {
   return {
-    title: "Case Studies | Market Edge Monitoring",
+    title: "Case Studies",
     description:
-      "ROI-driven case studies for Market Edge: MAP monitoring, margin recovery at scale, strategic sourcing, and smarter procurement decisions.",
+      "Market intelligence in action: MAP monitoring, margin recovery at scale, strategic sourcing, and smarter procurement decisions — real Market Edge outcomes with real numbers.",
     openGraph: {
-      title: "Case Studies | Market Edge Monitoring",
+      title: "Case Studies | Market Edge",
       description:
         "Real scenarios showing how Market Edge protects margin, saves time, and improves pricing & procurement decisions.",
       type: "website",

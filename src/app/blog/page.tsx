@@ -8,7 +8,8 @@ export default function BlogPage() {
     <main className="mx-auto max-w-5xl px-6 py-12">
       <h1 className="text-4xl font-bold">Market Edge Blog</h1>
       <p className="mt-2 text-gray-500">
-        Insights on price monitoring, competitors and marketplaces.
+        Market intelligence insights: pricing strategy, competitor tracking and
+        marketplace trends.
       </p>
 
       <div className="mt-10 space-y-6">

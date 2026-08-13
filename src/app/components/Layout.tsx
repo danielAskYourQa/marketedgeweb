@@ -56,7 +56,7 @@ export function Layout({ children }: { children: ReactNode }) {
       </a>
 
       <header
-        className="sticky top-0 z-50 backdrop-blur border-b border-gray-200 bg-white/80"
+        className="sticky top-0 z-50 backdrop-blur border-b border-white/10 bg-[#0b0b26]/90 text-white"
         role="banner"
       >
         <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
@@ -78,61 +78,61 @@ export function Layout({ children }: { children: ReactNode }) {
 
           {/* Primary nav */}
           <nav
-            className="hidden md:flex items-center gap-6 text-sm text-neutral-600"
+            className="hidden md:flex items-center gap-6 text-sm text-slate-300"
             aria-label="Primary"
           >
             <SectionLink
               sectionId="usecases"
-              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+              className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded-md px-1"
             >
               Use-cases
             </SectionLink>
 
             <SectionLink
               sectionId="pricing"
-              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+              className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded-md px-1"
             >
               Pricing
             </SectionLink>
 
             <SectionLink
               sectionId="faqs"
-              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+              className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded-md px-1"
             >
               FAQs
             </SectionLink>
 
             <SectionLink
               sectionId="reviews"
-              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+              className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded-md px-1"
             >
               Reviews
             </SectionLink>
 
             <Link
               href="/contact"
-              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+              className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded-md px-1"
             >
               Contact
             </Link>
 
             <Link
               href="/caseStudies"
-              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+              className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded-md px-1"
             >
               Case Studies
             </Link>
 
             <Link
               href="/affiliate"
-              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+              className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded-md px-1"
             >
               Affiliate
             </Link>
 
             <Link
               href="/blog"
-              className="hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500 rounded-md px-1"
+              className="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded-md px-1"
             >
               Blog
             </Link>
@@ -142,7 +142,7 @@ export function Layout({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-3">
             <a
               href="https://auth.webshopqa.com/login?client_id=719452pnlcub3boop4mhap7bop&response_type=token&redirect_uri=https://webshopqa.com"
-              className="inline-flex items-center justify-center rounded-2xl border border-fuchsia-600 px-4 py-2 text-sm font-semibold text-fuchsia-700 bg-white hover:bg-fuchsia-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500"
+              className="inline-flex items-center justify-center rounded-2xl border border-white/30 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400"
               aria-label="Sign in to Market Edge"
             >
               Sign In
@@ -168,18 +168,15 @@ export function Layout({ children }: { children: ReactNode }) {
 
       <div id="content">{children}</div>
 
-      <footer className="relative text-white" role="contentinfo">
-        {/* Background image */}
-        <div className="absolute inset-0">
-          <Image
-            src="/footer-image.png"
-            alt="Market Edge footer background"
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/30" />
-        </div>
+      <footer
+        className="relative text-white bg-[#0b0b26]"
+        role="contentinfo"
+      >
+        {/* subtle glow, matching the hero */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(60%_80%_at_50%_100%,rgba(79,70,229,0.18),transparent_70%)]"
+        />
 
         {/* Footer content */}
         <div className="relative mx-auto max-w-7xl px-4 py-10 grid md:grid-cols-4 gap-8 text-sm">
@@ -200,8 +197,9 @@ export function Layout({ children }: { children: ReactNode }) {
                 <span className="font-semibold">Market Edge</span>
               </Link>
             </div>
-            <p className="text-fuchsia-50">
-              Price monitoring and competition analysis for eCommerce
+            <p className="text-slate-300">
+              AI-powered market intelligence: competitor prices, stock and
+              trends for eCommerce
             </p>
           </div>
 
@@ -231,10 +229,12 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-2">Services</h4>
+            <h4 className="font-semibold mb-2">Platform</h4>
             <ul className="space-y-1 text-fuchsia-100">
-              <li>Price Monitoring</li>
-              <li>Competition Analysis</li>
+              <li>Price Intelligence</li>
+              <li>Stock &amp; Assortment Tracking</li>
+              <li>Competitor Intelligence</li>
+              <li>Market Trends &amp; Alerts</li>
             </ul>
           </div>
         </div>

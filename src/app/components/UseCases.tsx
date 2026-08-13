@@ -11,22 +11,22 @@ export function UseCases() {
     {
       title: "You're a distributor",
       desc:
-        "Track how competitors price the same products you distribute — stay competitive and win more deals.",
+        "See how competitors price and stock the products you distribute — react fast, stay competitive and win more deals.",
     },
     {
       title: "You're a manufacturer",
       desc:
-        "Monitor distributor pricing across regions and marketplaces to protect your brand and MAP.",
+        "Monitor distributor pricing and MAP compliance across regions and marketplaces to protect your brand.",
     },
     {
       title: "You're an importer",
       desc:
-        "Find which distributors/resellers offer the best prices for the same SKUs to optimize sourcing.",
+        "Spot which distributors and resellers offer the best prices for the same SKUs and optimize your sourcing.",
     },
     {
       title: "You're an online retailer",
       desc:
-        "Know if your prices are higher or lower than competitors so you don’t lose customers or margin.",
+        "Know where your prices stand against the market in real time so you never lose customers or margin blindly.",
     },
   ];
 
@@ -34,13 +34,17 @@ export function UseCases() {
     <section id="usecases" className="mx-auto max-w-7xl px-4 py-16">
       <div className="grid lg:grid-cols-2 gap-10 items-center">
         <div className="space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold">
-            Your partner for price monitoring online
+          <p className="text-xs md:text-sm uppercase tracking-widest text-indigo-600 font-semibold">
+            Who it&apos;s for
+          </p>
+          <h2 className="text-3xl md:text-4xl font-extrabold">
+            Market intelligence for every side of the market
           </h2>
           <p className="text-neutral-700">
-            Market Edge helps you monitor your products across competitor
-            websites and marketplaces and shows how your pricing compares so you
-            can react quickly and protect margin.
+            Whether you sell, distribute or source, Market Edge tracks your
+            products across competitor websites and marketplaces — prices,
+            stock and trends — so you can react quickly, protect margin and
+            find your next opportunity.
           </p>
           <div className="flex gap-3">
             <a
