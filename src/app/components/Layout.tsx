@@ -67,11 +67,11 @@ export function Layout({ children }: { children: ReactNode }) {
             aria-label="Go to Market Edge homepage"
           >
             <Image
-              src="/logo-40.png"
+              src="/market-edge-logo.png"
               alt="Market Edge logo"
-              width={32}
-              height={32}
-              className="rounded-2xl bg-white p-1"
+              width={40}
+              height={40}
+              className="rounded-xl"
             />
             <span className="font-semibold text-lg">Market Edge</span>
           </Link>
@@ -188,11 +188,11 @@ export function Layout({ children }: { children: ReactNode }) {
                 aria-label="Go to Market Edge homepage"
               >
                 <Image
-                  src="/logo-40.png"
+                  src="/market-edge-logo.png"
                   alt="Market Edge logo"
-                  width={32}
-                  height={32}
-                  className="rounded-2xl bg-white p-1"
+                  width={40}
+                  height={40}
+                  className="rounded-xl"
                 />
                 <span className="font-semibold">Market Edge</span>
               </Link>

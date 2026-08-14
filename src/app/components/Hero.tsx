@@ -1,21 +1,13 @@
 // src/app/components/Hero.tsx
 "use client";
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { Reveal } from "./ui/Reveal";
-import {
-  TrendingDown,
-  TrendingUp,
-  ArrowRight,
-  Globe2,
-  BarChart3,
-  Search,
-  PackageSearch,
-  BellRing,
-} from "lucide-react";
 
 /* ---------------------------------------------------------------------------
- * Hero — Similarweb-style: dark navy stage, centered headline, and a big
- * snap-scrolling carousel of dashboard cards (center in focus, sides faded).
+ * Hero — dark navy stage, centered headline, and a semi-arc snap carousel of
+ * product screens: 3 real dashboard shots + 2 HTML mocks in the same style.
  * ------------------------------------------------------------------------- */
 
 /* categorical palette validated for CVD safety & contrast (dataviz checks) */
@@ -26,23 +18,9 @@ const C = {
   amber: "#b45309",
 };
 
-const COMPETITORS = [
-  { name: "Your brand", share: "28%", color: C.indigo },
-  { name: "Competitor A", share: "24%", color: C.pink },
-  { name: "Competitor B", share: "17%", color: C.emerald },
-  { name: "Competitor C", share: "12%", color: C.amber },
-];
-
-const PRICE_MOVES = [
-  { sku: "Wireless Headset X2", store: "amazon.com", delta: -6, price: "$74.99" },
-  { sku: "Ergo Chair Pro", store: "wayfair.com", delta: +4, price: "$289.00" },
-  { sku: "4K Action Cam", store: "bestbuy.com", delta: -3, price: "$189.50" },
-  { sku: "Smart Scale S", store: "walmart.com", delta: -8, price: "$39.99" },
-];
-
 const LINES = [
   {
-    color: C.indigo,
+    color: "#6366f1",
     points:
       "0,118 50,110 100,116 150,98 200,104 250,88 300,95 350,78 400,84 450,66 500,72 550,58 600,62",
   },
@@ -58,52 +36,9 @@ const LINES = [
   },
 ];
 
-/* ---------- small building blocks ---------- */
-
-function WindowDots() {
-  return (
-    <div className="flex items-center gap-1.5">
-      <span className="h-2 w-2 rounded-full bg-rose-400/80" />
-      <span className="h-2 w-2 rounded-full bg-amber-400/80" />
-      <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
-    </div>
-  );
-}
-
-function CardChrome({
-  icon,
-  label,
-  children,
-}: {
-  icon?: React.ReactNode;
-  label: React.ReactNode;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="h-full rounded-2xl bg-white shadow-2xl ring-1 ring-black/10 overflow-hidden text-left flex flex-col">
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100 bg-gray-50/80 shrink-0">
-        <WindowDots />
-        <span className="inline-flex items-center gap-1.5 text-[11px] text-neutral-500">
-          {icon}
-          {label}
-        </span>
-        <span className="rounded-md bg-indigo-600 px-2 py-0.5 text-[10px] font-semibold text-white">
-          Live
-        </span>
-      </div>
-      <div className="p-4 sm:p-5 grow">{children}</div>
-    </div>
-  );
-}
-
 function TrendChart() {
   return (
-    <svg
-      viewBox="0 0 600 180"
-      className="w-full h-auto"
-      role="img"
-      aria-label="Market share trend of your brand versus three competitors"
-    >
+    <svg viewBox="0 0 600 180" className="w-full h-auto" aria-hidden>
       {[30, 70, 110, 150].map((y) => (
         <line key={y} x1="0" y1={y} x2="600" y2={y} stroke="#e5e7eb" strokeWidth="1" />
       ))}
@@ -122,273 +57,312 @@ function TrendChart() {
   );
 }
 
-function AreaChart() {
+/* stepped price series for the Price Intelligence mock */
+function StepChart() {
   return (
-    <svg viewBox="0 0 560 150" className="w-full h-auto" aria-hidden>
-      <defs>
-        <linearGradient id="me-hero-area" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={C.indigo} stopOpacity="0.35" />
-          <stop offset="100%" stopColor={C.indigo} stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      {[40, 80, 120].map((y) => (
-        <line key={y} x1="0" y1={y} x2="560" y2={y} stroke="#e5e7eb" strokeWidth="1" />
+    <svg viewBox="0 0 600 170" className="w-full h-auto" aria-hidden>
+      {[30, 65, 100, 135].map((y) => (
+        <line key={y} x1="0" y1={y} x2="600" y2={y} stroke="#e5e7eb" strokeWidth="1" />
       ))}
-      <polygon
-        points="0,108 70,96 140,102 210,78 280,84 350,62 420,68 490,50 560,44 560,150 0,150"
-        fill="url(#me-hero-area)"
-      />
-      <polyline
-        points="0,108 70,96 140,102 210,78 280,84 350,62 420,68 490,50 560,44"
+      <line x1="0" y1="82" x2="600" y2="82" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4 4" />
+      <path
+        d="M0 96 H70 V104 H150 V98 H230 V112 H320 V106 H420 V118 H600"
         fill="none"
-        stroke={C.indigo}
-        strokeWidth="2.5"
-        strokeLinecap="round"
+        stroke={C.pink}
+        strokeWidth="2"
         strokeLinejoin="round"
       />
-      <circle cx="560" cy="44" r="4.5" fill={C.indigo} stroke="#fff" strokeWidth="2" />
+      <path
+        d="M0 70 H60 V78 H140 V72 H240 V60 H340 V66 H450 V52 H600"
+        fill="none"
+        stroke="#6366f1"
+        strokeWidth="2.5"
+        strokeLinejoin="round"
+      />
+      <circle cx="600" cy="52" r="4.5" fill="#6366f1" stroke="#fff" strokeWidth="2" />
     </svg>
   );
 }
 
-/* ---------- carousel cards ---------- */
+/* ---------- app-frame chrome shared by the two generated screens ---------- */
 
-function MarketOverviewCard() {
+const NAV = [
+  "Dashboard",
+  "Price Intelligence",
+  "Assortment Intelligence",
+  "Competitive Intelligence",
+  "Opportunity Intelligence",
+];
+
+function AppFrame({
+  active,
+  title,
+  subtitle,
+  children,
+}: {
+  active: number;
+  title: string;
+  subtitle: string;
+  children: React.ReactNode;
+}) {
   return (
-    <CardChrome
-      icon={<Search className="h-3 w-3" aria-hidden />}
-      label={
-        <>
-          <span className="font-medium text-neutral-700">yourbrand.com</span>
-          <span className="text-neutral-300">|</span>
-          <span>vs. 3 competitors</span>
-        </>
-      }
-    >
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-bold text-neutral-900">Market Overview</h3>
-        <span className="text-[11px] text-neutral-400">Last 30 days · All channels</span>
-      </div>
-
-      <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
-        <div className="rounded-xl bg-indigo-50/70 px-3 py-2">
-          <p className="text-[10px] uppercase tracking-wide text-indigo-600 font-semibold">
-            Market share
-          </p>
-          <p className="text-lg font-extrabold text-neutral-900 leading-tight">28.4%</p>
-          <p className="text-[10px] font-semibold text-emerald-700">▲ 2.1 pts</p>
+    <div className="aspect-[3/2] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/10 bg-[#f7f8fb] flex text-left">
+      {/* sidebar */}
+      <div className="w-[23%] shrink-0 bg-[#10121f] text-white p-3 flex flex-col">
+        <div className="flex items-center gap-1.5 mb-4">
+          <Image
+            src="/market-edge-logo.png"
+            alt=""
+            width={18}
+            height={18}
+            className="rounded"
+          />
+          <span className="text-[9px] font-extrabold tracking-wide leading-tight">
+            MARKET
+            <br />
+            EDGE
+          </span>
         </div>
-        <div className="rounded-xl bg-fuchsia-50/70 px-3 py-2">
-          <p className="text-[10px] uppercase tracking-wide text-fuchsia-600 font-semibold">
-            Price position
-          </p>
-          <p className="text-lg font-extrabold text-neutral-900 leading-tight">−3.2%</p>
-          <p className="text-[10px] text-neutral-500">vs. market median</p>
-        </div>
-        <div className="rounded-xl bg-emerald-50/70 px-3 py-2">
-          <p className="text-[10px] uppercase tracking-wide text-emerald-700 font-semibold">
-            Coverage
-          </p>
-          <p className="text-lg font-extrabold text-neutral-900 leading-tight">1,248</p>
-          <p className="text-[10px] text-neutral-500">products tracked</p>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-[1fr_auto] gap-3 items-center">
-        <TrendChart />
-        <ul className="space-y-1.5 pr-1">
-          {COMPETITORS.map((c) => (
-            <li key={c.name} className="flex items-center gap-2 text-[11px]">
-              <span
-                className="h-2 w-2 rounded-full shrink-0"
-                style={{ backgroundColor: c.color }}
-              />
-              <span className="text-neutral-600 whitespace-nowrap">{c.name}</span>
-              <span className="ml-auto font-semibold text-neutral-900">{c.share}</span>
+        <ul className="space-y-1">
+          {NAV.map((n, i) => (
+            <li
+              key={n}
+              className={[
+                "rounded-md px-2 py-1.5 text-[8px] font-semibold truncate",
+                i === active ? "bg-indigo-600 text-white" : "text-slate-400",
+              ].join(" ")}
+            >
+              {n}
             </li>
           ))}
         </ul>
-      </div>
-    </CardChrome>
-  );
-}
-
-function PricePositionCard() {
-  const rows = [
-    { ch: "amazon.com", idx: "94.1", down: true },
-    { ch: "ebay.com", idx: "97.6", down: true },
-    { ch: "emag.ro", idx: "101.2", down: false },
-  ];
-  return (
-    <CardChrome
-      icon={<BarChart3 className="h-3 w-3" aria-hidden />}
-      label="Price Position"
-    >
-      <div className="flex items-end justify-between mb-3">
-        <div>
-          <p className="text-[10px] uppercase tracking-wide text-neutral-400 font-semibold">
-            Avg. price index
-          </p>
-          <p className="text-2xl font-extrabold text-neutral-900">
-            96.8 <span className="text-xs font-semibold text-neutral-400">(market = 100)</span>
-          </p>
+        <div className="mt-auto flex items-center gap-1.5">
+          <span className="h-4 w-4 rounded-full bg-gradient-to-tr from-fuchsia-500 to-indigo-500" />
+          <span className="text-[8px] text-slate-300 font-semibold">John Smith</span>
         </div>
-        <span className="text-[11px] font-semibold text-emerald-700">
-          cheaper than market
-        </span>
       </div>
-      <AreaChart />
-      <ul className="mt-3 divide-y divide-gray-100 text-[11px]">
-        {rows.map((r) => (
-          <li key={r.ch} className="flex items-center justify-between py-1.5">
-            <span className="text-neutral-600">{r.ch}</span>
-            <span
-              className={`font-semibold ${r.down ? "text-emerald-700" : "text-rose-600"}`}
-            >
-              {r.idx}
+
+      {/* content */}
+      <div className="min-w-0 grow p-3 flex flex-col gap-2">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-[13px] font-extrabold text-neutral-900 leading-tight">
+              {title}
+            </p>
+            <p className="text-[8px] text-neutral-500">{subtitle}</p>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="rounded-md bg-white ring-1 ring-black/10 px-2 py-1 text-[8px] text-neutral-600">
+              May 12 – Jun 10, 2026
             </span>
-          </li>
-        ))}
-      </ul>
-    </CardChrome>
-  );
-}
-
-function CompetitorMovesCard() {
-  return (
-    <CardChrome
-      icon={<Globe2 className="h-3 w-3" aria-hidden />}
-      label="Competitor Moves"
-    >
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-bold text-neutral-900">Latest price changes</h3>
-        <span className="text-[11px] text-neutral-400">Today</span>
+            <span className="rounded-md bg-indigo-600 px-2 py-1 text-[8px] font-semibold text-white">
+              Export Report
+            </span>
+          </div>
+        </div>
+        {children}
       </div>
-      <ul className="divide-y divide-gray-100">
-        {PRICE_MOVES.map((m) => {
-          const down = m.delta < 0;
-          return (
-            <li key={m.sku} className="flex items-center gap-2 py-2.5">
-              <div className="min-w-0">
-                <p className="truncate text-xs font-semibold text-neutral-800">{m.sku}</p>
-                <p className="text-[11px] text-neutral-400">{m.store}</p>
-              </div>
-              <div className="ml-auto text-right">
-                <p className="text-xs font-semibold text-neutral-900">{m.price}</p>
-                <p
-                  className={`inline-flex items-center gap-0.5 text-[11px] font-semibold ${
-                    down ? "text-rose-600" : "text-emerald-700"
-                  }`}
-                >
-                  {down ? (
-                    <TrendingDown className="h-3 w-3" aria-hidden />
-                  ) : (
-                    <TrendingUp className="h-3 w-3" aria-hidden />
-                  )}
-                  {down ? "" : "+"}
-                  {m.delta}%
-                </p>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </CardChrome>
+    </div>
   );
 }
 
-function StockAssortmentCard() {
+function Kpi({ label, value, note, accent }: { label: string; value: string; note: string; accent?: string }) {
+  return (
+    <div className="rounded-lg bg-white ring-1 ring-black/5 px-2 py-1.5 min-w-0">
+      <p className="text-[7px] uppercase tracking-wide text-neutral-400 font-semibold truncate">{label}</p>
+      <p className="text-[12px] font-extrabold text-neutral-900 leading-tight">{value}</p>
+      <p className={`text-[7px] truncate ${accent ?? "text-neutral-400"}`}>{note}</p>
+    </div>
+  );
+}
+
+function Panel({ title, right, children }: { title: string; right?: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-lg bg-white ring-1 ring-black/5 p-2 min-w-0 grow flex flex-col">
+      <div className="flex items-center justify-between mb-1">
+        <p className="text-[9px] font-bold text-neutral-900">{title}</p>
+        {right && <p className="text-[7px] text-neutral-400">{right}</p>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+/* ---------- generated screen 1: Dashboard ---------- */
+
+function DashboardMock() {
+  const competitors = [
+    { name: "Your brand", share: "28.4%", color: "#6366f1" },
+    { name: "TechData", share: "24.1%", color: C.pink },
+    { name: "Ingram Micro", share: "17.6%", color: C.emerald },
+  ];
+  return (
+    <AppFrame
+      active={0}
+      title="Dashboard"
+      subtitle="Your whole market at a glance."
+    >
+      <div className="grid grid-cols-4 gap-1.5">
+        <Kpi label="Products in Market" value="45,892" note="Total unique products" />
+        <Kpi label="Your Products" value="12,435" note="In your catalog" />
+        <Kpi label="Price Position" value="96.8" note="vs market = 100" accent="text-emerald-600" />
+        <Kpi label="High Impact Alerts" value="9" note="Requires attention" accent="text-rose-500" />
+      </div>
+      <div className="flex gap-1.5 grow min-h-0">
+        <Panel title="Market Share Trend" right="Last 90 days">
+          <TrendChart />
+          <div className="mt-1 flex gap-2.5">
+            {competitors.map((c) => (
+              <span key={c.name} className="inline-flex items-center gap-1 text-[7px] text-neutral-600">
+                <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: c.color }} />
+                {c.name} <b className="text-neutral-900">{c.share}</b>
+              </span>
+            ))}
+          </div>
+        </Panel>
+        <div className="w-[38%] shrink-0 flex flex-col gap-1.5">
+          <Panel title="Competitor Activity" right="Today">
+            <ul className="space-y-1">
+              {[
+                ["TechData added 23 new products", "2h ago"],
+                ["Ingram Micro repriced 142 SKUs", "5h ago"],
+                ["Westcoast launched campaign", "1d ago"],
+              ].map(([t, w]) => (
+                <li key={t} className="flex items-start gap-1 text-[7.5px] text-neutral-600">
+                  <span className="mt-0.5 h-1 w-1 rounded-full bg-indigo-600 shrink-0" />
+                  <span className="truncate">{t}</span>
+                  <span className="ml-auto text-neutral-400 whitespace-nowrap">{w}</span>
+                </li>
+              ))}
+            </ul>
+          </Panel>
+          <Panel title="Revenue Opportunity">
+            <p className="text-[13px] font-extrabold text-indigo-600 leading-none">€1.24M</p>
+            <p className="text-[7px] text-neutral-400">142 opportunities identified</p>
+          </Panel>
+        </div>
+      </div>
+    </AppFrame>
+  );
+}
+
+/* ---------- generated screen 2: Price Intelligence ---------- */
+
+function PriceMock() {
   const rows = [
-    { name: "Your brand", pct: 96, w: "96%" },
-    { name: "Competitor A", pct: 82, w: "82%" },
-    { name: "Competitor B", pct: 74, w: "74%" },
-    { name: "Competitor C", pct: 61, w: "61%" },
+    { ch: "TechData", idx: "101.2", up: true },
+    { ch: "Ingram Micro", idx: "98.4", up: false },
+    { ch: "Also Group", idx: "97.1", up: false },
   ];
   return (
-    <CardChrome
-      icon={<PackageSearch className="h-3 w-3" aria-hidden />}
-      label="Stock & Assortment"
+    <AppFrame
+      active={1}
+      title="Price Intelligence"
+      subtitle="Know exactly where you stand vs. the market."
     >
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-bold text-neutral-900">In-stock rate by seller</h3>
-        <span className="text-[11px] text-neutral-400">1,248 SKUs</span>
+      <div className="grid grid-cols-4 gap-1.5">
+        <Kpi label="Price Index" value="96.8" note="market = 100" accent="text-emerald-600" />
+        <Kpi label="Cheaper On" value="61%" note="of tracked SKUs" />
+        <Kpi label="Repricing Events" value="23" note="detected today" accent="text-amber-600" />
+        <Kpi label="MAP Violations" value="3" note="needs review" accent="text-rose-500" />
       </div>
-      <ul className="space-y-3">
-        {rows.map((r, i) => (
-          <li key={r.name}>
-            <div className="flex items-center justify-between text-[11px] mb-1">
-              <span className="text-neutral-600">{r.name}</span>
-              <span className="font-semibold text-neutral-900">{r.pct}%</span>
+      <div className="flex gap-1.5 grow min-h-0">
+        <Panel title="Price Index vs Market" right="Last 90 days · dashed = median">
+          <StepChart />
+          <div className="mt-1 flex gap-2.5 text-[7px] text-neutral-600">
+            <span className="inline-flex items-center gap-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" /> You · 96.8
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: C.pink }} /> Market avg
+            </span>
+          </div>
+        </Panel>
+        <div className="w-[38%] shrink-0">
+          <Panel title="Competitor Price Index" right="vs you">
+            <ul className="divide-y divide-gray-100">
+              {rows.map((r) => (
+                <li key={r.ch} className="flex items-center justify-between py-1 text-[8px]">
+                  <span className="text-neutral-600 truncate">{r.ch}</span>
+                  <span className={`font-bold ${r.up ? "text-rose-500" : "text-emerald-600"}`}>
+                    {r.idx}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-1.5 rounded-md bg-amber-50 px-1.5 py-1 text-[7px] text-amber-800 font-medium">
+              Ingram Micro dropped prices on 142 SKUs (avg. −3.2%)
             </div>
-            <div className="h-2.5 rounded-full bg-gray-100 overflow-hidden">
-              <div
-                className="h-full rounded-full"
-                style={{ width: r.w, backgroundColor: i === 0 ? C.indigo : "#94a3b8" }}
-              />
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-4 rounded-xl bg-amber-50 px-3 py-2 text-[11px] text-amber-800 font-medium">
-        Competitor B is out of stock on 37 SKUs you sell — opportunity to win the buy box.
+          </Panel>
+        </div>
       </div>
-    </CardChrome>
+    </AppFrame>
   );
 }
 
-function TrendsAlertsCard() {
-  const alerts = [
-    { t: "Competitor A dropped prices on 14 SKUs", when: "2h ago", kind: "price" },
-    { t: "New seller entered: techdeals.ro", when: "Yesterday", kind: "market" },
-    { t: "Your price position improved to 96.8", when: "This week", kind: "trend" },
-  ];
+/* ---------- real screenshots ---------- */
+
+function ShotSlide({ src, alt }: { src: string; alt: string }) {
   return (
-    <CardChrome
-      icon={<BellRing className="h-3 w-3" aria-hidden />}
-      label="Trends & Alerts"
-    >
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-bold text-neutral-900">Market movement</h3>
-        <span className="text-[11px] text-neutral-400">Last 90 days</span>
-      </div>
-      <svg viewBox="0 0 560 120" className="w-full h-auto" aria-hidden>
-        {[30, 60, 90].map((y) => (
-          <line key={y} x1="0" y1={y} x2="560" y2={y} stroke="#e5e7eb" strokeWidth="1" />
-        ))}
-        <polyline
-          points="0,70 56,72 112,66 168,70 224,64 280,68 336,38 392,44 448,40 504,46 560,42"
-          fill="none"
-          stroke={C.amber}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <circle cx="336" cy="38" r="5" fill={C.amber} stroke="#fff" strokeWidth="2" />
-      </svg>
-      <ul className="mt-3 divide-y divide-gray-100 text-[11px]">
-        {alerts.map((a) => (
-          <li key={a.t} className="flex items-center gap-2 py-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-indigo-600 shrink-0" />
-            <span className="text-neutral-700 truncate">{a.t}</span>
-            <span className="ml-auto text-neutral-400 whitespace-nowrap">{a.when}</span>
-          </li>
-        ))}
-      </ul>
-    </CardChrome>
+    <div className="aspect-[3/2] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/10 bg-white">
+      <Image
+        src={src}
+        alt={alt}
+        width={1536}
+        height={1024}
+        sizes="(max-width: 768px) 88vw, 660px"
+        className="h-full w-full object-cover"
+      />
+    </div>
   );
 }
 
 /* ---------- carousel ---------- */
 
 const SLIDES = [
-  { key: "price", label: "Price intelligence", Card: PricePositionCard },
-  { key: "moves", label: "Competitor moves", Card: CompetitorMovesCard },
-  { key: "overview", label: "Market overview", Card: MarketOverviewCard },
-  { key: "stock", label: "Stock & assortment", Card: StockAssortmentCard },
-  { key: "trends", label: "Trends & alerts", Card: TrendsAlertsCard },
+  {
+    key: "price",
+    label: "Price intelligence",
+    Card: PriceMock,
+  },
+  {
+    key: "assortment",
+    label: "Assortment intelligence",
+    Card: () => (
+      <ShotSlide
+        src="/dash-assortment.png"
+        alt="Market Edge Assortment Intelligence dashboard: product gaps, brand gaps, category coverage and opportunity engine"
+      />
+    ),
+  },
+  {
+    key: "competitive",
+    label: "Competitive intelligence",
+    Card: () => (
+      <ShotSlide
+        src="/dash-competitive.png"
+        alt="Market Edge Competitive Intelligence dashboard: competitor activity feed, product launches, marketing activity and reviews"
+      />
+    ),
+  },
+  {
+    key: "dashboard",
+    label: "Dashboard",
+    Card: DashboardMock,
+  },
+  {
+    key: "opportunity",
+    label: "Opportunity intelligence",
+    Card: () => (
+      <ShotSlide
+        src="/dash-opportunity.png"
+        alt="Market Edge Opportunity Intelligence dashboard: opportunity pipeline, revenue potential and recommended actions"
+      />
+    ),
+  },
 ];
 
-/* Market overview sits in the middle and is the selected card at launch */
+/* Competitive intelligence sits in the middle and is selected at launch */
 const INITIAL_SLIDE = 2;
 
 function DashboardCarousel() {
@@ -503,7 +477,7 @@ function DashboardCarousel() {
         ref={trackRef}
         role="region"
         aria-roledescription="carousel"
-        aria-label="Market Edge dashboards"
+        aria-label="Market Edge product screens"
         className="relative flex gap-6 overflow-x-auto snap-x snap-mandatory pt-4 pb-20 px-[calc(50vw-min(330px,44vw))] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {SLIDES.map((s, i) => {
@@ -589,7 +563,7 @@ export function Hero() {
           </div>
         </Reveal>
 
-        {/* --------- dashboard carousel --------- */}
+        {/* --------- product screens carousel --------- */}
         <Reveal mode="mount" y={40} delay={150} className="relative mt-14 md:mt-16">
           <DashboardCarousel />
 
