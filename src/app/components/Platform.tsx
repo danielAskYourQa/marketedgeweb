@@ -242,6 +242,85 @@ function Legend({ series }: { series: Series[] }) {
   );
 }
 
+/* ---------------------------------------------------------------------------
+ * LightFrame — light-mode product screen, same design language as the hero
+ * mocks (sidebar + KPI content) but on a white/soft palette.
+ * ------------------------------------------------------------------------- */
+
+const FRAME_NAV = [
+  "Price intelligence",
+  "Stock & assortment",
+  "Competitor intelligence",
+  "Trends & alerts",
+  "Marketplace coverage",
+  "AI product matching",
+];
+
+function LightFrame({
+  active,
+  title,
+  children,
+}: {
+  active: number;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/10 bg-[#fafbfe] flex text-left">
+      {/* light sidebar */}
+      <div className="hidden sm:flex w-[24%] shrink-0 bg-white border-r border-slate-100 p-3 flex-col">
+        <div className="flex items-center gap-1.5 mb-4">
+          <span className="grid h-5 w-5 place-items-center rounded-md bg-gradient-to-tr from-fuchsia-600 to-indigo-600 text-white text-[9px] font-black">
+            M
+          </span>
+          <span className="text-[9px] font-extrabold tracking-wide leading-tight text-neutral-900">
+            MARKET
+            <br />
+            EDGE
+          </span>
+        </div>
+        <ul className="space-y-1">
+          {FRAME_NAV.map((n, i) => (
+            <li
+              key={n}
+              className={[
+                "rounded-md px-2 py-1.5 text-[8px] font-semibold truncate",
+                i === active
+                  ? "bg-indigo-50 text-indigo-700 ring-1 ring-indigo-100"
+                  : "text-slate-400",
+              ].join(" ")}
+            >
+              {n}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-auto flex items-center gap-1.5 pt-3">
+          <span className="h-4 w-4 rounded-full bg-gradient-to-tr from-fuchsia-500 to-indigo-500" />
+          <span className="text-[8px] text-slate-500 font-semibold">John Smith</span>
+        </div>
+      </div>
+
+      {/* content */}
+      <div className="min-w-0 grow p-3 flex flex-col gap-2">
+        <div className="flex items-center justify-between">
+          <p className="text-[12px] font-extrabold text-neutral-900">{title}</p>
+          <div className="flex items-center gap-1.5">
+            <span className="rounded-md bg-white ring-1 ring-black/10 px-2 py-1 text-[8px] text-neutral-600 hidden md:block">
+              May 12 – Jun 10, 2026
+            </span>
+            <span className="rounded-md bg-indigo-600 px-2 py-1 text-[8px] font-semibold text-white">
+              Export Report
+            </span>
+          </div>
+        </div>
+        <div className="rounded-xl bg-white ring-1 ring-black/5 p-3 grow min-w-0">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ---------- KPI tile ---------- */
 
 function Kpi({ label, value, note, tone }: { label: string; value: string; note?: string; tone: string }) {
@@ -584,20 +663,7 @@ export function Platform() {
           y={10}
           className="mt-6 rounded-3xl bg-white shadow-xl ring-1 ring-black/5 overflow-hidden"
         >
-          {/* window chrome */}
-          <div className="flex items-center gap-2 px-5 py-3 border-b border-gray-100 bg-gray-50/80">
-            <span className="h-2.5 w-2.5 rounded-full bg-rose-400/80" />
-            <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
-            <span className="ml-3 text-xs text-neutral-500">
-              Market Edge — {feature.title}
-            </span>
-            <span className="ml-auto text-[11px] text-neutral-400 hidden sm:block">
-              Last 90 days · 1,248 SKUs · 14 sellers
-            </span>
-          </div>
-
-          <div className="grid lg:grid-cols-[1fr_1.8fr] gap-8 p-6 md:p-10 items-start">
+          <div className="grid lg:grid-cols-[1fr_1.8fr] gap-8 p-6 md:p-10 items-center">
             <div className="text-left">
               <h3 className="text-2xl font-extrabold">{feature.title}</h3>
               <p className="mt-3 text-neutral-600">{feature.desc}</p>
@@ -610,7 +676,9 @@ export function Platform() {
               </a>
             </div>
             <div className="min-w-0">
-              <Viz />
+              <LightFrame active={active} title={feature.title}>
+                <Viz />
+              </LightFrame>
             </div>
           </div>
         </Reveal>
