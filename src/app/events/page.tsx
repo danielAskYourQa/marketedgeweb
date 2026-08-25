@@ -86,7 +86,7 @@ export default function EventPage() {
           <h1 className="mx-auto mt-6 max-w-4xl text-4xl md:text-6xl font-extrabold leading-tight [text-wrap:balance]">
             See your market like{" "}
             <span className="bg-gradient-to-r from-fuchsia-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
-              you've never seen it
+              you&apos;ve never seen it
             </span>
           </h1>
 
@@ -120,7 +120,7 @@ export default function EventPage() {
               href="#demos"
               className="font-semibold text-slate-400 hover:text-white transition"
             >
-              What we'll show you ↓
+              What we&apos;ll show you ↓
             </a>
           </div>
 

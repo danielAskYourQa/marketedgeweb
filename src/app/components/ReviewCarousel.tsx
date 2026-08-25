@@ -106,7 +106,13 @@ export default function ReviewCarousel({
     if (!touch.current) return;
     const t = e.changedTouches[0];
     const dx = t.clientX - touch.current.x;
-    if (Math.abs(dx) > 40) dx > 0 ? prev() : next();
+    if (Math.abs(dx) > 40) {
+      if (dx > 0) {
+        prev();
+      } else {
+        next();
+      }
+    }
     touch.current = null;
   };
 
