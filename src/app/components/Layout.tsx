@@ -67,13 +67,12 @@ export function Layout({ children }: { children: ReactNode }) {
             aria-label="Go to Market Edge homepage"
           >
             <Image
-              src="/market-edge-logo.png"
-              alt="Market Edge logo"
-              width={40}
-              height={40}
-              className="rounded-xl"
+              src="/marketedge-logo-dark.svg"
+              alt="MarketEdge logo"
+              width={165}
+              height={32}
+              priority
             />
-            <span className="font-semibold text-lg">Market Edge</span>
           </Link>
 
           {/* Primary nav */}
@@ -188,13 +187,11 @@ export function Layout({ children }: { children: ReactNode }) {
                 aria-label="Go to Market Edge homepage"
               >
                 <Image
-                  src="/market-edge-logo.png"
-                  alt="Market Edge logo"
-                  width={40}
-                  height={40}
-                  className="rounded-xl"
+                  src="/marketedge-logo-dark.svg"
+                  alt="MarketEdge logo"
+                  width={145}
+                  height={28}
                 />
-                <span className="font-semibold">Market Edge</span>
               </Link>
             </div>
             <p className="text-slate-300">

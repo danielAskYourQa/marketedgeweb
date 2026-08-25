@@ -111,7 +111,7 @@ function AppFrame({
       <div className="w-[23%] shrink-0 bg-[#10121f] text-white p-3 flex flex-col">
         <div className="flex items-center gap-1.5 mb-4">
           <Image
-            src="/market-edge-logo.png"
+            src="/marketedge-icon.svg"
             alt=""
             width={18}
             height={18}

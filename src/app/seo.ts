@@ -59,7 +59,7 @@ export const organizationJsonLd = {
   "@type": "Organization",
   name: "Market Edge",
   url: SITE_URL,
-  logo: `${SITE_URL}/market-edge-logo.png`,
+  logo: `${SITE_URL}/icon.png`,
   email: "office@marketedgemonitoring.com",
   sameAs: ["https://www.trustpilot.com/review/marketedgemonitoring.com"],
 };
