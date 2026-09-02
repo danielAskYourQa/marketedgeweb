@@ -3,9 +3,28 @@
 import { useState } from "react";
 import { CheckCircle2, Loader2, ArrowRight } from "lucide-react";
 
+type FormStrings = {
+  placeholder: string;
+  button: string;
+  success: string;
+  note: string;
+};
+
+const DEFAULT_STRINGS: FormStrings = {
+  placeholder: "Work email",
+  button: "Claim your free scan",
+  success:
+    "You're in — we'll reach out to grab your website and competitor list, and your scan will be ready right after the event.",
+  note: "No credit card, no commitment — we'll only use this to send your market scan.",
+};
+
 /* Work-email lead capture for the event page (same pattern as the AskYourQA
    hero form: honeypot + /api/event-lead → email via Resend). */
-export default function EventLeadForm() {
+export default function EventLeadForm({
+  t = DEFAULT_STRINGS,
+}: {
+  t?: FormStrings;
+}) {
   const [email, setEmail] = useState("");
   const [botfield, setBotfield] = useState("");
   const [status, setStatus] = useState<
@@ -50,8 +69,7 @@ export default function EventLeadForm() {
       <div className="mx-auto mt-8 flex w-full max-w-xl items-center gap-3 rounded-3xl border border-emerald-300/40 bg-emerald-400/15 px-6 py-5 backdrop-blur-md sm:rounded-full">
         <CheckCircle2 className="h-6 w-6 shrink-0 text-emerald-300" aria-hidden />
         <p className="text-left text-sm font-semibold text-white sm:text-base">
-          You&apos;re in — we&apos;ll reach out to grab your website and
-          competitor list, and your scan will be ready right after the event.
+          {t.success}
         </p>
       </div>
     );
@@ -78,8 +96,8 @@ export default function EventLeadForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Work email"
-          aria-label="Work email"
+          placeholder={t.placeholder}
+          aria-label={t.placeholder}
           className="min-h-[56px] flex-1 px-6 py-4 text-neutral-800 outline-none"
         />
 
@@ -91,14 +109,13 @@ export default function EventLeadForm() {
           {status === "submitting" ? (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
           ) : null}
-          <span className="whitespace-nowrap">Claim your free scan</span>
+          <span className="whitespace-nowrap">{t.button}</span>
           <ArrowRight className="h-4 w-4" aria-hidden />
         </button>
       </form>
 
       <p className="mt-3 text-xs text-slate-400">
-        No credit card, no commitment — we&apos;ll only use this to send your
-        market scan.
+        {t.note}
       </p>
 
       {status === "error" && error && (
