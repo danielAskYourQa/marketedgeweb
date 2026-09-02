@@ -158,8 +158,9 @@ export default function TermsPage() {
         <h2>Contact</h2>
         <p>
           Ask Your QA SRL • Cluj-Napoca, Romania •{" "}
-          <a href="mailto:office@marketedgemonitoring.com">office@marketedgemonitoring.com</a> • +40
-          729 014 617
+          <a href="mailto:office@marketedgemonitoring.com">office@marketedgemonitoring.com</a> •{" "}
+          <a href="mailto:ionut@marketedgemonitoring.com">ionut@marketedgemonitoring.com</a> • +40
+          722 757 344
         </p>
       </section>
     </main>

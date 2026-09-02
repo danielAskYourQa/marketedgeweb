@@ -24,8 +24,9 @@ export default function PrivacyPage() {
         <h2>Who we are</h2>
         <p>
           Ask Your QA SRL, Cluj-Napoca, Romania. Email:{" "}
-          <a href="mailto:office@marketedgemonitoring.com">office@marketedgemonitoring.com</a> •
-          Phone: +40 729 014 617
+          <a href="mailto:office@marketedgemonitoring.com">office@marketedgemonitoring.com</a> •{" "}
+          <a href="mailto:ionut@marketedgemonitoring.com">ionut@marketedgemonitoring.com</a> •
+          Phone: +40 722 757 344
           {/* Optionally add company ID: CUI / Reg. No. */}
         </p>
 

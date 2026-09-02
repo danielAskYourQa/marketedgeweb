@@ -204,8 +204,9 @@ export function Layout({ children }: { children: ReactNode }) {
             <h4 className="font-semibold mb-2">Contact</h4>
             <ul className="space-y-1 text-fuchsia-100">
               <li>Cluj-Napoca, Romania</li>
-              <li>+40 729 014 617</li>
+              <li>+40 722 757 344</li>
               <li>office@marketedgemonitoring.com</li>
+              <li>ionut@marketedgemonitoring.com</li>
             </ul>
           </div>
 

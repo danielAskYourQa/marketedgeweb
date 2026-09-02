@@ -60,7 +60,13 @@ export default function ContactPage() {
                     office@marketedgemonitoring.com
                   </a>
                 </li>
-                <li>Phone: +40 729 014 617</li>
+                <li>
+                  Email:{" "}
+                  <a className="underline" href="mailto:ionut@marketedgemonitoring.com">
+                    ionut@marketedgemonitoring.com
+                  </a>
+                </li>
+                <li>Phone: +40 722 757 344</li>
                 <li>Location: Cluj-Napoca, Romania</li>
               </ul>
             </div>
