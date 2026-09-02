@@ -1,8 +1,15 @@
-/* Event details — fill in the real values here; the whole page renders from this. */
+/* Event details — ecomTEAM 2026 (https://ic.events/ecomteam) */
 export const EVENT = {
-  name: "GPeC E-Commerce Summit", // ← event name
-  dates: "November 4–5, 2026", // ← event dates
-  venue: "Bucharest, Romania", // ← city / venue
-  booth: "Booth 12", // ← stand / booth number
+  name: "ecomTEAM 2026",
+  url: "https://ic.events/ecomteam",
+  venue: "QOSMO Hotel, Brașov",
+  dates: {
+    ro: "16–18 septembrie 2026",
+    en: "September 16–18, 2026",
+  },
+  booth: {
+    ro: "standul Market Edge, zona Expo", // ← update when the stand number is known
+    en: "Market Edge stand, Expo area",
+  },
   bookingUrl: "/contact", // ← calendar link for demo slots (Calendly etc.)
 };

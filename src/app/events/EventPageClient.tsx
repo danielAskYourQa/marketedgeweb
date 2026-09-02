@@ -59,7 +59,7 @@ const STRINGS = {
         desc: "Opportunity Engine transformă fiecare gol într-un pas următor: branduri de adăugat, categorii în care să intri, tendințe de urmat.",
       },
     ],
-    offerEyebrow: "Oferta de eveniment",
+    offerEyebrow: "Oferta ecomTEAM",
     offerH2: "Scanare de piață gratuită pentru fiecare vizitator",
     offerP:
       "Lasă-ne site-ul tău și competitorii principali la stand. Configurăm crawlerele, rulăm prima scanare completă a pieței tale și îți trimitem raportul în zilele imediat următoare evenimentului. Raportul rămâne al tău, indiferent ce decizi.",
@@ -70,7 +70,7 @@ const STRINGS = {
       "Fără card, fără obligații — raportul e al tău",
     ],
     offerCta: "Rezervă-ți scanarea",
-    closingH2: `Nu ajungi la ${EVENT.booth}?`,
+    closingH2: `Nu ajungi la ${EVENT.name}?`,
     closingP:
       "Programează un demo remote și îți prezentăm platforma într-un call — apoi configurăm aceeași scanare gratuită pentru afacerea ta.",
     closingCta: "Programează un demo remote",
@@ -114,7 +114,7 @@ const STRINGS = {
         desc: "The Opportunity Engine turns every gap into a next step: brands to add, categories to enter, momentum to ride.",
       },
     ],
-    offerEyebrow: "Conference offer",
+    offerEyebrow: "ecomTEAM offer",
     offerH2: "Free market scan for every visitor",
     offerP:
       "Leave us your website and your top competitors at the stand. We'll configure the crawlers, run your first full market scan, and send you the report in the days right after the event. You keep it either way.",
@@ -125,7 +125,7 @@ const STRINGS = {
       "No credit card, no commitment — the report is yours",
     ],
     offerCta: "Reserve your scan",
-    closingH2: `Can't make it to ${EVENT.booth}?`,
+    closingH2: `Can't make it to ${EVENT.name}?`,
     closingP:
       "Book a remote demo and we'll walk you through the platform over a call — and set up the same free market scan for your business afterwards.",
     closingCta: "Book a remote demo",
@@ -210,12 +210,20 @@ export default function EventPageClient() {
           <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-slate-300">
             <span className="inline-flex items-center gap-1.5">
               <CalendarDays className="h-4 w-4 text-indigo-300" aria-hidden />
-              {EVENT.dates}
+              {EVENT.dates[lang]}
             </span>
             <span className="inline-flex items-center gap-1.5">
               <MapPin className="h-4 w-4 text-indigo-300" aria-hidden />
-              {EVENT.venue} · {EVENT.booth}
+              {EVENT.venue} · {EVENT.booth[lang]}
             </span>
+            <a
+              href={EVENT.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-indigo-300 hover:text-white transition"
+            >
+              ic.events/ecomteam ↗
+            </a>
           </div>
 
           <EventLeadForm t={t.form} />
