@@ -46,9 +46,7 @@ export default function ContactPage() {
 
             <div className="mt-4">
               <CalendlyInline
-                url={
-                  "https://calendly.com/ask_your_qa/discovery-meeting-position"
-                }
+                url={"https://calendly.com/ionut-marketedgemonitoring/30min"}
                 height={760}
               />
             </div>

@@ -131,8 +131,13 @@ const STRINGS = {
   },
 } as const;
 
-/* the platform's three components, with matching product screenshots */
-const COMPONENT_MEDIA = [
+/* the platform's three components; the third renders the new Market
+   Intelligence screens as a live mock (from the CI mockups artifact) */
+const COMPONENT_MEDIA: {
+  icon: typeof BarChart3;
+  img?: string;
+  alt?: string;
+}[] = [
   {
     icon: BarChart3,
     img: "/shot-benchmark.png",
@@ -144,11 +149,73 @@ const COMPONENT_MEDIA = [
     alt: "Market Edge assortment intelligence: product gaps and brand gaps on a live demo market",
   },
   {
-    icon: ScanSearch,
-    img: "/shot-exclusivity.png",
-    alt: "Market Edge market intelligence: category-level position — what only you sell versus what only competitors sell",
+    icon: ScanSearch, // no img: renders <MarketIntelMock /> below
   },
 ];
+
+/* compact rendition of the new Competitive/Market Intelligence overview */
+function MarketIntelMock() {
+  const competitors = [
+    { name: "vonmag", badge: "HIGH · 92", tone: "bg-rose-50 text-rose-700 border-l-rose-600", stat: "1,204 contested · +99/30d" },
+    { name: "ecoiluminat", badge: "MED · 48", tone: "bg-amber-50 text-amber-700 border-l-amber-600", stat: "486 · 1.06× above you" },
+    { name: "smarthouseelectric", badge: "LOW · 31", tone: "bg-emerald-50 text-emerald-700 border-l-emerald-600", stat: "402 · 1.02×" },
+  ];
+  return (
+    <div className="rounded-xl shadow-md ring-1 ring-black/10 bg-[#f4f5f9] p-3 text-left select-none">
+      {/* header */}
+      <div className="flex items-center justify-between rounded-lg bg-white ring-1 ring-black/5 px-3 py-2">
+        <div>
+          <p className="text-[11px] font-bold text-neutral-900 leading-tight">Competitive Intelligence</p>
+          <p className="text-[8px] text-neutral-400">Who threatens you, what they changed, where you fight</p>
+        </div>
+        <span className="rounded-md bg-indigo-600 px-1.5 py-0.5 text-[8px] font-semibold text-white">Live</span>
+      </div>
+
+      {/* threat-ranked competitors */}
+      <div className="mt-2 rounded-lg bg-white ring-1 ring-black/5 overflow-hidden">
+        {competitors.map((c) => (
+          <div key={c.name} className={`flex items-center gap-2 border-l-4 px-2.5 py-1.5 ${c.tone.split(" ").pop()}`}>
+            <span className="text-[9px] font-bold text-neutral-800">{c.name}</span>
+            <span className={`rounded px-1 py-0.5 text-[7px] font-bold ${c.tone.split(" ").slice(0, 2).join(" ")}`}>
+              {c.badge}
+            </span>
+            <span className="ml-auto text-[8px] text-neutral-500">{c.stat}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* head-to-head bar */}
+      <div className="mt-2 rounded-lg bg-white ring-1 ring-black/5 px-3 py-2">
+        <p className="text-[8px] font-semibold text-neutral-500 mb-1">
+          Head-to-Head vs vonmag · 1,204 shared products
+        </p>
+        <div className="flex h-3 overflow-hidden rounded-full text-[7px] font-bold text-white">
+          <span className="grid place-items-center bg-emerald-700" style={{ width: "38%" }}>
+            you 38%
+          </span>
+          <span className="bg-slate-300" style={{ width: "18%" }} />
+          <span className="grid place-items-center bg-rose-700" style={{ width: "44%" }}>
+            they 44%
+          </span>
+        </div>
+      </div>
+
+      {/* moves + promo strip */}
+      <div className="mt-2 grid grid-cols-2 gap-2">
+        <div className="rounded-lg bg-white ring-1 ring-black/5 px-2.5 py-1.5">
+          <p className="text-[8px] font-semibold text-neutral-500">Moves · 7 days</p>
+          <p className="text-[8px] text-neutral-700 mt-0.5">💸 vonmag price wave on <b>118 shared products</b></p>
+          <p className="text-[8px] font-semibold text-emerald-700 mt-0.5">⚡ 7 stockouts you can exploit</p>
+        </div>
+        <div className="rounded-lg bg-white ring-1 ring-black/5 px-2.5 py-1.5">
+          <p className="text-[8px] font-semibold text-neutral-500">Promo Watch</p>
+          <p className="text-[8px] text-neutral-700 mt-0.5"><b>47</b> active promos · median <b className="text-rose-600">−18%</b></p>
+          <p className="text-[8px] text-neutral-700 mt-0.5"><b className="text-rose-600">12</b> hit your products</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function LangSwitch({ lang, onChange }: { lang: Lang; onChange: (l: Lang) => void }) {
   return (
@@ -240,9 +307,14 @@ export default function EventPageClient() {
           <EventLeadForm t={t.form} />
 
           <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
-            <Link href={EVENT.bookingUrl} className="font-semibold text-indigo-300 hover:text-white transition">
+            <a
+              href={EVENT.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-indigo-300 hover:text-white transition"
+            >
               {t.bookSlot}
-            </Link>
+            </a>
             <a href="#components" className="font-semibold text-slate-400 hover:text-white transition">
               {t.whatWeShow}
             </a>
@@ -289,15 +361,19 @@ export default function EventPageClient() {
                     <h3 className="text-lg font-extrabold leading-snug">{c.title}</h3>
                   </div>
                   <p className="mt-3 text-sm text-neutral-600">{c.desc}</p>
-                  <div className="mt-5 mt-auto pt-5">
-                    <Image
-                      src={media.img}
-                      alt={media.alt}
-                      width={2265}
-                      height={1330}
-                      sizes="(max-width: 1024px) 92vw, 400px"
-                      className="w-full h-auto rounded-xl shadow-md ring-1 ring-black/10"
-                    />
+                  <div className="mt-auto pt-5">
+                    {media.img ? (
+                      <Image
+                        src={media.img}
+                        alt={media.alt ?? ""}
+                        width={2265}
+                        height={1330}
+                        sizes="(max-width: 1024px) 92vw, 400px"
+                        className="w-full h-auto rounded-xl shadow-md ring-1 ring-black/10"
+                      />
+                    ) : (
+                      <MarketIntelMock />
+                    )}
                   </div>
                 </div>
               );
@@ -356,13 +432,15 @@ export default function EventPageClient() {
             <p className="text-slate-300 mt-2 max-w-xl">{t.closingP}</p>
           </div>
           <div className="relative flex gap-3 shrink-0">
-            <Link
+            <a
               href={EVENT.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 bg-gradient-to-tr from-fuchsia-600 to-indigo-600 text-white font-semibold hover:opacity-90 transition"
             >
               {t.closingCta}
               <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
+            </a>
             <Link
               href="/#pricing"
               className="rounded-2xl px-5 py-3 border border-white/30 text-white font-semibold hover:bg-white/10 transition"

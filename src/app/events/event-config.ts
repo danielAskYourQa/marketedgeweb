@@ -7,5 +7,5 @@ export const EVENT = {
     ro: "16–18 septembrie 2026",
     en: "September 16–18, 2026",
   },
-  bookingUrl: "/contact", // ← calendar link for meetings during the event (Calendly etc.)
+  bookingUrl: "https://calendly.com/ionut-marketedgemonitoring/30min",
 };
