@@ -7,9 +7,9 @@ import {
   ArrowRight,
   CalendarDays,
   MapPin,
-  ScanSearch,
+  BarChart3,
   PackageSearch,
-  Zap,
+  ScanSearch,
   Check,
 } from "lucide-react";
 import EventLeadForm from "../components/EventLeadForm";
@@ -25,8 +25,8 @@ const STRINGS = {
     badge: `Ne găsești la ${EVENT.name}`,
     h1a: "Vezi piața ta cum",
     h1b: "n-ai mai văzut-o niciodată",
-    sub: "Vezi platforma în acțiune pe o piață reală, la standul nostru — apoi spune-ne site-ul tău și competitorii, iar noi construim aceeași imagine pentru afacerea ta și ți-o trimitem imediat după eveniment.",
-    bookSlot: "Rezervă un slot de demo →",
+    sub: "Suntem la ecomTEAM toate cele trei zile. Îți arătăm platforma pe piețe demo cu date reale, ne spui site-ul tău și competitorii — iar imediat după eveniment îți construim aceeași imagine pentru afacerea ta.",
+    bookSlot: "Programează o întâlnire la eveniment →",
     whatWeShow: "Ce îți arătăm ↓",
     form: {
       placeholder: "Email de serviciu",
@@ -40,29 +40,28 @@ const STRINGS = {
       { big: "~200.000 €", small: "venit anual dintr-o singură comandă salvată" },
       { big: "25–30h", small: "ore economisite lunar la verificările MAP" },
     ],
-    demosEyebrow: "La standul nostru",
-    demosH2: "Trei demo-uri. Cincisprezece minute. Datele tale.",
-    demosSub:
-      "Fără slide-uri, fără broșuri — platforma live, pe date reale de piață, îndreptată către afacerea ta.",
-    demoLabel: "Demo",
-    demos: [
+    componentsEyebrow: "Platforma",
+    componentsH2: "Trei componente. Toată piața ta.",
+    componentsSub:
+      "Fără slide-uri — platforma live, pe piețe demo cu date reale. Versiunea pentru piața ta o construim după eveniment.",
+    components: [
       {
-        title: "Platforma, live",
-        desc: "O piață reală pe ecran: peste 30.000 de produse la 4 competitori — prețuri, stocuri, goluri de sortiment și tendințe, exact cum le văd clienții noștri în fiecare dimineață.",
+        title: "Prețurile tale vs. competitori",
+        desc: "Produs cu produs: unde ești mai ieftin, unde ești mai scump și cine te subcotează — cu indice de preț pentru fiecare competitor.",
       },
       {
-        title: "Golurile tale, pe ecran",
-        desc: "Produsele și brandurile pe care competitorii le vând și tu nu — ordonate după veniturile pe care le valorează și cât de ușor sunt de câștigat.",
+        title: "Assortment intelligence",
+        desc: "Categoriile și brandurile care îți lipsesc: produsele pe care competitorii le vând și tu nu, ordonate după cât de ușor sunt de câștigat.",
       },
       {
-        title: "Acțiuni concrete, nu date brute",
-        desc: "Opportunity Engine transformă fiecare gol într-un pas următor: branduri de adăugat, categorii în care să intri, tendințe de urmat.",
+        title: "Market intelligence",
+        desc: "Poziția ta pe segmente: ești mai ieftin pe anumite branduri sau categorii? Unde ești singurul care vinde — și unde lipsești cu totul?",
       },
     ],
     offerEyebrow: "Oferta ecomTEAM",
     offerH2: "Scanare de piață gratuită pentru fiecare vizitator",
     offerP:
-      "Lasă-ne site-ul tău și competitorii principali la stand. Configurăm crawlerele, rulăm prima scanare completă a pieței tale și îți trimitem raportul în zilele imediat următoare evenimentului. Raportul rămâne al tău, indiferent ce decizi.",
+      "Spune-ne site-ul tău și competitorii principali — când ne întâlnim la eveniment sau lăsându-ți emailul mai sus. Configurăm crawlerele, rulăm prima scanare completă a pieței tale și îți trimitem raportul în zilele imediat următoare evenimentului. Raportul rămâne al tău, indiferent ce decizi.",
     offerBullets: [
       "Configurăm crawlere pentru competitorii tăi — zero efort din partea ta",
       "Raport de poziționare a prețurilor: unde ești mai ieftin, unde nu",
@@ -80,8 +79,8 @@ const STRINGS = {
     badge: `Live at ${EVENT.name}`,
     h1a: "See your market like",
     h1b: "you've never seen it",
-    sub: "Watch the platform work on a real market at our stand — then tell us your website and competitors, and we'll build the same view for your business and send it right after the event.",
-    bookSlot: "Book a demo slot →",
+    sub: "We're at ecomTEAM all three days. We'll show you the platform on demo markets with real data, you tell us your website and competitors — and right after the event we build the same view for your business.",
+    bookSlot: "Book a meeting at the event →",
     whatWeShow: "What we'll show you ↓",
     form: {
       placeholder: "Work email",
@@ -95,29 +94,28 @@ const STRINGS = {
       { big: "~€200k", small: "yearly revenue from one saved order" },
       { big: "25–30h", small: "executive hours saved per month on MAP checks" },
     ],
-    demosEyebrow: "At our stand",
-    demosH2: "Three demos. Fifteen minutes. Your data.",
-    demosSub:
-      "No slides, no brochure-ware — the live platform, on real market data, pointed at your business.",
-    demoLabel: "Demo",
-    demos: [
+    componentsEyebrow: "The platform",
+    componentsH2: "Three components. Your whole market.",
+    componentsSub:
+      "No slides — the live platform, on demo markets with real data. The version for your own market comes right after the event.",
+    components: [
       {
-        title: "The platform, live",
-        desc: "A real market on screen: 30,000+ products across 4 competitors — prices, stock, gaps and trends, exactly as our clients see them every morning.",
+        title: "Your prices vs. competitors",
+        desc: "Product by product: where you're cheaper, where you're not, and who undercuts you — with a price index for every competitor.",
       },
       {
-        title: "Your gaps, on screen",
-        desc: "Products and brands your competitors sell that you don't — ranked by how much revenue they're worth and how easy they are to win.",
+        title: "Assortment intelligence",
+        desc: "The categories and brands you're missing: products competitors sell that you don't, ranked by how easy they are to win.",
       },
       {
-        title: "Ranked actions, not raw data",
-        desc: "The Opportunity Engine turns every gap into a next step: brands to add, categories to enter, momentum to ride.",
+        title: "Market intelligence",
+        desc: "Your position by segment: are you cheaper on certain brands or categories? Where are you the only seller — and where are you missing entirely?",
       },
     ],
     offerEyebrow: "ecomTEAM offer",
     offerH2: "Free market scan for every visitor",
     offerP:
-      "Leave us your website and your top competitors at the stand. We'll configure the crawlers, run your first full market scan, and send you the report in the days right after the event. You keep it either way.",
+      "Tell us your website and your top competitors — when we meet at the event, or by leaving your email above. We'll configure the crawlers, run your first full market scan, and send you the report in the days right after the event. You keep it either way.",
     offerBullets: [
       "We set up crawlers for your competitors — no work on your side",
       "Price position report: where you're cheaper, where you're not",
@@ -133,10 +131,23 @@ const STRINGS = {
   },
 } as const;
 
-const DEMO_MEDIA = [
-  { icon: ScanSearch, img: "/shot-overview.png", alt: "Market Edge assortment overview on live market data" },
-  { icon: PackageSearch, img: "/shot-brand-gaps.png", alt: "Market Edge brand gaps ranked by opportunity" },
-  { icon: Zap, img: "/shot-opportunity.png", alt: "Market Edge opportunity engine with ranked actions" },
+/* the platform's three components, with matching product screenshots */
+const COMPONENT_MEDIA = [
+  {
+    icon: BarChart3,
+    img: "/shot-benchmark.png",
+    alt: "Market Edge: price index and head-to-head price comparison against every tracked competitor",
+  },
+  {
+    icon: PackageSearch,
+    img: "/shot-overview.png",
+    alt: "Market Edge assortment intelligence: product gaps and brand gaps on a live demo market",
+  },
+  {
+    icon: ScanSearch,
+    img: "/shot-exclusivity.png",
+    alt: "Market Edge market intelligence: category-level position — what only you sell versus what only competitors sell",
+  },
 ];
 
 function LangSwitch({ lang, onChange }: { lang: Lang; onChange: (l: Lang) => void }) {
@@ -214,7 +225,7 @@ export default function EventPageClient() {
             </span>
             <span className="inline-flex items-center gap-1.5">
               <MapPin className="h-4 w-4 text-indigo-300" aria-hidden />
-              {EVENT.venue} · {EVENT.booth[lang]}
+              {EVENT.venue}
             </span>
             <a
               href={EVENT.url}
@@ -232,7 +243,7 @@ export default function EventPageClient() {
             <Link href={EVENT.bookingUrl} className="font-semibold text-indigo-300 hover:text-white transition">
               {t.bookSlot}
             </Link>
-            <a href="#demos" className="font-semibold text-slate-400 hover:text-white transition">
+            <a href="#components" className="font-semibold text-slate-400 hover:text-white transition">
               {t.whatWeShow}
             </a>
           </div>
@@ -251,37 +262,34 @@ export default function EventPageClient() {
         </div>
       </section>
 
-      {/* ---------- what we'll show you ---------- */}
-      <section id="demos" className="bg-slate-50">
+      {/* ---------- the three platform components ---------- */}
+      <section id="components" className="bg-slate-50">
         <div className="mx-auto max-w-7xl px-4 py-20">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs md:text-sm uppercase tracking-widest text-indigo-600 font-semibold mb-3">
-              {t.demosEyebrow}
+              {t.componentsEyebrow}
             </p>
-            <h2 className="text-3xl md:text-5xl font-extrabold [text-wrap:balance]">{t.demosH2}</h2>
-            <p className="mt-4 text-neutral-600 text-lg">{t.demosSub}</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold [text-wrap:balance]">{t.componentsH2}</h2>
+            <p className="mt-4 text-neutral-600 text-lg">{t.componentsSub}</p>
           </div>
 
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {t.demos.map((d, i) => {
-              const media = DEMO_MEDIA[i];
+            {t.components.map((c, i) => {
+              const media = COMPONENT_MEDIA[i];
               const Icon = media.icon;
               return (
                 <div
-                  key={d.title}
+                  key={c.title}
                   className="flex flex-col rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 hover:shadow-lg transition"
                 >
                   <div className="flex items-center gap-3">
                     <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-fuchsia-600 to-indigo-600 text-white">
                       <Icon className="h-5 w-5" aria-hidden />
                     </span>
-                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-400">
-                      {t.demoLabel} {i + 1}
-                    </span>
+                    <h3 className="text-lg font-extrabold leading-snug">{c.title}</h3>
                   </div>
-                  <h3 className="mt-4 text-xl font-extrabold">{d.title}</h3>
-                  <p className="mt-2 text-sm text-neutral-600">{d.desc}</p>
-                  <div className="mt-5">
+                  <p className="mt-3 text-sm text-neutral-600">{c.desc}</p>
+                  <div className="mt-5 mt-auto pt-5">
                     <Image
                       src={media.img}
                       alt={media.alt}
@@ -325,10 +333,10 @@ export default function EventPageClient() {
           </div>
           <div className="min-w-0">
             <Image
-              src="/shot-benchmark.png"
-              alt="Market Edge benchmarking: your catalog versus every tracked competitor"
-              width={2265}
-              height={1325}
+              src="/shot-product-gaps.png"
+              alt="Market Edge product gaps: products competitors sell that you don't, with best market price per product"
+              width={2277}
+              height={1342}
               sizes="(max-width: 1024px) 92vw, 620px"
               className="w-full h-auto rounded-2xl shadow-xl ring-1 ring-black/10"
             />

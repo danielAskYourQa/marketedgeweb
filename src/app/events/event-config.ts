@@ -7,9 +7,5 @@ export const EVENT = {
     ro: "16–18 septembrie 2026",
     en: "September 16–18, 2026",
   },
-  booth: {
-    ro: "standul Market Edge, zona Expo", // ← update when the stand number is known
-    en: "Market Edge stand, Expo area",
-  },
-  bookingUrl: "/contact", // ← calendar link for demo slots (Calendly etc.)
+  bookingUrl: "/contact", // ← calendar link for meetings during the event (Calendly etc.)
 };
