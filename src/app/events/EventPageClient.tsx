@@ -2,69 +2,142 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { CalendarDays, MapPin } from "lucide-react";
-import EventLeadForm from "../components/EventLeadForm";
+import Image from "next/image";
+import {
+  CalendarDays,
+  ArrowRight,
+  Tag,
+  Package,
+  FileText,
+  BarChart3,
+  CheckCircle2,
+} from "lucide-react";
+import LeadModal, { type LeadFormStrings } from "../components/EventLeadForm";
 import { EVENT } from "./event-config";
 
 type Lang = "ro" | "en";
 
 /* ---------------------------------------------------------------------------
- * Single-screen event landing page. RO is the default (local event).
+ * ecomTEAM landing — dark blue stage, hero copy + dark dashboard mock,
+ * four feature cards. RO default.
  * ------------------------------------------------------------------------- */
-const STRINGS = {
+const STRINGS: Record<
+  Lang,
+  {
+    h1a: string;
+    h1b: string;
+    p1: string;
+    p2: string;
+    cta: string;
+    features: { title: string; desc: string }[];
+    form: LeadFormStrings;
+  }
+> = {
   ro: {
-    badge: `Ne găsești la ${EVENT.name}`,
-    h1a: "Vezi piața ta cum",
-    h1b: "n-ai mai văzut-o niciodată",
-    sub: "Suntem la ecomTEAM toate cele trei zile. Îți arătăm platforma pe piețe demo cu date reale, ne spui site-ul tău și competitorii — iar imediat după eveniment îți construim aceeași imagine pentru afacerea ta.",
-    home: "Descoperă platforma completă →",
+    h1a: "Ai venit la ecomTEAM să vezi ce urmează în eCommerce.",
+    h1b: "Noi îți arătăm ce se întâmplă deja în piața ta.",
+    p1: "MarketEdge monitorizează prețuri, stocuri, produse și competitori și transformă datele din piață în informații mai ușor de folosit în deciziile comerciale.",
+    p2: "Vezi mai clar cum ești poziționat, ce se schimbă la competitori și unde apar oportunități.",
+    cta: "Vreau demo",
+    features: [
+      {
+        title: "Prețuri",
+        desc: "Monitorizezi prețurile din piață și vezi rapid cum te poziționezi față de competitori.",
+      },
+      {
+        title: "Stocuri",
+        desc: "Urmărești disponibilitatea produselor și eviți situațiile de out of stock.",
+      },
+      {
+        title: "Produse",
+        desc: "Identifici produse noi, goluri de sortiment și oportunități de creștere.",
+      },
+      {
+        title: "Competitori",
+        desc: "Analizezi strategia competitorilor și vezi ce se schimbă în piața ta, în timp real.",
+      },
+    ],
     form: {
       placeholder: "Email de serviciu",
-      button: "Vreau Demo",
       success:
         "Gata! Te contactăm în curând ca să programăm demo-ul pentru piața ta.",
       note: "Fără card, fără obligații — folosim datele doar ca să te contactăm.",
       modalTitle: "Vreau demo",
-      modalSub: "Lasă-ne datele și te contactăm rapid — toate câmpurile sunt obligatorii.",
+      modalSub:
+        "Lasă-ne datele și te contactăm rapid — toate câmpurile sunt obligatorii.",
       firstName: "Prenume",
       lastName: "Nume",
       phone: "Telefon",
       website: "Site-ul tău",
       submit: "Trimite cererea",
     },
-    proof: [
-      { big: "+27.400 €", small: "marjă recuperată lunar pentru un distribuitor FMCG" },
-      { big: "~200.000 €", small: "venit anual dintr-o singură comandă salvată" },
-      { big: "25–30h", small: "ore economisite lunar la verificările MAP" },
-    ],
   },
   en: {
-    badge: `Live at ${EVENT.name}`,
-    h1a: "See your market like",
-    h1b: "you've never seen it",
-    sub: "We're at ecomTEAM all three days. We'll show you the platform on demo markets with real data, you tell us your website and competitors — and right after the event we build the same view for your business.",
-    home: "Explore the full platform →",
+    h1a: "You came to ecomTEAM to see what's next in eCommerce.",
+    h1b: "We show you what's already happening in your market.",
+    p1: "MarketEdge monitors prices, stock, products and competitors, turning market data into information that's easier to use in commercial decisions.",
+    p2: "See clearly where you stand, what's changing at your competitors and where opportunities appear.",
+    cta: "Book a demo",
+    features: [
+      {
+        title: "Prices",
+        desc: "Monitor market prices and instantly see how you're positioned against competitors.",
+      },
+      {
+        title: "Stock",
+        desc: "Track product availability and avoid out-of-stock situations.",
+      },
+      {
+        title: "Products",
+        desc: "Spot new products, assortment gaps and growth opportunities.",
+      },
+      {
+        title: "Competitors",
+        desc: "Analyze competitor strategy and see what's changing in your market, in real time.",
+      },
+    ],
     form: {
       placeholder: "Work email",
-      button: "Book a Demo",
-      success:
-        "You're in — we'll reach out shortly to schedule your demo.",
+      success: "You're in — we'll reach out shortly to schedule your demo.",
       note: "No credit card, no commitment — we'll only use this to contact you.",
       modalTitle: "Book a demo",
-      modalSub: "Leave your details and we'll get back to you fast — all fields are required.",
+      modalSub:
+        "Leave your details and we'll get back to you fast — all fields are required.",
       firstName: "First name",
       lastName: "Last name",
       phone: "Phone",
       website: "Your website",
       submit: "Send request",
     },
-    proof: [
-      { big: "+€27.4k", small: "monthly margin recovered for an FMCG distributor" },
-      { big: "~€200k", small: "yearly revenue from one saved order" },
-      { big: "25–30h", small: "executive hours saved per month on MAP checks" },
-    ],
   },
-} as const;
+};
+
+const FEATURE_ICONS = [Tag, Package, FileText, BarChart3];
+
+/* ---------------------------------------------------------------------------
+ * Dark dashboard mock — Assortment Intelligence overview, real product texts.
+ * ------------------------------------------------------------------------- */
+function DashboardMock() {
+  return (
+    <div className="rounded-2xl bg-[#0d1030] ring-1 ring-white/10 shadow-2xl shadow-indigo-950/60 overflow-hidden text-left lg:[transform:perspective(1600px)_rotateY(-5deg)] lg:hover:[transform:none] transition-transform duration-500">
+      {/* window bar */}
+      <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-white/5">
+        <span className="h-2 w-2 rounded-full bg-rose-400/80" />
+        <span className="h-2 w-2 rounded-full bg-amber-400/80" />
+        <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
+      </div>
+      <Image
+        src="/shot-events-dashboard.png"
+        alt="MarketEdge Assortment Intelligence: 66,894 competitor listings, 23,806 products in your catalogue, product gaps, brand gaps, category coverage and assortment benchmark"
+        width={2552}
+        height={1214}
+        priority
+        sizes="(max-width: 1024px) 92vw, 700px"
+        className="w-full h-auto"
+      />
+    </div>
+  );
+}
 
 function LangSwitch({ lang, onChange }: { lang: Lang; onChange: (l: Lang) => void }) {
   return (
@@ -89,6 +162,8 @@ function LangSwitch({ lang, onChange }: { lang: Lang; onChange: (l: Lang) => voi
 
 export default function EventPageClient() {
   const [lang, setLang] = useState<Lang>("ro");
+  const [leadOpen, setLeadOpen] = useState(false);
+  const [leadDone, setLeadDone] = useState(false);
 
   /* remember the visitor's choice */
   useEffect(() => {
@@ -105,76 +180,150 @@ export default function EventPageClient() {
   };
 
   const t = STRINGS[lang];
+  const demoBtn =
+    "inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-tr from-fuchsia-600 to-indigo-600 font-semibold text-white shadow-lg shadow-indigo-950/50 transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400";
 
   return (
-    <div lang={lang}>
-      <section className="relative isolate overflow-hidden bg-[#0b0b26] text-white">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(79,70,229,0.28),transparent_70%)]"
-        />
-        <div className="mx-auto max-w-7xl px-4 pt-8 md:pt-10 pb-20 text-center min-h-[calc(100vh-73px)] flex flex-col">
-          {/* language switch */}
-          <div className="flex justify-end">
-            <LangSwitch lang={lang} onChange={changeLang} />
-          </div>
+    <div
+      lang={lang}
+      className="relative isolate min-h-screen overflow-hidden bg-[#070823] text-white"
+    >
+      {/* blue-violet glow, as in the design */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-[radial-gradient(90%_70%_at_60%_35%,rgba(59,53,196,0.4),transparent_65%),radial-gradient(50%_45%_at_25%_80%,rgba(124,58,237,0.22),transparent_70%)]"
+      />
 
-          <div className="my-auto">
-            <p className="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/15 px-4 py-1.5 text-xs md:text-sm font-semibold text-indigo-200">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              {t.badge}
+      {/* ---------- header ---------- */}
+      <header className="sticky top-0 z-50 backdrop-blur bg-[#070823]/80 border-b border-white/5 overflow-x-clip">
+        <div className="mx-auto max-w-7xl px-4 py-3.5 flex items-center justify-between gap-3">
+          <Link href="/" aria-label="Go to Market Edge homepage" className="shrink-0">
+            <Image
+              src="/marketedge-logo-dark.svg"
+              alt="MarketEdge logo"
+              width={150}
+              height={29}
+              priority
+            />
+          </Link>
+          <div className="flex items-center gap-3 md:gap-5">
+            <LangSwitch lang={lang} onChange={changeLang} />
+            <span className="hidden md:flex items-center gap-2 text-sm text-slate-300">
+              <CalendarDays className="h-4 w-4 text-indigo-300" aria-hidden />
+              <span>
+                <b className="text-white">{EVENT.name}</b>
+                <br />
+                <span className="text-xs text-slate-400">{EVENT.dates[lang]}</span>
+              </span>
+            </span>
+            <button
+              type="button"
+              onClick={() => setLeadOpen(true)}
+              className={`${demoBtn} px-5 py-2.5 text-sm`}
+            >
+              {t.cta}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* ---------- hero ---------- */}
+      <section className="mx-auto max-w-7xl px-4 pt-12 md:pt-16 pb-10">
+        <div className="grid lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-8 items-center">
+          <div className="text-left">
+            <p className="inline-flex rounded-full bg-white/10 ring-1 ring-white/15 px-4 py-1.5 text-xs md:text-sm font-semibold text-indigo-200">
+              {EVENT.name}
             </p>
 
-            <h1 className="mx-auto mt-6 max-w-4xl text-4xl md:text-6xl font-extrabold leading-tight [text-wrap:balance]">
+            <h1 className="mt-5 text-3xl md:text-5xl font-extrabold leading-[1.15] [text-wrap:balance]">
               {t.h1a}{" "}
               <span className="bg-gradient-to-r from-fuchsia-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
                 {t.h1b}
               </span>
             </h1>
 
-            <p className="mx-auto mt-5 max-w-2xl text-base md:text-lg text-slate-300">{t.sub}</p>
+            <p className="mt-6 max-w-xl text-base md:text-lg text-slate-300">{t.p1}</p>
+            <p className="mt-4 max-w-xl text-base md:text-lg text-slate-300">{t.p2}</p>
 
-            <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-slate-300">
-              <span className="inline-flex items-center gap-1.5">
-                <CalendarDays className="h-4 w-4 text-indigo-300" aria-hidden />
-                {EVENT.dates[lang]}
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <MapPin className="h-4 w-4 text-indigo-300" aria-hidden />
-                {EVENT.venue}
-              </span>
-              <a
-                href={EVENT.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-indigo-300 hover:text-white transition"
+            {leadDone ? (
+              <div className="mt-8 flex max-w-xl items-center gap-3 rounded-2xl border border-emerald-300/40 bg-emerald-400/15 px-5 py-4">
+                <CheckCircle2 className="h-6 w-6 shrink-0 text-emerald-300" aria-hidden />
+                <p className="text-sm font-semibold">{t.form.success}</p>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setLeadOpen(true)}
+                className={`${demoBtn} mt-8 px-8 py-3.5 text-base`}
               >
-                ic.events/ecomteam ↗
-              </a>
-            </div>
-
-            <EventLeadForm t={t.form} />
-
-            <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
-              <Link href="/" className="font-semibold text-slate-400 hover:text-white transition">
-                {t.home}
-              </Link>
-            </div>
-
-            {/* proof band */}
-            <div className="mx-auto mt-12 grid max-w-3xl grid-cols-1 sm:grid-cols-3 gap-6">
-              {t.proof.map((s) => (
-                <div key={s.big}>
-                  <p className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-fuchsia-400 to-indigo-300 bg-clip-text text-transparent">
-                    {s.big}
-                  </p>
-                  <p className="mt-1 text-xs md:text-sm text-slate-400">{s.small}</p>
-                </div>
-              ))}
-            </div>
+                {t.cta}
+                <ArrowRight className="h-5 w-5" aria-hidden />
+              </button>
+            )}
           </div>
+
+          <DashboardMock />
         </div>
       </section>
+
+      {/* ---------- feature cards ---------- */}
+      <section className="mx-auto max-w-7xl px-4 pb-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {t.features.map((f, i) => {
+            const Icon = FEATURE_ICONS[i];
+            return (
+              <div
+                key={f.title}
+                className="rounded-2xl bg-white/[0.04] ring-1 ring-white/10 p-5 backdrop-blur-sm hover:bg-white/[0.07] transition"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-indigo-500/15 ring-1 ring-indigo-400/30 text-indigo-300">
+                    <Icon className="h-5 w-5" aria-hidden />
+                  </span>
+                  <h2 className="text-lg font-extrabold">{f.title}</h2>
+                </div>
+                <p className="mt-3 text-sm text-slate-300">{f.desc}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ---------- slim footer ---------- */}
+      <footer className="border-t border-white/5 text-xs text-slate-500" role="contentinfo">
+        <div className="mx-auto max-w-7xl px-4 py-6 flex flex-wrap items-center justify-between gap-3">
+          <span>
+            © {new Date().getFullYear()} MarketEdge · {EVENT.name} ·{" "}
+            {EVENT.venue} ·{" "}
+            <a
+              href={EVENT.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition"
+            >
+              ic.events/ecomteam
+            </a>
+          </span>
+          <span className="flex gap-4">
+            <Link href="/privacy" className="hover:text-white transition">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-white transition">
+              Terms of Service
+            </Link>
+          </span>
+        </div>
+      </footer>
+
+      <LeadModal
+        open={leadOpen}
+        onClose={() => setLeadOpen(false)}
+        onSuccess={() => {
+          setLeadOpen(false);
+          setLeadDone(true);
+        }}
+        t={t.form}
+      />
     </div>
   );
 }
