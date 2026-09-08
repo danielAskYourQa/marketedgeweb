@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { CalendarDays, MapPin } from "lucide-react";
 import EventLeadForm from "../components/EventLeadForm";
 import { EVENT } from "./event-config";
@@ -155,9 +156,9 @@ export default function EventPageClient() {
             <EventLeadForm t={t.form} />
 
             <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
-              <a href="/" className="font-semibold text-slate-400 hover:text-white transition">
+              <Link href="/" className="font-semibold text-slate-400 hover:text-white transition">
                 {t.home}
-              </a>
+              </Link>
             </div>
 
             {/* proof band */}
