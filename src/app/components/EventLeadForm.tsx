@@ -115,25 +115,15 @@ export default function EventLeadForm({
 
   return (
     <div className="mx-auto mt-8 w-full max-w-xl">
-      {/* hero pill: email + button that opens the popup */}
-      <div className="flex w-full flex-col overflow-hidden rounded-3xl border border-white/25 bg-white/95 shadow-2xl shadow-indigo-900/40 backdrop-blur-md sm:flex-row sm:rounded-full">
-        <input
-          type="email"
-          value={form.email}
-          onChange={set("email")}
-          placeholder={t.placeholder}
-          aria-label={t.placeholder}
-          className="min-h-[56px] flex-1 px-6 py-4 text-neutral-800 outline-none"
-        />
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="flex min-h-[56px] items-center justify-center gap-2 bg-gradient-to-tr from-fuchsia-600 to-indigo-600 px-6 py-4 font-semibold text-white transition hover:opacity-90 md:px-8"
-        >
-          <span className="whitespace-nowrap">{t.button}</span>
-          <ArrowRight className="h-4 w-4" aria-hidden />
-        </button>
-      </div>
+      {/* single CTA that opens the popup */}
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-2xl bg-gradient-to-tr from-fuchsia-600 to-indigo-600 px-10 py-4 text-lg font-semibold text-white shadow-lg shadow-indigo-900/40 transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400"
+      >
+        <span className="whitespace-nowrap">{t.button}</span>
+        <ArrowRight className="h-5 w-5" aria-hidden />
+      </button>
 
       <p className="mt-3 text-xs text-slate-400">{t.note}</p>
 
