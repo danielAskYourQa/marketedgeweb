@@ -56,7 +56,7 @@ export function Layout({ children }: { children: ReactNode }) {
       </a>
 
       <header
-        className="sticky top-0 z-50 backdrop-blur border-b border-white/10 bg-[#0b0b26]/90 text-white"
+        className="sticky top-0 z-50 backdrop-blur border-b border-white/10 bg-[#0b0b26]/90 text-white overflow-x-clip"
         role="banner"
       >
         <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
