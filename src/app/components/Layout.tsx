@@ -46,6 +46,51 @@ function SectionLink({
 }
 
 export function Layout({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  /* event landing: minimal chrome — logo only, no nav / sign-in / contact */
+  const isEventLanding = pathname?.startsWith("/events") ?? false;
+
+  if (isEventLanding) {
+    return (
+      <main className="min-h-screen bg-white text-neutral-900">
+        <header
+          className="sticky top-0 z-50 backdrop-blur border-b border-white/10 bg-[#0b0b26]/90 text-white overflow-x-clip"
+          role="banner"
+        >
+          <div className="mx-auto max-w-7xl px-4 py-4 flex items-center">
+            <Link
+              href={HOME}
+              className="flex items-center gap-2"
+              aria-label="Go to Market Edge homepage"
+            >
+              <Image
+                src="/marketedge-logo-dark.svg"
+                alt="MarketEdge logo"
+                width={165}
+                height={32}
+                priority
+              />
+            </Link>
+          </div>
+        </header>
+        <div id="content">{children}</div>
+        <footer className="bg-[#0b0b26] text-slate-400 text-xs" role="contentinfo">
+          <div className="mx-auto max-w-7xl px-4 py-6 flex flex-wrap items-center justify-between gap-3">
+            <span>© {new Date().getFullYear()} Market Edge</span>
+            <span className="flex gap-4">
+              <Link href="/privacy" className="hover:text-white transition">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="hover:text-white transition">
+                Terms of Service
+              </Link>
+            </span>
+          </div>
+        </footer>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-white text-neutral-900">
       <a

@@ -16,7 +16,6 @@ const STRINGS = {
     h1a: "Vezi piața ta cum",
     h1b: "n-ai mai văzut-o niciodată",
     sub: "Suntem la ecomTEAM toate cele trei zile. Îți arătăm platforma pe piețe demo cu date reale, ne spui site-ul tău și competitorii — iar imediat după eveniment îți construim aceeași imagine pentru afacerea ta.",
-    bookSlot: "Programează o întâlnire la eveniment →",
     home: "Descoperă platforma completă →",
     form: {
       placeholder: "Email de serviciu",
@@ -43,7 +42,6 @@ const STRINGS = {
     h1a: "See your market like",
     h1b: "you've never seen it",
     sub: "We're at ecomTEAM all three days. We'll show you the platform on demo markets with real data, you tell us your website and competitors — and right after the event we build the same view for your business.",
-    bookSlot: "Book a meeting at the event →",
     home: "Explore the full platform →",
     form: {
       placeholder: "Work email",
@@ -157,14 +155,6 @@ export default function EventPageClient() {
             <EventLeadForm t={t.form} />
 
             <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
-              <a
-                href={EVENT.bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-indigo-300 hover:text-white transition"
-              >
-                {t.bookSlot}
-              </a>
               <a href="/" className="font-semibold text-slate-400 hover:text-white transition">
                 {t.home}
               </a>
