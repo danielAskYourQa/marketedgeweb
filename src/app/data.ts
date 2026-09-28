@@ -59,7 +59,7 @@ export const defaultFaqs = [
   },
   {
     q: "Who is Market Edge for?",
-    a: "Distributors, manufacturers, retailers, and importers who need a clear view of pricing, stock and competitor activity across their market — from small shops tracking 5 competitors to businesses covering 20,000 products.",
+    a: "Distributors, manufacturers, retailers, and importers who need a clear view of pricing, stock and competitor activity across their market — from small shops tracking 5 competitors to enterprises watching their whole market.",
   },
   {
     q: "How does Market Edge collect market data?",
@@ -71,7 +71,7 @@ export const defaultFaqs = [
   },
   {
     q: "How is pricing structured?",
-    a: "Three flat plans sized by market coverage: Starter (up to 1,000 products, 5 competitors), Professional (up to 10,000 products, 10 competitors) and Business (up to 20,000 products, 20 competitors). Annual billing saves 20%, and custom plans are available beyond that.",
+    a: "Four plans sized by how many competitors you track — with unlimited products on every plan: Starter (5 competitors), Growth (10), Scale (20, AI Assistant included) and Enterprise (custom). The AI Assistant can be added to Starter or Growth for €100/month. Annual billing saves 20%.",
   },
   {
     q: "Can I try it before I commit?",
