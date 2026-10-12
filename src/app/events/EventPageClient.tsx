@@ -18,7 +18,7 @@ import { EVENT } from "./event-config";
 type Lang = "ro" | "en";
 
 /* ---------------------------------------------------------------------------
- * ecomTEAM landing — dark blue stage, hero copy + dark dashboard mock,
+ * Event landing (GPeC Summit) — dark blue stage, hero copy + dashboard shot,
  * four feature cards. RO default.
  * ------------------------------------------------------------------------- */
 const STRINGS: Record<
@@ -34,7 +34,7 @@ const STRINGS: Record<
   }
 > = {
   ro: {
-    h1a: "Ai venit la ecomTEAM să vezi ce urmează în eCommerce.",
+    h1a: "Ai venit la GPeC Summit să vezi ce urmează în eCommerce.",
     h1b: "Noi îți arătăm ce se întâmplă deja în piața ta.",
     p1: "MarketEdge monitorizează prețuri, stocuri, produse și competitori și transformă datele din piață în informații mai ușor de folosit în deciziile comerciale.",
     p2: "Vezi mai clar cum ești poziționat, ce se schimbă la competitori și unde apar oportunități.",
@@ -73,7 +73,7 @@ const STRINGS: Record<
     },
   },
   en: {
-    h1a: "You came to ecomTEAM to see what's next in eCommerce.",
+    h1a: "You came to GPeC Summit to see what's next in eCommerce.",
     h1b: "We show you what's already happening in your market.",
     p1: "MarketEdge monitors prices, stock, products and competitors, turning market data into information that's easier to use in commercial decisions.",
     p2: "See clearly where you stand, what's changing at your competitors and where opportunities appear.",
@@ -301,7 +301,7 @@ export default function EventPageClient() {
               rel="noopener noreferrer"
               className="hover:text-white transition"
             >
-              ic.events/ecomteam
+              gpec.ro
             </a>
           </span>
           <span className="flex gap-4">

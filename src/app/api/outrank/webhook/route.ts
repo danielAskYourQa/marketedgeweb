@@ -96,11 +96,18 @@ export async function POST(req: Request) {
       results.push({ slug, ok: true });
     } catch (e: unknown) {
       const message = e instanceof Error ? e.message : String(e);
+      console.error(`[outrank] publish failed for "${slug}":`, message);
       results.push({ slug: slug || "unknown", ok: false, error: message });
     }
   }
 
-  return NextResponse.json({ ok: true, results });
+  // If nothing was published, say so loudly — a 200 here made an expired
+  // GitHub token invisible for a month (Outrank never retried or alerted).
+  const failed = results.filter((r) => !r.ok);
+  if (failed.length === results.length) {
+    return NextResponse.json({ ok: false, results }, { status: 502 });
+  }
+  return NextResponse.json({ ok: true, partial: failed.length > 0, results });
 }
 
 function toMdx(opts: {

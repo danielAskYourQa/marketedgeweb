@@ -1,11 +1,11 @@
-/* Event details — ecomTEAM 2026 (https://ic.events/ecomteam) */
+/* Event details — GPeC SUMMIT, 13 Oct 2026 (https://www.gpec.ro/gpec-summit-octombrie/) */
 export const EVENT = {
-  name: "ecomTEAM 2026",
-  url: "https://ic.events/ecomteam",
-  venue: "QOSMO Hotel, Brașov",
+  name: "GPeC SUMMIT 2026",
+  url: "https://www.gpec.ro/gpec-summit-octombrie/",
+  venue: "Teatrul Național București",
   dates: {
-    ro: "16–18 septembrie 2026",
-    en: "September 16–18, 2026",
+    ro: "13 octombrie 2026",
+    en: "October 13, 2026",
   },
   bookingUrl: "https://calendly.com/ionut-marketedgemonitoring/30min",
 };
