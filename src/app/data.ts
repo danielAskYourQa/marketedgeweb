@@ -47,7 +47,7 @@ export const trustpilotReviews: Review[] = [
 export const defaultFaqs = [
   {
     q: "What is Market Edge?",
-    a: "Market Edge is an AI-powered market intelligence platform. It tracks competitor prices, stock and assortment across websites and marketplaces in near real time, and turns that data into a clear view of your market — trends, alerts and opportunities included.",
+    a: "Market Edge is an AI-powered market intelligence platform. It tracks competitor prices, stock and assortment across websites and marketplaces, and turns that data into five working views of your market — Price, Assortment, Competitive and Opportunity Intelligence plus Equivalence — with an AI assistant that answers questions straight from your data.",
   },
   {
     q: "What is a market intelligence platform?",
@@ -55,7 +55,7 @@ export const defaultFaqs = [
   },
   {
     q: "Is Market Edge a price tracking tool?",
-    a: "Price tracking is at the core of Market Edge — and it goes further. Alongside competitor price monitoring you get stock and availability tracking, assortment coverage, and market trend alerts, so you understand the whole market, not just today's prices.",
+    a: "Price tracking is at the core of Market Edge — and it goes further. Price Intelligence shows who is cheaper on every matched product and what is at stake; around it you get assortment gaps, competitor threat scores, head-to-head views, equivalent-product comparisons and a ranked list of opportunities — the whole market, not just today's prices.",
   },
   {
     q: "Who is Market Edge for?",

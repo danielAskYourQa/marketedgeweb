@@ -115,7 +115,7 @@ const STRINGS: Record<
 const FEATURE_ICONS = [Tag, Package, FileText, BarChart3];
 
 /* ---------------------------------------------------------------------------
- * Dark dashboard mock — Assortment Intelligence overview, real product texts.
+ * Dark dashboard mock — Competitive Intelligence overview, real market data.
  * ------------------------------------------------------------------------- */
 function DashboardMock() {
   return (
@@ -127,10 +127,10 @@ function DashboardMock() {
         <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
       </div>
       <Image
-        src="/shot-events-dashboard.png"
-        alt="MarketEdge Assortment Intelligence: 66,894 competitor listings, 23,806 products in your catalogue, product gaps, brand gaps, category coverage and assortment benchmark"
-        width={2552}
-        height={1214}
+        src="/shot-competitive.png"
+        alt="MarketEdge Competitive Intelligence: competitors ranked by threat score, this week's market digest, moves, head-to-head and exploitable stock-outs on live data"
+        width={1568}
+        height={746}
         priority
         sizes="(max-width: 1024px) 92vw, 700px"
         className="w-full h-auto"

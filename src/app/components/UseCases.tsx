@@ -17,9 +17,9 @@ const SEGMENTS = [
     kicker: "Online retailers",
     title: "Price with confidence. Win the buy box.",
     points: [
-      "Track competitor prices & stock in near real time",
-      "Reprice where it matters — without giving away margin",
-      "Be first to react when a competitor goes out of stock",
+      "Price Intelligence: who is cheaper on every matched product — and what's at stake, in money",
+      "Head-to-Head: the battlefield categories where the price war with each competitor actually happens",
+      "Moves flags the products a competitor ran out of and you haven't — be first while their shelf is empty",
     ],
   },
   {
@@ -27,9 +27,9 @@ const SEGMENTS = [
     kicker: "Brands & manufacturers",
     title: "Protect your brand and your channel.",
     points: [
-      "Monitor MAP compliance across all resellers",
-      "See exactly who sells your products, and where",
-      "Benchmark your shelf presence against competitors",
+      "See every reseller's live price and stock on your products, crawled daily",
+      "Benchmarking & Exclusivity: your shelf presence against every competitor, category by category",
+      "New Product Detection: watch competitor catalogs move the day they add or delist",
     ],
   },
   {
@@ -37,9 +37,9 @@ const SEGMENTS = [
     kicker: "Distributors",
     title: "Quote sharper. Win more deals.",
     points: [
-      "Know the market price for every SKU you quote",
-      "Track competing distributors' coverage and stock",
-      "Find the gaps where you're the only one in stock",
+      "Know the market price for every SKU you quote — your whole catalog, searchable with match links",
+      "Threat scores and 8-week catalogue trends on every competitor you track",
+      "Exclusivity: the products where you're the only one in stock — that's where you set the price",
     ],
   },
   {
@@ -47,9 +47,9 @@ const SEGMENTS = [
     kicker: "Importers & sourcing",
     title: "Buy the right products at the right time.",
     points: [
-      "Compare reseller prices across markets before you buy",
-      "Avoid inventory the market has already commoditized",
-      "Build orders around market stock gaps for better margin",
+      "Product & Brand Gaps: what the market sells that you don't, scored by opportunity",
+      "Equivalence: the same technical spec under a cheaper brand — matched on specs, not codes",
+      "Opportunity Engine ranks every signal 0–100 — or just Ask MarketEdge, our AI assistant, in plain language",
     ],
   },
 ];

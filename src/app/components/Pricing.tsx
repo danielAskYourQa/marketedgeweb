@@ -31,8 +31,8 @@ const PLANS: Plan[] = [
     features: [
       "Unlimited products",
       "Up to 5 competitors",
-      "Daily price & stock refresh",
-      "Alerts & dashboards",
+      "All modules: Price, Assortment, Competitive, Opportunity & Equivalence",
+      "Daily crawls · price & stock refresh",
       "Major marketplaces + any website",
       "Email support",
     ],
@@ -48,10 +48,9 @@ const PLANS: Plan[] = [
     features: [
       "Unlimited products",
       "Up to 10 competitors",
+      "Everything in Starter",
       "Near real-time refresh",
-      "Price history & market trends",
-      "Competitor stock & assortment tracking",
-      "CSV / Excel exports",
+      "Full report pack: executive summary, gaps, coverage + custom CSV builder",
       "Priority chat support",
     ],
   },
@@ -66,8 +65,8 @@ const PLANS: Plan[] = [
       "Unlimited products",
       "Up to 20 competitors",
       "Everything in Growth",
+      "Ask MarketEdge AI Assistant included",
       "API access & integrations",
-      "MAP monitoring workflows",
       "Dedicated onboarding & product matching",
     ],
   },
@@ -111,10 +110,11 @@ export function PricingSection() {
       </div>
 
       <p className="text-neutral-700 mb-10">
-        Every plan includes the full platform: price &amp; stock tracking,
-        alerts, trends and AI product matching. Add the AI Assistant to any
-        plan for {formatEUR(AI_ADDON_EUR)}/month — included on Scale and
-        Enterprise. Prices in EUR, excl. VAT. Cancel anytime.
+        Every plan includes the full platform: Price, Assortment, Competitive
+        &amp; Opportunity Intelligence, Equivalence and AI product matching.
+        Add the AI Assistant to any plan for {formatEUR(AI_ADDON_EUR)}/month —
+        included on Scale and Enterprise. Prices in EUR, excl. VAT. Cancel
+        anytime.
       </p>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">

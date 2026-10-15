@@ -7,312 +7,31 @@ import { Reveal } from "./ui/Reveal";
 
 /* ---------------------------------------------------------------------------
  * Hero — dark navy stage, centered headline, and a semi-arc snap carousel of
- * product screens: 3 real dashboard shots + 2 HTML mocks in the same style.
+ * real product screens captured from the live platform (demo market data).
  * ------------------------------------------------------------------------- */
-
-/* categorical palette validated for CVD safety & contrast (dataviz checks) */
-const C = {
-  indigo: "#4338ca",
-  pink: "#db2777",
-  emerald: "#047857",
-  amber: "#b45309",
-};
-
-const LINES = [
-  {
-    color: "#6366f1",
-    points:
-      "0,118 50,110 100,116 150,98 200,104 250,88 300,95 350,78 400,84 450,66 500,72 550,58 600,62",
-  },
-  {
-    color: C.pink,
-    points:
-      "0,96 50,104 100,92 150,108 200,96 250,112 300,102 350,116 400,104 450,118 500,108 550,122 600,114",
-  },
-  {
-    color: C.emerald,
-    points:
-      "0,150 50,142 100,152 150,138 200,146 250,132 300,142 350,128 400,138 450,124 500,134 550,120 600,128",
-  },
-];
-
-function TrendChart() {
-  return (
-    <svg viewBox="0 0 600 180" className="w-full h-auto" aria-hidden>
-      {[30, 70, 110, 150].map((y) => (
-        <line key={y} x1="0" y1={y} x2="600" y2={y} stroke="#e5e7eb" strokeWidth="1" />
-      ))}
-      {LINES.map((l) => (
-        <polyline
-          key={l.color}
-          points={l.points}
-          fill="none"
-          stroke={l.color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      ))}
-    </svg>
-  );
-}
-
-/* stepped price series for the Price Intelligence mock */
-function StepChart() {
-  return (
-    <svg viewBox="0 0 600 170" className="w-full h-auto" aria-hidden>
-      {[30, 65, 100, 135].map((y) => (
-        <line key={y} x1="0" y1={y} x2="600" y2={y} stroke="#e5e7eb" strokeWidth="1" />
-      ))}
-      <line x1="0" y1="82" x2="600" y2="82" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4 4" />
-      <path
-        d="M0 96 H70 V104 H150 V98 H230 V112 H320 V106 H420 V118 H600"
-        fill="none"
-        stroke={C.pink}
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M0 70 H60 V78 H140 V72 H240 V60 H340 V66 H450 V52 H600"
-        fill="none"
-        stroke="#6366f1"
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-      />
-      <circle cx="600" cy="52" r="4.5" fill="#6366f1" stroke="#fff" strokeWidth="2" />
-    </svg>
-  );
-}
-
-/* ---------- app-frame chrome shared by the two generated screens ---------- */
-
-const NAV = [
-  "Dashboard",
-  "Price Intelligence",
-  "Assortment Intelligence",
-  "Competitive Intelligence",
-  "Opportunity Intelligence",
-];
-
-function AppFrame({
-  active,
-  title,
-  subtitle,
-  children,
-}: {
-  active: number;
-  title: string;
-  subtitle: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="aspect-[3/2] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/10 bg-[#f7f8fb] flex text-left">
-      {/* sidebar */}
-      <div className="w-[23%] shrink-0 bg-[#10121f] text-white p-3 flex flex-col">
-        <div className="flex items-center gap-1.5 mb-4">
-          <Image
-            src="/marketedge-icon.svg"
-            alt=""
-            width={18}
-            height={18}
-            className="rounded"
-          />
-          <span className="text-[9px] font-extrabold tracking-wide leading-tight">
-            MARKET
-            <br />
-            EDGE
-          </span>
-        </div>
-        <ul className="space-y-1">
-          {NAV.map((n, i) => (
-            <li
-              key={n}
-              className={[
-                "rounded-md px-2 py-1.5 text-[8px] font-semibold truncate",
-                i === active ? "bg-indigo-600 text-white" : "text-slate-400",
-              ].join(" ")}
-            >
-              {n}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-auto flex items-center gap-1.5">
-          <span className="h-4 w-4 rounded-full bg-gradient-to-tr from-fuchsia-500 to-indigo-500" />
-          <span className="text-[8px] text-slate-300 font-semibold">John Smith</span>
-        </div>
-      </div>
-
-      {/* content */}
-      <div className="min-w-0 grow p-3 flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-[13px] font-extrabold text-neutral-900 leading-tight">
-              {title}
-            </p>
-            <p className="text-[8px] text-neutral-500">{subtitle}</p>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="rounded-md bg-white ring-1 ring-black/10 px-2 py-1 text-[8px] text-neutral-600">
-              May 12 – Jun 10, 2026
-            </span>
-            <span className="rounded-md bg-indigo-600 px-2 py-1 text-[8px] font-semibold text-white">
-              Export Report
-            </span>
-          </div>
-        </div>
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function Kpi({ label, value, note, accent }: { label: string; value: string; note: string; accent?: string }) {
-  return (
-    <div className="rounded-lg bg-white ring-1 ring-black/5 px-2 py-1.5 min-w-0">
-      <p className="text-[7px] uppercase tracking-wide text-neutral-400 font-semibold truncate">{label}</p>
-      <p className="text-[12px] font-extrabold text-neutral-900 leading-tight">{value}</p>
-      <p className={`text-[7px] truncate ${accent ?? "text-neutral-400"}`}>{note}</p>
-    </div>
-  );
-}
-
-function Panel({ title, right, children }: { title: string; right?: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-lg bg-white ring-1 ring-black/5 p-2 min-w-0 grow flex flex-col">
-      <div className="flex items-center justify-between mb-1">
-        <p className="text-[9px] font-bold text-neutral-900">{title}</p>
-        {right && <p className="text-[7px] text-neutral-400">{right}</p>}
-      </div>
-      {children}
-    </div>
-  );
-}
-
-/* ---------- generated screen 1: Dashboard ---------- */
-
-function DashboardMock() {
-  const competitors = [
-    { name: "Your brand", share: "28.4%", color: "#6366f1" },
-    { name: "TechData", share: "24.1%", color: C.pink },
-    { name: "Ingram Micro", share: "17.6%", color: C.emerald },
-  ];
-  return (
-    <AppFrame
-      active={0}
-      title="Dashboard"
-      subtitle="Your whole market at a glance."
-    >
-      <div className="grid grid-cols-4 gap-1.5">
-        <Kpi label="Products in Market" value="45,892" note="Total unique products" />
-        <Kpi label="Your Products" value="12,435" note="In your catalog" />
-        <Kpi label="Price Position" value="96.8" note="vs market = 100" accent="text-emerald-600" />
-        <Kpi label="High Impact Alerts" value="9" note="Requires attention" accent="text-rose-500" />
-      </div>
-      <div className="flex gap-1.5 grow min-h-0">
-        <Panel title="Market Share Trend" right="Last 90 days">
-          <TrendChart />
-          <div className="mt-1 flex gap-2.5">
-            {competitors.map((c) => (
-              <span key={c.name} className="inline-flex items-center gap-1 text-[7px] text-neutral-600">
-                <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: c.color }} />
-                {c.name} <b className="text-neutral-900">{c.share}</b>
-              </span>
-            ))}
-          </div>
-        </Panel>
-        <div className="w-[38%] shrink-0 flex flex-col gap-1.5">
-          <Panel title="Competitor Activity" right="Today">
-            <ul className="space-y-1">
-              {[
-                ["TechData added 23 new products", "2h ago"],
-                ["Ingram Micro repriced 142 SKUs", "5h ago"],
-                ["Westcoast launched campaign", "1d ago"],
-              ].map(([t, w]) => (
-                <li key={t} className="flex items-start gap-1 text-[7.5px] text-neutral-600">
-                  <span className="mt-0.5 h-1 w-1 rounded-full bg-indigo-600 shrink-0" />
-                  <span className="truncate">{t}</span>
-                  <span className="ml-auto text-neutral-400 whitespace-nowrap">{w}</span>
-                </li>
-              ))}
-            </ul>
-          </Panel>
-          <Panel title="Revenue Opportunity">
-            <p className="text-[13px] font-extrabold text-indigo-600 leading-none">€1.24M</p>
-            <p className="text-[7px] text-neutral-400">142 opportunities identified</p>
-          </Panel>
-        </div>
-      </div>
-    </AppFrame>
-  );
-}
-
-/* ---------- generated screen 2: Price Intelligence ---------- */
-
-function PriceMock() {
-  const rows = [
-    { ch: "TechData", idx: "101.2", up: true },
-    { ch: "Ingram Micro", idx: "98.4", up: false },
-    { ch: "Also Group", idx: "97.1", up: false },
-  ];
-  return (
-    <AppFrame
-      active={1}
-      title="Price Intelligence"
-      subtitle="Know exactly where you stand vs. the market."
-    >
-      <div className="grid grid-cols-4 gap-1.5">
-        <Kpi label="Price Index" value="96.8" note="market = 100" accent="text-emerald-600" />
-        <Kpi label="Cheaper On" value="61%" note="of tracked SKUs" />
-        <Kpi label="Repricing Events" value="23" note="detected today" accent="text-amber-600" />
-        <Kpi label="MAP Violations" value="3" note="needs review" accent="text-rose-500" />
-      </div>
-      <div className="flex gap-1.5 grow min-h-0">
-        <Panel title="Price Index vs Market" right="Last 90 days · dashed = median">
-          <StepChart />
-          <div className="mt-1 flex gap-2.5 text-[7px] text-neutral-600">
-            <span className="inline-flex items-center gap-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" /> You · 96.8
-            </span>
-            <span className="inline-flex items-center gap-1">
-              <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: C.pink }} /> Market avg
-            </span>
-          </div>
-        </Panel>
-        <div className="w-[38%] shrink-0">
-          <Panel title="Competitor Price Index" right="vs you">
-            <ul className="divide-y divide-gray-100">
-              {rows.map((r) => (
-                <li key={r.ch} className="flex items-center justify-between py-1 text-[8px]">
-                  <span className="text-neutral-600 truncate">{r.ch}</span>
-                  <span className={`font-bold ${r.up ? "text-rose-500" : "text-emerald-600"}`}>
-                    {r.idx}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-1.5 rounded-md bg-amber-50 px-1.5 py-1 text-[7px] text-amber-800 font-medium">
-              Ingram Micro dropped prices on 142 SKUs (avg. −3.2%)
-            </div>
-          </Panel>
-        </div>
-      </div>
-    </AppFrame>
-  );
-}
 
 /* ---------- real screenshots ---------- */
 
 function ShotSlide({ src, alt }: { src: string; alt: string }) {
+  /* real 2.1:1 app capture centered in a dark window frame, so the whole
+     screen shows uncropped inside the carousel's 3:2 card */
   return (
-    <div className="aspect-[3/2] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/10 bg-white">
-      <Image
-        src={src}
-        alt={alt}
-        width={1536}
-        height={1024}
-        sizes="(max-width: 768px) 88vw, 660px"
-        className="h-full w-full object-cover"
-      />
+    <div className="aspect-[3/2] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/10 bg-[#0d1030] flex flex-col">
+      <div className="flex items-center gap-1.5 px-4 py-2.5">
+        <span className="h-2 w-2 rounded-full bg-rose-400/80" />
+        <span className="h-2 w-2 rounded-full bg-amber-400/80" />
+        <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
+      </div>
+      <div className="flex-1 flex items-center px-3 pb-3">
+        <Image
+          src={src}
+          alt={alt}
+          width={1568}
+          height={746}
+          sizes="(max-width: 768px) 88vw, 660px"
+          className="w-full h-auto rounded-lg ring-1 ring-white/10"
+        />
+      </div>
     </div>
   );
 }
@@ -323,15 +42,20 @@ const SLIDES = [
   {
     key: "price",
     label: "Price intelligence",
-    Card: PriceMock,
-  },
-  {
-    key: "assortment",
-    label: "Assortment intelligence",
     Card: () => (
       <ShotSlide
-        src="/dash-assortment.png"
-        alt="Market Edge Assortment Intelligence dashboard: product gaps, brand gaps, category coverage and opportunity engine"
+        src="/shot-price-intelligence.png"
+        alt="Market Edge Price Intelligence: matched products priced against each competitor, with difference, amount at stake and who is cheaper"
+      />
+    ),
+  },
+  {
+    key: "product-gaps",
+    label: "Product gaps",
+    Card: () => (
+      <ShotSlide
+        src="/shot-product-gaps.png"
+        alt="Market Edge Product Gaps: products competitors sell that you don't, by category and brand, with opportunity scores and lowest market price"
       />
     ),
   },
@@ -340,23 +64,58 @@ const SLIDES = [
     label: "Competitive intelligence",
     Card: () => (
       <ShotSlide
-        src="/dash-competitive.png"
-        alt="Market Edge Competitive Intelligence dashboard: competitor activity feed, product launches, marketing activity and reviews"
+        src="/shot-competitive.png"
+        alt="Market Edge Competitive Intelligence: competitors ranked by threat score, weekly market digest, moves and head-to-head summary"
       />
     ),
   },
   {
-    key: "dashboard",
-    label: "Dashboard",
-    Card: DashboardMock,
+    key: "assortment",
+    label: "Assortment intelligence",
+    Card: () => (
+      <ShotSlide
+        src="/shot-assortment.png"
+        alt="Market Edge Assortment Intelligence: competitor listings, product gaps, brand gaps, category coverage and opportunity engine on live data"
+      />
+    ),
+  },
+  {
+    key: "brand-gaps",
+    label: "Brand gaps",
+    Card: () => (
+      <ShotSlide
+        src="/shot-brand-gaps.png"
+        alt="Market Edge Brand Gaps: brands competitors carry that you don't, with missing products, price profile and where each brand lives"
+      />
+    ),
+  },
+  {
+    key: "equivalence",
+    label: "Equivalence",
+    Card: () => (
+      <ShotSlide
+        src="/shot-equivalence.png"
+        alt="Market Edge Equivalence: competitor substitutes for your products matched on technical specs, with their price and the difference"
+      />
+    ),
+  },
+  {
+    key: "head-to-head",
+    label: "Head-to-Head",
+    Card: () => (
+      <ShotSlide
+        src="/shot-head-to-head.png"
+        alt="Market Edge Head-to-Head: shared products with one competitor, who wins on price, combined territory and contested categories"
+      />
+    ),
   },
   {
     key: "opportunity",
     label: "Opportunity intelligence",
     Card: () => (
       <ShotSlide
-        src="/dash-opportunity.png"
-        alt="Market Edge Opportunity Intelligence dashboard: opportunity pipeline, revenue potential and recommended actions"
+        src="/shot-moves.png"
+        alt="Market Edge Opportunity Intelligence — Moves: repricings, new products, delistings and exploitable stock-outs across competitors"
       />
     ),
   },
