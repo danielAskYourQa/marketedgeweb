@@ -178,7 +178,7 @@ export function Platform() {
           <p className="mt-4 text-neutral-600 text-lg">
             Real screens from the live platform — price, assortment,
             competitive and opportunity intelligence on actual market data:
-            23,700+ listings tracked across 5 stores, crawled daily. Pick a
+            23,700+ listings tracked across 5 stores, monitored daily. Pick a
             capability to see it in action.
           </p>
         </div>

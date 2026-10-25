@@ -27,7 +27,7 @@ const SEGMENTS = [
     kicker: "Brands & manufacturers",
     title: "Protect your brand and your channel.",
     points: [
-      "See every reseller's live price and stock on your products, crawled daily",
+      "See every reseller's live price and stock on your products, monitored daily",
       "Benchmarking & Exclusivity: your shelf presence against every competitor, category by category",
       "New Product Detection: watch competitor catalogs move the day they add or delist",
     ],

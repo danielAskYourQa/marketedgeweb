@@ -92,7 +92,7 @@ export async function POST(request: Request) {
       <p><strong>Email:</strong> ${esc(email)}</p>
       <p><strong>Phone:</strong> ${esc(phone)}</p>
       <p><strong>Website:</strong> ${esc(website)}</p>
-      <p>They claimed the free market scan offer. Follow up to collect their competitor list and schedule the crawl.</p>
+      <p>They claimed the free market scan offer. Follow up to collect their competitor list and schedule the monitoring setup.</p>
     `,
   });
 
