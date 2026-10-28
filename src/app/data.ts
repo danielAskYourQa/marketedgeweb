@@ -75,7 +75,7 @@ export const defaultFaqs = [
   },
   {
     q: "What counts as one competitor slot?",
-    a: "One slot covers a standard store with up to 25,000 products. Larger catalogs use one extra slot per additional 25,000 products, and heavily protected sites — marketplaces, anti-bot walls, login-gated stores — use one extra slot, because they take far more monitoring infrastructure to track reliably. We size every competitor for you before you commit.",
+    a: "One slot covers a standard store with up to 25,000 products. Larger catalogs use one extra slot per additional 25,000 products, and complex sites — marketplaces and platforms that need our advanced monitoring technology — use one extra slot, because tracking them reliably takes more infrastructure. We size every competitor for you before you commit.",
   },
   {
     q: "Can I try it before I commit?",

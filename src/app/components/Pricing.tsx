@@ -8,7 +8,8 @@ import {
   Sparkles,
   Plus,
   X,
-  ShieldAlert,
+  Layers,
+  Info,
 } from "lucide-react";
 
 const ANNUAL_DISCOUNT = 0.2; // 20% off on annual
@@ -150,7 +151,7 @@ function SubscriptionCalculator({ billing }: { billing: "monthly" | "annual" }) 
         <div>
           <h3 className="text-xl font-extrabold">Build your subscription</h3>
           <p className="mt-1 text-sm text-slate-400">
-            Pick each competitor&apos;s catalog size and flag the protected
+            Pick each competitor&apos;s catalog size and mark the complex
             ones — your price updates live.
           </p>
         </div>
@@ -176,18 +177,31 @@ function SubscriptionCalculator({ billing }: { billing: "monthly" | "annual" }) 
             />
             <button
               type="button"
-              aria-pressed={r.isProtected}
-              title="Marketplace, anti-bot wall or login-gated store — uses one extra slot"
+              role="checkbox"
+              aria-checked={r.isProtected}
+              title="A marketplace or a site that needs our advanced monitoring technology — uses one extra slot"
               onClick={() => update(r.id, { isProtected: !r.isProtected })}
               className={[
-                "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold ring-1 transition",
+                "inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold ring-1 transition",
                 r.isProtected
                   ? "bg-gradient-to-r from-fuchsia-600/30 to-indigo-600/30 text-fuchsia-200 ring-fuchsia-400/40"
                   : "bg-white/[0.04] text-slate-400 ring-white/10 hover:text-white",
               ].join(" ")}
             >
-              <ShieldAlert className="h-3.5 w-3.5" aria-hidden />
-              protected
+              {/* visible checkbox square so it reads as a toggle */}
+              <span
+                aria-hidden
+                className={[
+                  "grid h-4 w-4 shrink-0 place-items-center rounded-[5px] ring-1 transition",
+                  r.isProtected
+                    ? "bg-gradient-to-tr from-fuchsia-500 to-indigo-500 ring-fuchsia-300/60 text-white"
+                    : "bg-white/[0.06] ring-white/25",
+                ].join(" ")}
+              >
+                {r.isProtected && <Check className="h-3 w-3" strokeWidth={3} />}
+              </span>
+              <Layers className="h-3.5 w-3.5" aria-hidden />
+              complex site
             </button>
             <span className="ml-auto rounded-full bg-white/10 px-2.5 py-1 text-xs font-bold text-indigo-200">
               {rowSlots(r)} {rowSlots(r) === 1 ? "slot" : "slots"}
@@ -206,17 +220,36 @@ function SubscriptionCalculator({ billing }: { billing: "monthly" | "annual" }) 
         ))}
       </div>
 
-      <button
-        type="button"
-        onClick={() => {
-          setRows((rs) => [...rs, { id: nextId, size: 1, isProtected: false }]);
-          setNextId((n) => n + 1);
-        }}
-        className="mt-3 inline-flex items-center gap-1.5 rounded-xl border border-dashed border-white/20 px-4 py-2 text-sm font-semibold text-slate-300 hover:border-fuchsia-400/60 hover:text-white transition"
-      >
-        <Plus className="h-4 w-4" aria-hidden />
-        Add competitor
-      </button>
+      <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+        <button
+          type="button"
+          onClick={() => {
+            setRows((rs) => [...rs, { id: nextId, size: 1, isProtected: false }]);
+            setNextId((n) => n + 1);
+          }}
+          className="inline-flex items-center gap-1.5 rounded-xl border border-dashed border-white/20 px-4 py-2 text-sm font-semibold text-slate-300 hover:border-fuchsia-400/60 hover:text-white transition"
+        >
+          <Plus className="h-4 w-4" aria-hidden />
+          Add competitor
+        </button>
+
+        {/* complexity explainer */}
+        <details className="text-xs text-slate-400">
+          <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 font-semibold hover:text-white transition [&::-webkit-details-marker]:hidden">
+            <Info className="h-3.5 w-3.5" aria-hidden />
+            What makes a site complex?
+          </summary>
+          <p className="mt-2 max-w-xl leading-relaxed">
+            Most online stores are standard. A site counts as{" "}
+            <b className="text-slate-200">complex</b> when it&apos;s a
+            marketplace or needs our advanced monitoring technology to track
+            reliably — think very large, fast-changing platforms. Complex
+            sites use one extra slot. Not sure which yours are? Leave them as
+            standard — we verify every competitor&apos;s sizing with you
+            before you commit.
+          </p>
+        </details>
+      </div>
 
       {/* AI assistant — one flat add-on for the whole package */}
       <label className="mt-5 flex cursor-pointer items-center gap-3 rounded-2xl bg-white/[0.04] ring-1 ring-white/10 px-4 py-3 text-sm transition hover:ring-fuchsia-400/40">
@@ -293,8 +326,8 @@ function CustomCard() {
 
       <ul className="mt-5 space-y-2.5">
         {[
-          "We verify every competitor's size and protection for you",
-          "Custom monitoring setup for heavily protected sites",
+          "We verify every competitor's size and complexity for you",
+          "Custom setup for the most complex sites",
           "API access & integrations, custom monitoring frequency",
           "SLA, multiple seats & SSO",
         ].map((f) => (
@@ -359,7 +392,7 @@ export function PricingSection() {
           bigger catalog: +1 slot per 25,000 products
         </span>
         <span className="rounded-full bg-indigo-50 text-indigo-800 ring-1 ring-indigo-100 px-3 py-1.5 font-semibold">
-          protected site or marketplace: +1 slot
+          complex site or marketplace: +1 slot
         </span>
       </div>
 
@@ -383,21 +416,21 @@ export function PricingSection() {
         </ul>
       </div>
 
-      {/* competitor-slot explainer — why big or protected sites cost more */}
+      {/* competitor-slot explainer — why big or complex sites cost more */}
       <div className="mt-8 rounded-2xl bg-slate-50 ring-1 ring-black/5 px-5 py-4 text-sm text-neutral-600 space-y-2">
         <p>
           <b className="text-neutral-900">What is a competitor slot?</b>{" "}
           <b>1 slot</b> covers a standard store with up to{" "}
           <b>25,000 products</b>. Bigger catalogs use one extra slot per
-          additional 25,000 products, and heavily protected sites —
-          marketplaces, anti-bot walls, login-gated stores — use one extra
-          slot, because tracking them reliably takes far more monitoring
+          additional 25,000 products, and complex sites — marketplaces and
+          platforms that need our advanced monitoring technology — use one
+          extra slot, because tracking them reliably takes more
           infrastructure.
         </p>
         <p className="text-neutral-500">
           Example: a 12,000-product store = 1 slot · a 60,000-product store =
-          3 slots · a protected 120,000-product marketplace = 6 slots. We
-          verify every competitor&apos;s sizing with you before you commit.
+          3 slots · a 120,000-product marketplace = 6 slots. We verify every
+          competitor&apos;s sizing with you before you commit.
         </p>
       </div>
     </section>
