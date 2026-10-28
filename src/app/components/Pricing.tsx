@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 const ANNUAL_DISCOUNT = 0.2; // 20% off on annual
-const AI_ADDON_EUR = 100; // AI Assistant — one flat add-on / month
+const AI_ADDON_EUR = 80; // AI Assistant — one flat add-on / month
 
 /* ---------------------------------------------------------------------------
  * Subscription calculator — no tiers. The visitor adds the competitors they
@@ -201,7 +201,7 @@ function SubscriptionCalculator({ billing }: { billing: "monthly" | "annual" }) 
                 {r.isProtected && <Check className="h-3 w-3" strokeWidth={3} />}
               </span>
               <Layers className="h-3.5 w-3.5" aria-hidden />
-              complex site
+              complex competitor website
             </button>
             <span className="ml-auto rounded-full bg-white/10 px-2.5 py-1 text-xs font-bold text-indigo-200">
               {rowSlots(r)} {rowSlots(r) === 1 ? "slot" : "slots"}
@@ -237,14 +237,14 @@ function SubscriptionCalculator({ billing }: { billing: "monthly" | "annual" }) 
         <details className="text-xs text-slate-400">
           <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 font-semibold hover:text-white transition [&::-webkit-details-marker]:hidden">
             <Info className="h-3.5 w-3.5" aria-hidden />
-            What makes a site complex?
+            What makes a competitor website complex?
           </summary>
           <p className="mt-2 max-w-xl leading-relaxed">
-            Most online stores are standard. A site counts as{" "}
+            Most online stores are standard. A competitor website counts as{" "}
             <b className="text-slate-200">complex</b> when it&apos;s a
             marketplace or needs our advanced monitoring technology to track
             reliably — think very large, fast-changing platforms. Complex
-            sites use one extra slot. Not sure which yours are? Leave them as
+            competitor websites use one extra slot. Not sure which yours are? Leave them as
             standard — we verify every competitor&apos;s sizing with you
             before you commit.
           </p>
@@ -327,7 +327,7 @@ function CustomCard() {
       <ul className="mt-5 space-y-2.5">
         {[
           "We verify every competitor's size and complexity for you",
-          "Custom setup for the most complex sites",
+          "Custom setup for the most complex competitor websites",
           "API access & integrations, custom monitoring frequency",
           "SLA, multiple seats & SSO",
         ].map((f) => (
@@ -392,7 +392,7 @@ export function PricingSection() {
           bigger catalog: +1 slot per 25,000 products
         </span>
         <span className="rounded-full bg-indigo-50 text-indigo-800 ring-1 ring-indigo-100 px-3 py-1.5 font-semibold">
-          complex site or marketplace: +1 slot
+          complex competitor website: +1 slot
         </span>
       </div>
 
@@ -422,10 +422,10 @@ export function PricingSection() {
           <b className="text-neutral-900">What is a competitor slot?</b>{" "}
           <b>1 slot</b> covers a standard store with up to{" "}
           <b>25,000 products</b>. Bigger catalogs use one extra slot per
-          additional 25,000 products, and complex sites — marketplaces and
-          platforms that need our advanced monitoring technology — use one
-          extra slot, because tracking them reliably takes more
-          infrastructure.
+          additional 25,000 products, and complex competitor websites —
+          marketplaces and platforms that need our advanced monitoring
+          technology — use one extra slot, because tracking them reliably
+          takes more infrastructure.
         </p>
         <p className="text-neutral-500">
           Example: a 12,000-product store = 1 slot · a 60,000-product store =

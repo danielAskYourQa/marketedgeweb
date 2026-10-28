@@ -71,11 +71,11 @@ export const defaultFaqs = [
   },
   {
     q: "How is pricing structured?",
-    a: "There are no tiers — you build your own subscription. Add the competitors you want tracked; each uses slots based on catalog size and monitoring complexity, and the slots set your price, starting from €119/month. Every subscription includes the full platform with unlimited products of your own; the AI Assistant is one flat +€100/month for the whole package, added once no matter how many competitors you track. Annual billing saves 20%, and one price curve covers any market size — volume discount built in.",
+    a: "There are no tiers — you build your own subscription. Add the competitors you want tracked; each uses slots based on catalog size and monitoring complexity, and the slots set your price, starting from €119/month. Every subscription includes the full platform with unlimited products of your own; the AI Assistant is one flat +€80/month for the whole package, added once no matter how many competitors you track. Annual billing saves 20%, and one price curve covers any market size — volume discount built in.",
   },
   {
     q: "What counts as one competitor slot?",
-    a: "One slot covers a standard store with up to 25,000 products. Larger catalogs use one extra slot per additional 25,000 products, and complex sites — marketplaces and platforms that need our advanced monitoring technology — use one extra slot, because tracking them reliably takes more infrastructure. We size every competitor for you before you commit.",
+    a: "One slot covers a standard store with up to 25,000 products. Larger catalogs use one extra slot per additional 25,000 products, and complex competitor websites — marketplaces and platforms that need our advanced monitoring technology — use one extra slot, because tracking them reliably takes more infrastructure. We size every competitor for you before you commit.",
   },
   {
     q: "Can I try it before I commit?",
