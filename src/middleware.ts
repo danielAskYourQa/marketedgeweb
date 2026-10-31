@@ -10,14 +10,18 @@ const CLIENTS: Record<string, string> = {
   tbi: "LEASING_PASSWORD_TBI",
 };
 
-function passwordFrom(request: NextRequest): string | null {
+// What the browser's sign-in box sent, user name and password. Decoded as UTF-8 so passwords with
+// diacritics match; both trimmed, since a pasted password often carries a space.
+function credentialsFrom(request: NextRequest): string[] {
   const header = request.headers.get("authorization") ?? "";
-  if (!header.startsWith("Basic ")) return null;
+  if (!header.startsWith("Basic ")) return [];
   try {
-    const decoded = atob(header.slice(6));
-    return decoded.slice(decoded.indexOf(":") + 1); // any user name
+    const bytes = Uint8Array.from(atob(header.slice(6).trim()), (c) => c.charCodeAt(0));
+    const decoded = new TextDecoder().decode(bytes);
+    const at = decoded.indexOf(":");
+    return [decoded.slice(at + 1), decoded.slice(0, at)].map((s) => s.trim());
   } catch {
-    return null;
+    return [];
   }
 }
 
@@ -26,10 +30,12 @@ export function middleware(request: NextRequest) {
   const envName = CLIENTS[client];
   if (!envName) return new NextResponse("Not found", { status: 404 });
 
-  const expected = process.env[envName];
+  // trimmed: a value pasted into Vercel often ends in a newline
+  const expected = process.env[envName]?.trim();
   if (!expected) return new NextResponse("This page is not available.", { status: 503 });
 
-  if (passwordFrom(request) === expected) return NextResponse.next();
+  // the password in either box: people often type it as the user name and leave the password empty
+  if (credentialsFrom(request).includes(expected)) return NextResponse.next();
   return new NextResponse("Authentication required", {
     status: 401,
     headers: { "WWW-Authenticate": `Basic realm="MarketEdge Leasing ${client}", charset="UTF-8"` },
